@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Nexstay CRM · Conciergerie</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        :root {
+            --terracotta: #C27A6B;
+            --terracotta-light: #E9C5BC;
+            --terracotta-soft: #F7EDEA;
+            --terracotta-deep: #A15847;
+            --neutral-0: #FFFFFF;
+            --neutral-50: #F9F8F7;
+            --neutral-100: #F0ECEA;
+            --neutral-200: #E0D9D5;
+            --neutral-400: #A59A95;
+            --neutral-600: #6B605C;
+            --neutral-800: #3A3532;
+            --shadow: 0 4px 12px rgba(0,0,0,0.05);
+            --radius: 14px;
+            --font: 'Inter', system-ui, -apple-system, sans-serif;
+        }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { font-family:var(--font); background:var(--neutral-50); color:var(--neutral-800); display:flex; min-height:100vh; }
+
+        .sidebar {
+            width:240px; background:white; border-right:1px solid var(--neutral-100);
+            display:flex; flex-direction:column; position:fixed; top:0; left:0; bottom:0; z-index:100;
+            padding:20px 12px; transition: transform 0.3s ease;
+        }
+        .sidebar.hidden { transform: translateX(-100%); }
+        .sidebar-toggle {
+            position:fixed; top:50%; left:240px; transform:translateY(-50%);
+            z-index:150; background:white; border:1px solid var(--neutral-200);
+            border-left:none; border-radius:0 8px 8px 0; padding:6px 4px;
+            cursor:pointer; font-size:0.8rem; color:var(--terracotta);
+            transition: left 0.3s ease; box-shadow:var(--shadow-sm);
+            display:flex; align-items:center; justify-content:center;
+        }
+        .sidebar.hidden + .sidebar-toggle { left:0; }
+        .main { flex:1; margin-left:240px; padding:24px 28px; transition: margin-left 0.3s ease; }
+        .main.expanded { margin-left:0; }
+        .logo { display:flex; align-items:center; gap:8px; padding:0 12px 24px; border-bottom:1px solid var(--neutral-100); margin-bottom:12px; }
+        .logo-icon { background:var(--terracotta); color:white; width:34px; height:34px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-weight:600; font-size:1.2rem; }
+        .logo-text { font-weight:600; font-size:1.1rem; } .logo-text span { color:var(--terracotta); }
+        .nav { flex:1; display:flex; flex-direction:column; gap:2px; }
+        .nav button { display:flex; align-items:center; gap:10px; padding:10px 14px; border:none; background:transparent; color:var(--neutral-600); cursor:pointer; font-size:0.88rem; border-radius:8px; transition:0.2s; text-align:left; font-family:var(--font); }
+        .nav button:hover, .nav button.active { background:var(--terracotta-soft); color:var(--terracotta-deep); font-weight:500; }
+        .nav svg { width:18px; height:18px; stroke:currentColor; fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+        .page { display:none; }
+        .page.active { display:block; animation: fadeIn 0.2s ease; }
+        @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+        .header { display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; flex-wrap:wrap; gap:12px; }
+        .btn { display:inline-flex; align-items:center; gap:6px; padding:9px 18px; border-radius:8px; font-weight:500; font-size:0.85rem; cursor:pointer; border:1px solid var(--neutral-200); background:white; color:var(--neutral-800); transition:0.2s; font-family:var(--font); }
+        .btn-primary { background:var(--terracotta); color:white; border-color:var(--terracotta); }
+        .btn-primary:hover { background:var(--terracotta-deep); }
+        .btn-sm { padding:5px 12px; font-size:0.78rem; }
+        .card { background:white; border-radius:var(--radius); padding:20px; margin-bottom:20px; border:1px solid var(--neutral-100); }
+        .stats { display:grid; grid-template-columns:repeat(auto-fit, minmax(150px,1fr)); gap:16px; margin-bottom:20px; }
+        .stat { background:white; padding:18px; border-radius:var(--radius); border-left:3px solid var(--terracotta); border:1px solid var(--neutral-100); }
+        .stat-value { font-size:1.8rem; font-weight:600; }
+        .stat-label { font-size:0.7rem; text-transform:uppercase; color:var(--neutral-400); margin-top:4px; }
+        table { width:100%; border-collapse:collapse; font-size:0.82rem; }
+        th { background:var(--neutral-50); color:var(--neutral-600); font-weight:600; font-size:0.7rem; text-transform:uppercase; padding:12px; text-align:left; border-bottom:1px solid var(--neutral-200); white-space: nowrap; }
+        td { padding:10px 12px; border-bottom:1px solid var(--neutral-100); vertical-align: middle; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .form-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(200px,1fr)); gap:16px; }
+        .form-group { display:flex; flex-direction:column; gap:4px; }
+        .form-group label { font-size:0.7rem; font-weight:600; text-transform:uppercase; color:var(--neutral-400); }
+        input, select, textarea { padding:9px 12px; border:1px solid var(--neutral-200); border-radius:8px; font-size:0.85rem; font-family:var(--font); }
+        .filter-bar { display:flex; gap:12px; flex-wrap:wrap; align-items:flex-end; margin-bottom:20px; background:white; padding:16px; border-radius:var(--radius); border:1px solid var(--neutral-100); }
+        .occ-ring { display: inline-flex; align-items:center; gap:8px; }
+        .occ-ring svg { width:44px; height:44px; }
+        .cal-nav { display:flex; align-items:center; gap:8px; }
+        .cal-nav button { background:white; border:1px solid var(--neutral-200); border-radius:8px; padding:6px 12px; cursor:pointer; font-size:0.85rem; }
+        .modal-overlay { position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.3); display:flex; align-items:center; justify-content:center; z-index:200; }
+        .modal { background:white; border-radius:var(--radius); padding:24px; max-width:700px; width:90%; max-height:80vh; overflow-y:auto; box-shadow:var(--shadow); }
+        .param-tag { display:inline-block; background:var(--terracotta-soft); color:var(--terracotta-deep); padding:4px 12px; border-radius:20px; margin:4px; cursor:grab; font-size:0.8rem; }
+        .toast { position:fixed; top:20px; right:20px; background:var(--neutral-800); color:white; padding:10px 18px; border-radius:8px; font-size:0.8rem; z-index:999; }
+        .checkbox-group { display:flex; flex-wrap:wrap; gap:8px; margin-top:4px; }
+        .checkbox-group label { display:flex; align-items:center; gap:4px; font-size:0.8rem; }
+        .editor-toolbar { display:flex; gap:4px; margin-bottom:8px; flex-wrap:wrap; }
+        .editor-toolbar button { background:var(--neutral-100); border:1px solid var(--neutral-200); padding:4px 8px; border-radius:4px; cursor:pointer; font-size:0.8rem; }
+        .editor-toolbar button:hover { background:var(--terracotta-soft); }
+        .login-container { display:flex; align-items:center; justify-content:center; width:100%; min-height:100vh; background:var(--neutral-50); }
+        .login-box { background:white; padding:32px; border-radius:var(--radius); box-shadow:var(--shadow); width:360px; }
+
+        .cal-table-wrap { overflow: auto; max-height: 70vh; direction: rtl; }
+        .cal-table-wrap table { direction: ltr; }
+        .cal-table th:first-child, .cal-table td:first-child { position: sticky; left: 0; background: white; z-index: 2; }
+        .cal-table thead th { position: sticky; top: 0; background: var(--neutral-50); z-index: 3; }
+        .cal-table thead th:first-child { z-index: 4; }
+
+        .equipements-columns { display: flex; gap: 16px; flex-wrap: wrap; }
+        .equipements-col { flex: 1; min-width: 200px; }
+        .equipements-col ul { list-style: none; padding: 0; }
+    </style>
+</head>
+<body>
+<aside class="sidebar" id="sidebar">
+    <div class="logo"><div class="logo-icon">N</div><div class="logo-text">Nexstay<span>CRM</span></div></div>
+    <nav class="nav" id="nav"></nav>
+    <div id="userArea" style="padding:12px; font-size:0.8rem; border-top:1px solid var(--neutral-100);"></div>
+</aside>
+<button class="sidebar-toggle" id="sidebarToggle" title="Menu">◀</button>
+<main class="main" id="mainContent"></main>
+<div id="modalContainer"></div>
+
+<script>
+    (function() {
+        const STORE = 'nexstay_data';
+        const EQUIPEMENTS_KEY = 'nexstay_equipements';
+        const MODELES_KEY = 'nexstay_modeles_contrats';
+        const USERS_KEY = 'nexstay_users';
+        const CURRENT_USER_KEY = 'nexstay_current_user';
+        const CHARGES_KEY = 'nexstay_charges';
+
+        const entityMap = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;', '/': '&#x2F;', '`': '&#x60;', '=': '&#x3D;' };
+        function escapeHtml(text) { return String(text).replace(/[&<>"'`=\/]/g, s => entityMap[s]); }
+
+        function getModeles() { try { return JSON.parse(localStorage.getItem(MODELES_KEY) || '[]'); } catch(e) { return []; } }
+        function saveModeles(liste) { localStorage.setItem(MODELES_KEY, JSON.stringify(liste)); }
+        function getEquipementsDisponibles() { try { return JSON.parse(localStorage.getItem(EQUIPEMENTS_KEY) || '["WiFi","Climatisation","Chauffage","Lave-linge","Sèche-linge","Parking","Piscine","Jardin","Balcon","Ascenseur"]'); } catch(e) { return []; } }
+        function saveEquipementsDisponibles(liste) { localStorage.setItem(EQUIPEMENTS_KEY, JSON.stringify(liste)); }
+        function getCharges() { try { return JSON.parse(localStorage.getItem(CHARGES_KEY) || '[]'); } catch(e) { return []; } }
+        function saveCharges(liste) { localStorage.setItem(CHARGES_KEY, JSON.stringify(liste)); }
+        function getData() {
+            let raw = localStorage.getItem(STORE);
+            let data = raw ? JSON.parse(raw) : {};
+            data.proprietaires = data.proprietaires || [];
+            data.logements = data.logements || [];
+            data.locataires = data.locataires || [];
+            data.paiements = data.paiements || {};
+            data.logements = data.logements.map(log => {
+                if (typeof log.equipements === 'string') log.equipements = log.equipements.split(',').map(s => s.trim()).filter(Boolean);
+                else if (!Array.isArray(log.equipements)) log.equipements = [];
+                return log;
+            });
+            return data;
+        }
+        const saveData = (d) => localStorage.setItem(STORE, JSON.stringify(d));
+        const uid = () => Date.now().toString(36) + Math.random().toString(36);
+        const formatTND = (v) => (Number(v)||0).toFixed(3) + ' TND';
+        const NATIONALITES = ["Afghane","Albanaise","Algérienne","Allemande","Américaine","Andorrane","Angolaise","Argentine","Arménienne","Australienne","Autrichienne","Azerbaïdjanaise","Bahamienne","Bahreïnienne","Bangladeshie","Barbadienne","Belge","Bélizienne","Béninoise","Bhoutanaise","Biélorusse","Birmane","Bolivienne","Bosniaque","Botswanaise","Brésilienne","Britannique","Brunéienne","Bulgare","Burkinabée","Burundaise","Cambodgienne","Camerounaise","Canadienne","Capverdienne","Chilienne","Chinoise","Chypriote","Colombienne","Comorienne","Congolaise","Costaricaine","Croate","Cubaine","Danoise","Djiboutienne","Dominicaine","Égyptienne","Émiratie","Équatorienne","Érythréenne","Espagnole","Estonienne","Éthiopienne","Fidjienne","Finlandaise","Française","Gabonaise","Gambienne","Géorgienne","Ghanéenne","Grecque","Guatémaltèque","Guinéenne","Haïtienne","Hondurienne","Hongroise","Indienne","Indonésienne","Irakienne","Iranienne","Irlandaise","Islandaise","Israélienne","Italienne","Ivoirienne","Jamaïcaine","Japonaise","Jordanienne","Kazakhstanaise","Kényane","Kirghize","Koweïtienne","Laotienne","Lesothane","Lettonne","Libanaise","Libérienne","Libyenne","Lituanienne","Luxembourgeoise","Macédonienne","Malaisienne","Malienne","Maltaise","Marocaine","Mauricienne","Mauritanienne","Mexicaine","Moldave","Monégasque","Mongole","Monténégrine","Mozambicaine","Namibienne","Népalaise","Nicaraguayenne","Nigériane","Nigérienne","Norvégienne","Néo-Zélandaise","Omanaise","Ougandaise","Pakistanaise","Panaméenne","Paraguayenne","Néerlandaise","Péruvienne","Philippine","Polonaise","Portugaise","Qatarienne","Roumaine","Russe","Rwandaise","Salvadorienne","Sénégalaise","Serbe","Sierra-Léonaise","Singapourienne","Slovaque","Slovène","Somalienne","Soudanaise","Sri-Lankaise","Sud-Africaine","Suédoise","Suisse","Surinamaise","Syrienne","Tadjikistan","Tanzanienne","Tchadienne","Tchèque","Thaïlandaise","Togolaise","Trinidadienne","Tunisienne","Turque","Ukrainienne","Uruguayenne","Vénézuélienne","Vietnamienne","Yéménite","Zambienne","Zimbabwéenne"];
+        const propName = (id) => { let p = getData().proprietaires.find(x=>x.id===id); return p ? p.prenom+' '+p.nom : '—'; };
+        const logName = (id) => { let l = getData().logements.find(x=>x.id===id); return l ? l.nom : '—'; };
+        const shortDate = (d) => d ? new Date(d+'T00:00:00').toLocaleDateString('fr-FR',{day:'2-digit',month:'short'}) : '—';
+
+        function getUsers() {
+            let raw = localStorage.getItem(USERS_KEY);
+            if (!raw) {
+                let adminUser = { id: uid(), login: 'admin', password: 'admin@nextay.tn', isAdmin: true };
+                let users = [adminUser];
+                localStorage.setItem(USERS_KEY, JSON.stringify(users));
+                return users;
+            }
+            return JSON.parse(raw);
+        }
+        function saveUsers(users) { localStorage.setItem(USERS_KEY, JSON.stringify(users)); }
+        function getCurrentUser() { let userId = localStorage.getItem(CURRENT_USER_KEY); if (!userId) return null; return getUsers().find(u => u.id === userId) || null; }
+        function setCurrentUser(userId) { localStorage.setItem(CURRENT_USER_KEY, userId); }
+        function logout() { localStorage.removeItem(CURRENT_USER_KEY); location.reload(); }
+        window.logout = logout;
+
+        function toast(msg) { let t = document.createElement('div'); t.className='toast'; t.textContent=msg; document.body.appendChild(t); setTimeout(() => t.remove(), 2500); }
+
+        function initModeles() {
+            if (getModeles().length === 0) {
+                let html = '<p><strong>CONTRAT DE LOCATION SAISONNIÈRE</strong></p><p>Entre le propriétaire et le locataire désigné ci-dessous :</p><p>Locataire : {{prenom}} {{nom}}<br>Pièce d\'identité : {{identite}}<br>Nationalité : {{nationalite}}<br>Période : du {{dateArrivee}} au {{dateDepart}} ({{nbNuits}} nuits)</p><p>Logement : {{logementNom}}<br>Adresse : {{logementAdresse}}, {{logementCodePostal}} {{logementVille}}<br>Composition : {{logementChambres}} chambre(s), {{logementSDB}} salle(s) de bain, {{logementLits}} lit(s)<br>Équipements : {{logementEquipements}}</p><p>Montant total : {{prixTotal}}</p><p>Signatures :</p>';
+                saveModeles([{ id: uid(), nom: 'Standard', html }]);
+            }
+            if (!localStorage.getItem(EQUIPEMENTS_KEY)) saveEquipementsDisponibles(["WiFi","Climatisation","Chauffage","Lave-linge","Sèche-linge","Parking","Piscine","Jardin","Balcon","Ascenseur"]);
+        }
+
+        function seedIfEmpty() {
+            let d = getData();
+            if (d.proprietaires.length === 0 && d.logements.length === 0) {
+                let p1 = { id:uid(), nom:'Lambert', prenom:'Camille', commission:15 };
+                let p2 = { id:uid(), nom:'Morel', prenom:'Julien', commission:18 };
+                d.proprietaires = [p1, p2];
+                let l1 = { id:uid(), nom:'Villa Terracotta', adresse:'12 rue des Oliviers', ville:'Tunis', codePostal:'1002', chambres:2, sdb:1, lits:2, capacite:4, equipements: ["WiFi","Climatisation"], proprietaireId:p1.id };
+                let l2 = { id:uid(), nom:'Studio Sidi Bou', adresse:'4 impasse du Jasmin', ville:'Carthage', codePostal:'2016', chambres:1, sdb:1, lits:1, capacite:2, equipements: ["WiFi"], proprietaireId:p2.id };
+                d.logements = [l1, l2];
+                let now = new Date(); let y = now.getFullYear(); let m = now.getMonth();
+                d.locataires = [
+                    { id:uid(), nom:'Ben Ali', prenom:'Amira', identite:'CNI 12345678', nationalite:'Tunisienne', logementId:l1.id, dateArrivee:new Date(y,m,3).toISOString().slice(0,10), dateDepart:new Date(y,m,8).toISOString().slice(0,10), personnes:3, prix:1200.500, statut:'terminé', modeleContratId: getModeles()[0]?.id || '', notes:'' },
+                    { id:uid(), nom:'Schmidt', prenom:'Karl', identite:'PASSPORT DE987654', nationalite:'Allemande', logementId:l2.id, dateArrivee:new Date(y,m,12).toISOString().slice(0,10), dateDepart:new Date(y,m,16).toISOString().slice(0,10), personnes:1, prix:680.000, statut:'confirmé', modeleContratId: getModeles()[0]?.id || '', notes:'' }
+                ];
+                d.paiements = {};
+                d.locataires.forEach(l => { d.paiements[l.id] = { paye: l.statut==='terminé' ? l.prix : 0 }; });
+                saveData(d);
+            }
+        }
+
+        function setupPasswordFields() {
+            document.querySelectorAll('input[type="password"]').forEach(input => {
+                if (input.dataset.peekSetup) return;
+                input.dataset.peekSetup = '1';
+                let timer;
+                input.addEventListener('input', function() {
+                    clearTimeout(timer);
+                    this.type = 'text';
+                    timer = setTimeout(() => { this.type = 'password'; }, 600);
+                });
+            });
+        }
+        const observer = new MutationObserver(() => setupPasswordFields());
+        observer.observe(document.body, { childList: true, subtree: true });
+
+        function showLoginScreen() {
+            document.body.innerHTML = `<div class="login-container"><div class="login-box">
+                <div style="text-align:center; margin-bottom:20px;"><div class="logo-icon" style="margin:0 auto 8px;">N</div><div class="logo-text">Nexstay<span>CRM</span></div></div>
+                <div class="form-group"><label>Login</label><input type="text" id="loginInput"></div>
+                <div class="form-group" style="margin-top:12px;"><label>Mot de passe</label><input type="password" id="passwordInput"></div>
+                <div style="margin-top:16px;"><button class="btn btn-primary" onclick="attemptLogin()" style="width:100%;">Se connecter</button></div>
+                <div id="loginError" style="color:red; margin-top:8px; font-size:0.8rem;"></div>
+            </div></div>`;
+            setupPasswordFields();
+            window.attemptLogin = function() {
+                let login = document.getElementById('loginInput').value.trim();
+                let password = document.getElementById('passwordInput').value;
+                let user = getUsers().find(u => u.login === login && u.password === password);
+                if (!user) { document.getElementById('loginError').innerText = 'Login ou mot de passe incorrect.'; return; }
+                setCurrentUser(user.id); location.reload();
+            };
+        }
+
+        function buildApp(currentUser) {
+            document.body.innerHTML = `
+                <aside class="sidebar" id="sidebar">
+                    <div class="logo"><div class="logo-icon">N</div><div class="logo-text">Nexstay<span>CRM</span></div></div>
+                    <nav class="nav" id="nav"></nav>
+                    <div id="userArea" style="padding:12px; font-size:0.8rem; border-top:1px solid var(--neutral-100);"></div>
+                </aside>
+                <button class="sidebar-toggle visible" id="sidebarToggle" title="Menu">◀</button>
+                <main class="main" id="mainContent"></main>
+                <div id="modalContainer"></div>`;
+
+            const sidebar = document.getElementById('sidebar');
+            const main = document.getElementById('mainContent');
+            const toggleBtn = document.getElementById('sidebarToggle');
+            toggleBtn.addEventListener('click', () => {
+                sidebar.classList.toggle('hidden');
+                document.querySelector('.main').classList.toggle('expanded');
+                toggleBtn.textContent = sidebar.classList.contains('hidden') ? '▶' : '◀';
+            });
+
+            const nav = document.getElementById('nav');
+            const pages = {
+                dashboard: { label:'Tableau de bord', icon:'<rect x="1" y="1" width="16" height="16" rx="2"/><line x1="5" y1="13" x2="5" y2="9"/><line x1="9" y1="13" x2="9" y2="5"/><line x1="13" y1="13" x2="13" y2="11"/>' },
+                locataires: { label:'Locataires', icon:'<circle cx="9" cy="5" r="3"/><path d="M3 15c0-3.3 2.7-6 6-6s6 2.7 6 6"/>' },
+                logements: { label:'Logements', icon:'<path d="M2 7l7-5 7 5v9H2z"/><rect x="6" y="11" width="6" height="5"/>' },
+                proprietaires: { label:'Propriétaires', icon:'<rect x="4" y="1" width="10" height="14" rx="1"/><line x1="9" y1="5" x2="9" y2="11"/><circle cx="9" cy="14" r="1"/>' },
+                calendrier: { label:'Calendrier', icon:'<rect x="2" y="3" width="14" height="13" rx="1"/><line x1="2" y1="7" x2="16" y2="7"/>' },
+                paiements: { label:'Paiements', icon:'<rect x="1" y="4" width="16" height="10" rx="1.5"/><line x1="1" y1="8" x2="17" y2="8"/>' },
+                contrat: { label:'Modèles contrat', icon:'<rect x="2" y="1" width="14" height="16" rx="1"/><line x1="5" y1="5" x2="13" y2="5"/><line x1="5" y1="9" x2="13" y2="9"/>' },
+                parametrage: { label:'Paramétrage', icon:'<circle cx="9" cy="9" r="5" fill="none"/><path d="M9 1v2M9 15v2M1.5 4.5l1.5 1.5M15 12l1.5 1.5M1 9h2M15 9h2M1.5 13.5l1.5-1.5M15 6l1.5-1.5" stroke="currentColor" stroke-width="1.5"/>' },
+                charges: { label:'Charges', icon:'<rect x="2" y="4" width="14" height="10" rx="1"/><line x1="6" y1="8" x2="12" y2="8"/><line x1="6" y1="11" x2="10" y2="11"/>' },
+                sauvegarde: { label:'Sauvegarde', icon:'<path d="M5 2h8l3 3v11a1 1 0 01-1 1H3a1 1 0 01-1-1V3a1 1 0 011-1z"/><path d="M9 6v7"/><path d="M6 9l3-3 3 3"/>' }
+            };
+            if (currentUser.isAdmin) {
+                pages.utilisateurs = { label:'Utilisateurs', icon:'<circle cx="9" cy="7" r="2"/><path d="M5 14c0-2.2 1.8-4 4-4s4 1.8 4 4"/>' };
+            }
+            pages.moncompte = { label:'Mon compte', icon:'<circle cx="9" cy="5" r="3"/><path d="M9 10c-1.7 0-3 1.3-3 3h6c0-1.7-1.3-3-3-3z"/><path d="M9 5c-1.1 0-2 .9-2 2v1h4V7c0-1.1-.9-2-2-2z"/>' };
+
+            nav.innerHTML = '';
+            Object.entries(pages).forEach(([key, val]) => {
+                let btn = document.createElement('button');
+                btn.dataset.page = key;
+                btn.innerHTML = `<svg viewBox="0 0 18 18">${val.icon}</svg> ${val.label}`;
+                btn.addEventListener('click', () => switchPage(key));
+                nav.appendChild(btn);
+            });
+
+            document.getElementById('userArea').innerHTML = `<div style="font-weight:500;">${currentUser.login}</div>
+                <button class="btn btn-sm" onclick="window.logout()" style="margin-top:4px; width:100%;">Déconnexion</button>`;
+
+            let currentPage = 'dashboard';
+            function switchPage(page) {
+                if (!pages[page]) return;
+                currentPage = page;
+                document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
+                document.querySelector(`.nav button[data-page="${page}"]`).classList.add('active');
+                try { renderPage(page); setupPasswordFields(); } catch(e) { main.innerHTML = `<div class="error-message">Erreur : ${e.message}</div>`; }
+                if (window.innerWidth <= 768) {
+                    sidebar.classList.add('hidden');
+                    document.querySelector('.main').classList.add('expanded');
+                }
+            }
+
+            function renderPage(page) {
+                switch(page) {
+                    case 'dashboard': renderDashboard(); break;
+                    case 'locataires': renderLocataires(); break;
+                    case 'logements': renderLogements(); break;
+                    case 'proprietaires': renderProprietaires(); break;
+                    case 'calendrier': renderCalendrier(); break;
+                    case 'paiements': renderPaiements(); break;
+                    case 'contrat': renderModelesContrats(); break;
+                    case 'parametrage': renderParametrage(); break;
+                    case 'charges': renderCharges(); break;
+                    case 'sauvegarde': renderSauvegarde(); break;
+                    case 'utilisateurs': renderUtilisateurs(); break;
+                    case 'moncompte': renderMonCompte(); break;
+                }
+            }
+
+            function renderDashboard() {
+                let d = getData();
+                let now = new Date();
+                let defaultStart = new Date(now.getFullYear(), now.getMonth(), 1).toISOString().slice(0,10);
+                let defaultEnd = new Date(now.getFullYear(), now.getMonth()+1, 0).toISOString().slice(0,10);
+                let start = document.getElementById('dashStart')?.value || defaultStart;
+                let end = document.getElementById('dashEnd')?.value || defaultEnd;
+                let debut = start ? new Date(start+'T00:00:00') : new Date(2020,0,1);
+                let fin = end ? new Date(end+'T23:59:59') : new Date(2099,11,31);
+                let fLog = document.getElementById('dashLogement')?.value || '';
+                let fProp = document.getElementById('dashProprietaire')?.value || '';
+                let joursTotal = Math.round((fin - debut) / 86400000) || 1;
+
+                let locs = d.locataires.filter(l => {
+                    let a = new Date(l.dateArrivee+'T00:00:00'), dep = new Date(l.dateDepart+'T00:00:00');
+                    return a <= fin && dep >= debut;
+                });
+                if (fLog) locs = locs.filter(l => l.logementId === fLog);
+                if (fProp) { let ids = d.logements.filter(l => l.proprietaireId === fProp).map(l => l.id); locs = locs.filter(l => ids.includes(l.logementId)); }
+                let totalCA = locs.reduce((s,l) => s + (l.prix||0), 0);
+                let perProp = {};
+                locs.forEach(l => {
+                    let log = d.logements.find(lg => lg.id === l.logementId); if (!log) return;
+                    perProp[log.proprietaireId] = perProp[log.proprietaireId] || {ca:0, count:0};
+                    perProp[log.proprietaireId].ca += l.prix; perProp[log.proprietaireId].count++;
+                });
+                let totalComm = 0;
+                Object.entries(perProp).forEach(([pid, val]) => {
+                    let p = d.proprietaires.find(x=>x.id===pid); if (!p) return;
+                    totalComm += val.ca * (p.commission/100);
+                });
+                let logs = fLog ? d.logements.filter(l => l.id === fLog) : d.logements;
+                if (fProp) logs = logs.filter(l => l.proprietaireId === fProp);
+                let totalNuits = 0;
+                logs.forEach(log => {
+                    let set = new Set();
+                    locs.filter(l => l.logementId === log.id).forEach(loc => {
+                        let a = new Date(Math.max(new Date(loc.dateArrivee+'T00:00:00'), debut));
+                        let dep = new Date(Math.min(new Date(loc.dateDepart+'T00:00:00'), fin));
+                        for (let d = new Date(a); d < dep; d.setDate(d.getDate()+1)) set.add(d.toISOString().slice(0,10));
+                    });
+                    totalNuits += set.size;
+                });
+                let tauxGlobal = logs.length ? Math.round((totalNuits / (logs.length * joursTotal)) * 100) : 0;
+
+                function ringSvg(pct) {
+                    const radius = 16, circ = 2*Math.PI*radius, dash = (pct/100)*circ;
+                    return `<svg width="44" height="44" viewBox="0 0 44 44">
+                        <circle cx="22" cy="22" r="${radius}" fill="none" stroke="var(--neutral-200)" stroke-width="4"/>
+                        <circle cx="22" cy="22" r="${radius}" fill="none" stroke="var(--terracotta)" stroke-width="4" stroke-dasharray="${dash} ${circ-dash}" stroke-linecap="round" transform="rotate(-90 22 22)"/>
+                        <text x="22" y="24" text-anchor="middle" font-size="10" fill="var(--neutral-800)">${pct}%</text></svg>`;
+                }
+
+                main.innerHTML = `
+                    <div class="header"><h2>Tableau de bord</h2><button class="btn" onclick="switchPage('dashboard')">Actualiser</button></div>
+                    <div class="filter-bar">
+                        <div class="form-group"><label>Début</label><input type="date" id="dashStart" value="${start}"></div>
+                        <div class="form-group"><label>Fin</label><input type="date" id="dashEnd" value="${end}"></div>
+                        <div class="form-group"><label>Logement</label><select id="dashLogement" onchange="switchPage('dashboard')"><option value="">Tous</option>${d.logements.map(l=>`<option value="${l.id}" ${fLog===l.id?'selected':''}>${l.nom}</option>`).join('')}</select></div>
+                        <div class="form-group"><label>Propriétaire</label><select id="dashProprietaire" onchange="switchPage('dashboard')"><option value="">Tous</option>${d.proprietaires.map(p=>`<option value="${p.id}" ${fProp===p.id?'selected':''}>${p.prenom} ${p.nom}</option>`).join('')}</select></div>
+                    </div>
+                    <div class="stats">
+                        <div class="stat"><div class="stat-value">${locs.length}</div><div class="stat-label">Réservations</div></div>
+                        <div class="stat"><div class="stat-value">${formatTND(totalCA)}</div><div class="stat-label">CA</div></div>
+                        <div class="stat"><div class="stat-value">${formatTND(totalComm)}</div><div class="stat-label">Commissions</div></div>
+                        <div class="stat"><div class="stat-value">${tauxGlobal}%</div><div class="stat-label">Occupation globale</div></div>
+                    </div>
+                    <div class="card"><h3>Taux d'occupation par logement</h3><table><thead><tr><th>Logement</th><th>Nuits occupées</th><th>Occupation</th></tr></thead><tbody>
+                    ${logs.map(log => {
+                        let set = new Set();
+                        locs.filter(l=>l.logementId===log.id).forEach(loc=>{
+                            let a = new Date(Math.max(new Date(loc.dateArrivee+'T00:00:00'), debut));
+                            let dep = new Date(Math.min(new Date(loc.dateDepart+'T00:00:00'), fin));
+                            for (let d=new Date(a); d<dep; d.setDate(d.getDate()+1)) set.add(d.toISOString().slice(0,10));
+                        });
+                        let pct = Math.round((set.size / joursTotal)*100);
+                        return `<tr><td>${log.nom}</td><td>${set.size}</td><td><div class="occ-ring">${ringSvg(pct)}</div></td></tr>`;
+                    }).join('')}
+                    </tbody></table></div>
+                    <div class="card"><h3>Résumé financier</h3><table><thead><tr><th>Propriétaire</th><th>Comm.</th><th>Réservations</th><th>CA brut</th><th>Commission</th><th>Reversement</th></tr></thead><tbody>
+                    ${Object.entries(perProp).map(([pid,val])=>{
+                        let p = d.proprietaires.find(x=>x.id===pid); if(!p) return '';
+                        let comm = val.ca * (p.commission/100);
+                        return `<tr><td>${p.prenom} ${p.nom}</td><td>${p.commission}%</td><td>${val.count}</td><td>${formatTND(val.ca)}</td><td>${formatTND(comm)}</td><td>${formatTND(val.ca-comm)}</td></tr>`;
+                    }).join('')}
+                    </tbody></table></div>`;
+            }
+
+            function renderLocataires(formData = null) {
+                let d = getData(); let modeles = getModeles();
+                let html = `<div class="header"><h2>Locataires</h2><button class="btn btn-primary" onclick="window.editLocataire('new')">+ Nouveau</button></div>`;
+                if (formData) {
+                    html += `<div class="card"><div class="form-grid">
+                        <input type="hidden" id="locId" value="${formData.id||''}">
+                        <div class="form-group"><label>Nom *</label><input id="locNom" value="${formData.nom||''}"></div>
+                        <div class="form-group"><label>Prénom *</label><input id="locPrenom" value="${formData.prenom||''}"></div>
+                        <div class="form-group"><label>N° pièce identité</label><input id="locIdentite" value="${formData.identite||''}"></div>
+                        <div class="form-group"><label>Nationalité</label><select id="locNationalite">${NATIONALITES.map(n=>`<option value="${n}" ${formData.nationalite===n?'selected':''}>${n}</option>`).join('')}</select></div>
+                        <div class="form-group"><label>Logement *</label><select id="locLogement">${d.logements.map(l=>`<option value="${l.id}" ${formData.logementId===l.id?'selected':''}>${l.nom}</option>`).join('')}</select></div>
+                        <div class="form-group"><label>Modèle contrat</label><select id="locModeleContrat">${modeles.map(m=>`<option value="${m.id}" ${formData.modeleContratId===m.id?'selected':''}>${m.nom}</option>`).join('')}</select></div>
+                        <div class="form-group"><label>Arrivée *</label><input type="date" id="locArrivee" value="${formData.dateArrivee||''}"></div>
+                        <div class="form-group"><label>Départ *</label><input type="date" id="locDepart" value="${formData.dateDepart||''}"></div>
+                        <div class="form-group"><label>Personnes</label><input type="number" id="locPersonnes" value="${formData.personnes||1}"></div>
+                        <div class="form-group"><label>Prix total (TND) *</label><input type="number" id="locPrix" step="0.001" value="${formData.prix||''}"></div>
+                        <div class="form-group"><label>Statut</label><select id="locStatut"><option>confirmé</option><option>en cours</option><option>terminé</option><option>annulé</option></select></div>
+                        <div class="form-group"><label>Notes</label><input id="locNotes" value="${formData.notes||''}"></div>
+                    </div><div style="margin-top:16px;"><button class="btn btn-primary" onclick="window.saveLocataire()">Enregistrer</button> <button class="btn" onclick="switchPage('locataires')">Annuler</button></div></div>`;
+                }
+                html += `<div class="card"><table><thead><tr><th>Nom</th><th>Prénom</th><th>Nationalité</th><th>Logement</th><th>Dates</th><th>Prix</th><th>Statut</th><th>Actions</th></tr></thead><tbody>`;
+                d.locataires.sort((a,b)=>new Date(b.dateArrivee)-new Date(a.dateArrivee)).forEach(l => {
+                    html += `<tr><td>${l.nom}</td><td>${l.prenom}</td><td>${l.nationalite||''}</td><td>${logName(l.logementId)}</td><td>${shortDate(l.dateArrivee)} → ${shortDate(l.dateDepart)}</td><td>${formatTND(l.prix)}</td><td>${l.statut}</td><td>
+                        <button class="btn btn-sm" onclick="window.editLocataire('${l.id}')">✎</button>
+                        <button class="btn btn-sm" onclick="window.voirContrat('${l.id}')">📄</button>
+                        <button class="btn btn-sm btn-primary" onclick="window.telechargerContrat('${l.id}')">⬇️ PDF</button>
+                        <button class="btn btn-sm" onclick="window.deleteLocataire('${l.id}')">✕</button></td></tr>`;
+                });
+                html += `</tbody></table></div>`;
+                main.innerHTML = html;
+            }
+            window.editLocataire = function(id) { if (id === 'new') renderLocataires({}); else { let l = getData().locataires.find(l => l.id===id); if(l) renderLocataires(l); } };
+            window.saveLocataire = function() {
+                let d = getData(); let id = document.getElementById('locId')?.value;
+                let nom = document.getElementById('locNom').value.trim(), prenom = document.getElementById('locPrenom').value.trim();
+                if (!nom||!prenom) return toast('Nom et prénom requis');
+                let obj = { id: id||uid(), nom, prenom, identite: document.getElementById('locIdentite').value, nationalite: document.getElementById('locNationalite').value, logementId: document.getElementById('locLogement').value, modeleContratId: document.getElementById('locModeleContrat').value, dateArrivee: document.getElementById('locArrivee').value, dateDepart: document.getElementById('locDepart').value, personnes: parseInt(document.getElementById('locPersonnes').value)||1, prix: parseFloat(document.getElementById('locPrix').value)||0, statut: document.getElementById('locStatut').value, notes: document.getElementById('locNotes').value };
+                if(id){ let i = d.locataires.findIndex(l=>l.id===id); if(i>=0) d.locataires[i]=obj; } else { d.locataires.push(obj); if(!d.paiements[obj.id]) d.paiements[obj.id]={paye:0}; }
+                saveData(d); switchPage('locataires'); toast('Locataire enregistré');
+            };
+            window.deleteLocataire = function(id) { if(!confirm('Supprimer ?')) return; let d = getData(); d.locataires = d.locataires.filter(l=>l.id!==id); delete d.paiements[id]; saveData(d); switchPage('locataires'); };
+
+            function obtenirContratHTML(locId) {
+                let d = getData(); let loc = d.locataires.find(l=>l.id===locId); if(!loc) return ''; let log = d.logements.find(l=>l.id===loc.logementId); if(!log) return '';
+                let nbNuits = Math.round((new Date(loc.dateDepart)-new Date(loc.dateArrivee))/86400000);
+                let equipementsTexte = Array.isArray(log.equipements) ? log.equipements.join(', ') : '';
+                let modele = getModeles().find(m=>m.id===loc.modeleContratId) || getModeles()[0]; if(!modele) return '<p>Aucun modèle</p>';
+                return modele.html.replace(/{{prenom}}/g, escapeHtml(loc.prenom)).replace(/{{nom}}/g, escapeHtml(loc.nom))
+                    .replace(/{{identite}}/g, escapeHtml(loc.identite||'')).replace(/{{nationalite}}/g, escapeHtml(loc.nationalite||''))
+                    .replace(/{{dateArrivee}}/g, escapeHtml(new Date(loc.dateArrivee).toLocaleDateString('fr-FR')))
+                    .replace(/{{dateDepart}}/g, escapeHtml(new Date(loc.dateDepart).toLocaleDateString('fr-FR')))
+                    .replace(/{{nbNuits}}/g, nbNuits).replace(/{{logementNom}}/g, escapeHtml(log.nom))
+                    .replace(/{{logementAdresse}}/g, escapeHtml(log.adresse||'')).replace(/{{logementVille}}/g, escapeHtml(log.ville||''))
+                    .replace(/{{logementCodePostal}}/g, escapeHtml(log.codePostal||'')).replace(/{{logementChambres}}/g, log.chambres||0)
+                    .replace(/{{logementSDB}}/g, log.sdb||0).replace(/{{logementLits}}/g, log.lits||0)
+                    .replace(/{{logementEquipements}}/g, escapeHtml(equipementsTexte)).replace(/{{prixTotal}}/g, escapeHtml(formatTND(loc.prix)));
+            }
+            window.voirContrat = function(locId) {
+                let html = obtenirContratHTML(locId);
+                document.getElementById('modalContainer').innerHTML = `<div class="modal-overlay" onclick="this.parentElement.innerHTML=''"><div class="modal" onclick="event.stopPropagation()"><h3>Contrat</h3><div style="font-size:0.85rem;line-height:1.5;">${html}</div><div style="text-align:right;margin-top:16px;"><button class="btn btn-primary" onclick="window.telechargerContrat('${locId}')">Télécharger PDF</button> <button class="btn" onclick="document.getElementById('modalContainer').innerHTML=''">Fermer</button></div></div></div>`;
+            };
+            window.telechargerContrat = function(locId) {
+                let html = obtenirContratHTML(locId); if(!html) return toast('Aucun contrat');
+                let loc = getData().locataires.find(l=>l.id===locId);
+                let nomFichier = loc ? `Contrat_${loc.nom}_${loc.prenom}.pdf` : 'Contrat.pdf';
+                let container = document.createElement('div'); container.style.position='absolute'; container.style.left='-9999px'; container.style.width='800px'; container.innerHTML=html;
+                document.body.appendChild(container);
+                html2canvas(container,{scale:2}).then(canvas=>{
+                    document.body.removeChild(container);
+                    const { jsPDF } = window.jspdf;
+                    const doc = new jsPDF({orientation:'portrait',unit:'mm',format:'a4'});
+                    const pageWidth = doc.internal.pageSize.getWidth(), imgWidth = pageWidth-20, imgHeight = (canvas.height*imgWidth)/canvas.width;
+                    let position=10, heightLeft=imgHeight;
+                    doc.addImage(canvas.toDataURL('image/png'),'PNG',10,position,imgWidth,imgHeight);
+                    heightLeft -= doc.internal.pageSize.getHeight();
+                    while(heightLeft>0){ position = heightLeft-imgHeight; doc.addPage(); doc.addImage(canvas.toDataURL('image/png'),'PNG',10,position,imgWidth,imgHeight); heightLeft -= doc.internal.pageSize.getHeight(); }
+                    doc.save(nomFichier); toast('PDF téléchargé');
+                }).catch(()=>{ document.body.removeChild(container); toast('Erreur PDF'); });
+            };
+
+            function renderLogements(formData=null){
+                let d = getData(); let equipementsDispo = getEquipementsDisponibles();
+                let html = `<div class="header"><h2>Logements</h2><button class="btn btn-primary" onclick="window.editLogement('new')">+ Nouveau</button></div>`;
+                if(formData){
+                    let checked = formData.equipements || [];
+                    html += `<div class="card"><div class="form-grid">
+                        <input type="hidden" id="logId" value="${formData.id||''}">
+                        <div class="form-group"><label>Nom *</label><input id="logNom" value="${formData.nom||''}"></div>
+                        <div class="form-group"><label>Adresse *</label><input id="logAdresse" value="${formData.adresse||''}"></div>
+                        <div class="form-group"><label>Ville *</label><input id="logVille" value="${formData.ville||''}"></div>
+                        <div class="form-group"><label>Code postal</label><input id="logCodePostal" value="${formData.codePostal||''}"></div>
+                        <div class="form-group"><label>Chambres</label><input type="number" id="logChambres" value="${formData.chambres||1}"></div>
+                        <div class="form-group"><label>SDB</label><input type="number" id="logSDB" value="${formData.sdb||1}"></div>
+                        <div class="form-group"><label>Lits</label><input type="number" id="logLits" value="${formData.lits||1}"></div>
+                        <div class="form-group"><label>Capacité</label><input type="number" id="logCapacite" value="${formData.capacite||2}"></div>
+                        <div class="form-group"><label>Propriétaire *</label><select id="logProprietaire">${d.proprietaires.map(p=>`<option value="${p.id}" ${formData.proprietaireId===p.id?'selected':''}>${p.prenom} ${p.nom}</option>`).join('')}</select></div>
+                        <div class="form-group"><label>Équipements</label><div class="checkbox-group">${equipementsDispo.map(eq=>`<label><input type="checkbox" value="${eq}" ${checked.includes(eq)?'checked':''}> ${eq}</label>`).join('')}</div></div>
+                    </div><div style="margin-top:16px;"><button class="btn btn-primary" onclick="window.saveLogement()">Enregistrer</button> <button class="btn" onclick="switchPage('logements')">Annuler</button></div></div>`;
+                }
+                html += `<div class="card"><table><thead><tr><th>Nom</th><th>Adresse</th><th>Ville</th><th>Chambres</th><th>Propriétaire</th><th>Actions</th></tr></thead><tbody>`;
+                d.logements.sort((a,b)=>a.nom.localeCompare(b.nom)).forEach(l => {
+                    html += `<tr><td>${l.nom}</td><td>${l.adresse||''}</td><td>${l.ville||''}</td><td>${l.chambres||0}</td><td>${propName(l.proprietaireId)}</td><td><button class="btn btn-sm" onclick="window.editLogement('${l.id}')">✎</button> <button class="btn btn-sm btn-danger" onclick="window.deleteLogement('${l.id}')">✕</button></td></tr>`;
+                });
+                html += `</tbody></table></div>`;
+                main.innerHTML = html;
+            }
+            window.editLogement = function(id){ if(id==='new') renderLogements({}); else { let l = getData().logements.find(l=>l.id===id); if(l) renderLogements(l); } };
+            window.saveLogement = function(){
+                let d=getData(); let id=document.getElementById('logId')?.value; let nom=document.getElementById('logNom').value.trim();
+                if(!nom) return toast('Nom requis');
+                let checkboxes = document.querySelectorAll('.checkbox-group input[type="checkbox"]:checked');
+                let obj = { id: id||uid(), nom, adresse: document.getElementById('logAdresse').value, ville: document.getElementById('logVille').value, codePostal: document.getElementById('logCodePostal').value, chambres: parseInt(document.getElementById('logChambres').value)||0, sdb: parseInt(document.getElementById('logSDB').value)||0, lits: parseInt(document.getElementById('logLits').value)||0, capacite: parseInt(document.getElementById('logCapacite').value)||1, equipements: Array.from(checkboxes).map(cb=>cb.value), proprietaireId: document.getElementById('logProprietaire').value };
+                if(id){ let i = d.logements.findIndex(l=>l.id===id); if(i>=0) d.logements[i]=obj; } else d.logements.push(obj);
+                saveData(d); switchPage('logements'); toast('Logement enregistré');
+            };
+            window.deleteLogement = function(id){ let d=getData(); if(d.locataires.some(l=>l.logementId===id)) return toast('Logement lié à des locataires'); if(!confirm('Supprimer ?')) return; d.logements = d.logements.filter(l=>l.id!==id); saveData(d); switchPage('logements'); };
+
+            function renderProprietaires(formData=null){
+                let d=getData(); let html=`<div class="header"><h2>Propriétaires</h2><button class="btn btn-primary" onclick="window.editProprietaire('new')">+ Nouveau</button></div>`;
+                if(formData){ html+=`<div class="card"><div class="form-grid"><input type="hidden" id="propId" value="${formData.id||''}"><div class="form-group"><label>Nom *</label><input id="propNom" value="${formData.nom||''}"></div><div class="form-group"><label>Prénom *</label><input id="propPrenom" value="${formData.prenom||''}"></div><div class="form-group"><label>Commission (%)</label><input type="number" id="propCommission" value="${formData.commission||15}" step="0.5"></div><div class="form-group"><label>Email</label><input id="propEmail" value="${formData.email||''}"></div></div><div style="margin-top:16px;"><button class="btn btn-primary" onclick="window.saveProprietaire()">Enregistrer</button> <button class="btn" onclick="switchPage('proprietaires')">Annuler</button></div></div>`; }
+                html+=`<div class="card"><table><thead><tr><th>Nom</th><th>Prénom</th><th>Commission</th><th>Logements</th><th>Actions</th></tr></thead><tbody>`;
+                d.proprietaires.forEach(p=>{ let nb = d.logements.filter(l=>l.proprietaireId===p.id).length; html+=`<tr><td>${p.nom}</td><td>${p.prenom}</td><td>${p.commission}%</td><td>${nb}</td><td><button class="btn btn-sm" onclick="window.editProprietaire('${p.id}')">✎</button> <button class="btn btn-sm btn-danger" onclick="window.deleteProprietaire('${p.id}')">✕</button></td></tr>`; });
+                html+=`</tbody></table></div>`; main.innerHTML=html;
+            }
+            window.editProprietaire = function(id){ if(id==='new') renderProprietaires({}); else { let p = getData().proprietaires.find(p=>p.id===id); if(p) renderProprietaires(p); } };
+            window.saveProprietaire = function(){ let d=getData(); let id=document.getElementById('propId')?.value; let nom=document.getElementById('propNom').value.trim(); if(!nom) return toast('Nom requis'); let obj = { id: id||uid(), nom, prenom: document.getElementById('propPrenom').value, commission: parseFloat(document.getElementById('propCommission').value)||15, email: document.getElementById('propEmail').value }; if(id){ let i = d.proprietaires.findIndex(p=>p.id===id); if(i>=0) d.proprietaires[i]=obj; } else d.proprietaires.push(obj); saveData(d); switchPage('proprietaires'); toast('Enregistré'); };
+            window.deleteProprietaire = function(id){ let d=getData(); if(d.logements.some(l=>l.proprietaireId===id)) return toast('Possède des logements'); if(!confirm('Supprimer ?')) return; d.proprietaires = d.proprietaires.filter(p=>p.id!==id); saveData(d); switchPage('proprietaires'); };
+
+            window.calMonth = new Date().toISOString().slice(0,7);
+            function renderCalendrier(){
+                let d=getData(); let month=window.calMonth; let fLog=document.getElementById('calLogement')?.value||''; let [y,m]=month.split('-').map(Number); let nbJours=new Date(y,m,0).getDate(); let logs=fLog?d.logements.filter(l=>l.id===fLog):d.logements;
+                let html=`<div class="header"><h2>Calendrier</h2><div class="cal-nav"><button onclick="window.changerMois(-1)">◀</button><span style="font-weight:500;margin:0 8px;">${new Date(y,m-1).toLocaleDateString('fr-FR',{month:'long',year:'numeric'})}</span><button onclick="window.changerMois(1)">▶</button><select id="calLogement" style="margin-left:12px;" onchange="renderCalendrier()"><option value="">Tous</option>${d.logements.map(l=>`<option value="${l.id}" ${fLog===l.id?'selected':''}>${l.nom}</option>`).join('')}</select></div></div>`;
+                html+=`<div class="card"><div class="cal-table-wrap"><table class="cal-table"><thead><tr><th>Logement</th>${Array.from({length:nbJours},(_,i)=>`<th>${i+1}</th>`).join('')}</tr></thead><tbody>`;
+                logs.forEach(log=>{ let occ=new Set(); d.locataires.filter(loc=>loc.logementId===log.id).forEach(loc=>{ let a=new Date(loc.dateArrivee+'T00:00:00'), dep=new Date(loc.dateDepart+'T00:00:00'); for(let dt=new Date(a);dt<dep;dt.setDate(dt.getDate()+1)) if(dt.getFullYear()===y&&dt.getMonth()===m-1) occ.add(dt.getDate()); }); html+=`<tr><td>${log.nom}</td>`; for(let j=1;j<=nbJours;j++) html+=`<td style="background:${occ.has(j)?'var(--terracotta-soft)':'transparent'};color:${occ.has(j)?'var(--terracotta-deep)':'#aaa'};">${occ.has(j)?'●':'·'}</td>`; html+=`</tr>`; });
+                html+=`</tbody></table></div></div>`; main.innerHTML=html;
+            }
+            window.changerMois = function(delta){ let [y,m]=window.calMonth.split('-').map(Number); let newM=m+delta, newY=y; if(newM>12){newM=1;newY++;} else if(newM<1){newM=12;newY--;} window.calMonth=`${newY}-${String(newM).padStart(2,'0')}`; renderCalendrier(); };
+
+            function renderPaiements(){ let d=getData(); let html=`<div class="header"><h2>Suivi paiements</h2></div><div class="card"><table><thead><tr><th>Locataire</th><th>Logement</th><th>Total</th><th>Payé</th><th>Reste</th><th></th></tr></thead><tbody>`; d.locataires.forEach(l=>{ let p=d.paiements[l.id]||{paye:0}; let reste=Math.max(0,l.prix-p.paye); html+=`<tr><td>${l.prenom} ${l.nom}</td><td>${logName(l.logementId)}</td><td>${formatTND(l.prix)}</td><td>${formatTND(p.paye)}</td><td>${formatTND(reste)}</td><td><button class="btn btn-sm btn-primary" onclick="window.addPaiement('${l.id}')">Paiement</button></td></tr>`; }); html+=`</tbody></table></div>`; main.innerHTML=html; }
+            window.addPaiement = function(locId){ let d=getData(); let l=d.locataires.find(x=>x.id===locId); if(!l) return; let p=d.paiements[locId]||{paye:0}; let reste=Math.max(0,l.prix-p.paye); let montant=prompt(`Reste dû : ${formatTND(reste)}`, reste.toFixed(3)); if(!montant) return; let val=parseFloat(montant); if(isNaN(val)||val<0) return; d.paiements[locId]={paye:Math.min(l.prix, p.paye+val)}; saveData(d); renderPaiements(); toast('Paiement enregistré'); };
+
+            function renderParametrage(){
+                let equipements=getEquipementsDisponibles();
+                let cols = [];
+                for (let i=0; i<equipements.length; i+=12) {
+                    cols.push(equipements.slice(i, i+12));
+                }
+                let html=`<div class="header"><h2>Paramétrage</h2></div><div class="card"><h3>Équipements disponibles</h3><div style="margin-bottom:12px;"><input type="text" id="nouvelEquipement" placeholder="Ajouter..."><button class="btn btn-primary" onclick="window.ajouterEquipement()">Ajouter</button></div><div class="equipements-columns">`;
+                cols.forEach(col => {
+                    html+=`<div class="equipements-col"><ul>${col.map(eq=>`<li style="display:flex;align-items:center;gap:8px;padding:4px 0;">${eq} <button class="btn btn-sm" onclick="window.supprimerEquipement('${eq}')">✕</button></li>`).join('')}</ul></div>`;
+                });
+                html+=`</div></div>`; main.innerHTML=html;
+            }
+            window.ajouterEquipement = function(){ let val=document.getElementById('nouvelEquipement').value.trim(); if(!val) return; let equipements=getEquipementsDisponibles(); if(equipements.includes(val)) return toast('Existe déjà'); equipements.push(val); saveEquipementsDisponibles(equipements); renderParametrage(); toast('Ajouté'); };
+            window.supprimerEquipement = function(eq){ saveEquipementsDisponibles(getEquipementsDisponibles().filter(e=>e!==eq)); renderParametrage(); toast('Supprimé'); };
+
+            function renderSauvegarde(){ main.innerHTML=`<div class="header"><h2>Sauvegarde</h2></div><div class="card"><h3>Exporter</h3><button class="btn btn-primary" onclick="window.exporterDonnees()">📥 Exporter (JSON)</button></div><div class="card"><h3>Importer</h3><input type="file" id="fichierImport" accept=".json"><button class="btn btn-primary" onclick="window.importerDonnees()">📤 Importer</button></div>`; }
+            window.exporterDonnees = function(){ let data={proprietaires:getData().proprietaires,logements:getData().logements,locataires:getData().locataires,paiements:getData().paiements,equipements:getEquipementsDisponibles(),modeles:getModeles(),users:getUsers(),charges:getCharges()}; let blob=new Blob([JSON.stringify(data)],{type:'application/json'}); let a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='nexstay_backup.json'; a.click(); };
+            window.importerDonnees = function(){ let file=document.getElementById('fichierImport').files[0]; if(!file) return; let reader=new FileReader(); reader.onload=function(e){ let data=JSON.parse(e.target.result); if(!data.proprietaires||!data.logements||!data.locataires||!data.paiements) return toast('Fichier invalide'); let d=getData(); d.proprietaires=data.proprietaires; d.logements=data.logements; d.locataires=data.locataires; d.paiements=data.paiements; saveData(d); if(data.equipements) saveEquipementsDisponibles(data.equipements); if(data.modeles) saveModeles(data.modeles); if(data.users) saveUsers(data.users); if(data.charges) saveCharges(data.charges); toast('Importé'); switchPage('dashboard'); }; reader.readAsText(file); };
+
+            function renderUtilisateurs(){ let users=getUsers(); let html=`<div class="header"><h2>Utilisateurs</h2><button class="btn btn-primary" onclick="document.getElementById('formUtilisateur').style.display='block'">+ Nouvel utilisateur</button></div><div class="card" id="formUtilisateur" style="display:none;"><div class="form-grid"><div class="form-group"><label>Login</label><input id="newUserLogin"></div><div class="form-group"><label>Mot de passe</label><input type="password" id="newUserPassword"></div></div><div style="margin-top:12px;"><button class="btn btn-primary" onclick="window.creerUtilisateur()">Créer</button> <button class="btn" onclick="document.getElementById('formUtilisateur').style.display='none'">Annuler</button></div></div><div class="card"><table><thead><tr><th>Login</th><th>Admin</th></tr></thead><tbody>${users.map(u=>`<tr><td>${u.login}</td><td>${u.isAdmin?'Oui':'Non'}</td></tr>`).join('')}</tbody></table></div>`; main.innerHTML=html; setupPasswordFields(); }
+            window.creerUtilisateur = function(){ let login=document.getElementById('newUserLogin').value.trim(); let password=document.getElementById('newUserPassword').value; if(!login||!password) return toast('Login et mot de passe requis'); let users=getUsers(); if(users.some(u=>u.login===login)) return toast('Login existant'); users.push({id:uid(), login, password, isAdmin:false}); saveUsers(users); renderUtilisateurs(); toast('Créé'); };
+
+            function renderMonCompte(){ main.innerHTML=`<div class="header"><h2>Mon compte</h2></div><div class="card"><h3>Changer mot de passe</h3><div class="form-grid"><div class="form-group"><label>Ancien</label><input type="password" id="oldPass"></div><div class="form-group"><label>Nouveau</label><input type="password" id="newPass1"></div><div class="form-group"><label>Confirmer</label><input type="password" id="newPass2"></div></div><button class="btn btn-primary" onclick="window.changerMotDePasse()">Enregistrer</button></div>`; setupPasswordFields(); }
+            window.changerMotDePasse = function(){ let old=document.getElementById('oldPass').value, new1=document.getElementById('newPass1').value, new2=document.getElementById('newPass2').value; if(!old||!new1||!new2) return toast('Tous les champs obligatoires'); if(new1!==new2) return toast('Les mots de passe ne correspondent pas'); let users=getUsers(); let user=users.find(u=>u.id===currentUser.id); if(!user||user.password!==old) return toast('Ancien mot de passe incorrect'); user.password=new1; saveUsers(users); toast('Modifié'); };
+
+            function renderCharges(formData=null){
+                let d=getData(); let charges=getCharges(); let now=new Date();
+                let debutMois=new Date(now.getFullYear(),now.getMonth(),1);
+                let finMois=new Date(now.getFullYear(),now.getMonth()+1,0,23,59,59);
+                let locsMois=d.locataires.filter(l=>{ let a=new Date(l.dateArrivee+'T00:00:00'), dep=new Date(l.dateDepart+'T00:00:00'); return a<=finMois&&dep>=debutMois; });
+                let html=`<div class="header"><h2>Charges</h2><button class="btn btn-primary" onclick="window.editCharge('new')">+ Nouvelle charge</button></div>`;
+                if(formData){
+                    let checkedLogements=formData.logementIds||[];
+                    html+=`<div class="card"><div class="form-grid"><input type="hidden" id="chargeId" value="${formData.id||''}"><div class="form-group"><label>Nom *</label><input id="chargeNom" value="${formData.nom||''}"></div><div class="form-group"><label>Type *</label><select id="chargeType"><option value="mensuel" ${formData.type==='mensuel'?'selected':''}>Mensuel</option><option value="reservation" ${formData.type==='reservation'?'selected':''}>Par réservation</option></select></div><div class="form-group"><label>Montant (TND) *</label><input type="number" id="chargeMontant" step="0.001" value="${formData.montant||''}"></div><div class="form-group"><label>Logements concernés</label><div class="checkbox-group">${d.logements.map(l=>`<label><input type="checkbox" value="${l.id}" ${checkedLogements.includes(l.id)?'checked':''}> ${l.nom}</label>`).join('')}</div></div></div><div style="margin-top:16px;"><button class="btn btn-primary" onclick="window.saveCharge()">Enregistrer</button> <button class="btn" onclick="switchPage('charges')">Annuler</button></div></div>`;
+                }
+                html+=`<div class="card"><table><thead><tr><th>Nom</th><th>Type</th><th>Montant</th><th>Actions</th></tr></thead><tbody>`;
+                charges.forEach(c=>{ html+=`<tr><td>${c.nom}</td><td>${c.type==='mensuel'?'Mensuel':'Par réservation'}</td><td>${formatTND(c.montant)}</td><td><button class="btn btn-sm" onclick="window.editCharge('${c.id}')">✎</button> <button class="btn btn-sm btn-danger" onclick="window.deleteCharge('${c.id}')">✕</button></td></tr>`; });
+                html+=`</tbody></table></div>`;
+                html+=`<div class="card"><h3>Résumé des charges (mois en cours)</h3><table><thead><tr><th>Logement</th><th>Charges mensuelles</th><th>Charges / réservation</th><th>Total charges</th><th>Nb réservations</th><th>Moyenne / réservation</th></tr></thead><tbody>`;
+                d.logements.forEach(log=>{ let chargesMensuelles=0, chargesParReservation=0; charges.forEach(c=>{ if(!c.logementIds.includes(log.id)) return; if(c.type==='mensuel') chargesMensuelles+=Number(c.montant); else chargesParReservation+=Number(c.montant); }); let nbReservations=locsMois.filter(l=>l.logementId===log.id).length; let totalCharges=chargesMensuelles+(chargesParReservation*nbReservations); let moyenne=nbReservations>0?totalCharges/nbReservations:0; html+=`<tr><td>${log.nom}</td><td>${formatTND(chargesMensuelles)}</td><td>${formatTND(chargesParReservation)}</td><td>${formatTND(totalCharges)}</td><td>${nbReservations}</td><td>${formatTND(moyenne)}</td></tr>`; });
+                html+=`</tbody></table></div>`; main.innerHTML=html;
+            }
+            window.editCharge = function(id){ if(id==='new') renderCharges({}); else { let c=getCharges().find(c=>c.id===id); if(c) renderCharges(c); } };
+            window.saveCharge = function(){ let id=document.getElementById('chargeId')?.value; let nom=document.getElementById('chargeNom').value.trim(); let type=document.getElementById('chargeType').value; let montant=parseFloat(document.getElementById('chargeMontant').value)||0; if(!nom||!type||montant<=0) return toast('Tous les champs obligatoires'); let checkboxes=document.querySelectorAll('.checkbox-group input[type="checkbox"]:checked'); let logementIds=Array.from(checkboxes).map(cb=>cb.value); let charge={id: id||uid(), nom, type, montant, logementIds}; let charges=getCharges(); if(id){ let idx=charges.findIndex(c=>c.id===id); if(idx>=0) charges[idx]=charge; } else charges.push(charge); saveCharges(charges); switchPage('charges'); toast('Charge enregistrée'); };
+            window.deleteCharge = function(id){ if(!confirm('Supprimer ?')) return; saveCharges(getCharges().filter(c=>c.id!==id)); switchPage('charges'); toast('Charge supprimée'); };
+
+            function renderModelesContrats(){ let modeles=getModeles(); let html=`<div class="header"><h2>Modèles contrat</h2><button class="btn btn-primary" onclick="window.editerModele('new')">+ Nouveau</button></div>`; if(modeles.length===0) html+='<p>Aucun modèle</p>'; else { html+='<div class="card"><table><thead><tr><th>Nom</th><th>Actions</th></tr></thead><tbody>'; modeles.forEach(m=>html+=`<tr><td>${m.nom}</td><td><button class="btn btn-sm" onclick="window.editerModele('${m.id}')">✎</button> <button class="btn btn-sm btn-danger" onclick="window.supprimerModele('${m.id}')">✕</button></td></tr>`); html+='</tbody></table></div>'; } main.innerHTML=html; }
+            window.editerModele = function(id){ let modeles=getModeles(); let modele=id==='new'?{id:'',nom:'',html:''}:modeles.find(m=>m.id===id); let html=`<div class="header"><h2>${id==='new'?'Nouveau':'Modifier'} modèle</h2></div><div class="card"><div class="form-group"><label>Nom</label><input id="modeleNom" value="${modele.nom||''}"></div><div class="drag-params" style="margin:12px 0;">${['prenom','nom','identite','nationalite','dateArrivee','dateDepart','nbNuits','logementNom','logementAdresse','logementVille','logementCodePostal','logementChambres','logementSDB','logementLits','logementEquipements','prixTotal'].map(p=>`<span class="param-tag" draggable="true">{{${p}}}</span>`).join('')}</div><div class="editor-toolbar"><button onclick="execCmd('bold')"><b>G</b></button><button onclick="execCmd('italic')"><i>I</i></button><button onclick="execCmd('underline')"><u>S</u></button></div><div id="templateEditor" contenteditable="true" style="min-height:250px;border:1px solid #ddd;padding:12px;">${modele.html}</div><button class="btn btn-primary" onclick="window.saveModele('${modele.id}')">Enregistrer</button> <button class="btn" onclick="switchPage('contrat')">Annuler</button></div>`; main.innerHTML=html; document.querySelectorAll('.param-tag').forEach(tag=>{ tag.addEventListener('dragstart', e=>e.dataTransfer.setData('text/plain', tag.textContent)); }); let editor=document.getElementById('templateEditor'); editor.addEventListener('dragover', e=>e.preventDefault()); editor.addEventListener('drop', e=>{ e.preventDefault(); let text=e.dataTransfer.getData('text/plain'); document.execCommand('insertText', false, text); }); };
+            window.saveModele = function(id){ let nom=document.getElementById('modeleNom').value.trim(); if(!nom) return toast('Nom requis'); let html=document.getElementById('templateEditor').innerHTML; let modeles=getModeles(); if(id){ let idx=modeles.findIndex(m=>m.id===id); modeles[idx]={id,nom,html}; } else modeles.push({id:uid(),nom,html}); saveModeles(modeles); toast('Modèle enregistré'); switchPage('contrat'); };
+            window.supprimerModele = function(id){ if(!confirm('Supprimer ?')) return; saveModeles(getModeles().filter(m=>m.id!==id)); switchPage('contrat'); toast('Supprimé'); };
+            function execCmd(cmd){ document.execCommand(cmd); document.getElementById('templateEditor').focus(); }
+
+            window.switchPage = switchPage;
+            window.renderPage = renderPage;
+            initModeles(); seedIfEmpty(); switchPage('dashboard');
+        }
+
+        initModeles(); seedIfEmpty();
+        let user = getCurrentUser();
+        if (!user) showLoginScreen(); else buildApp(user);
+    })();
+</script>
+</body>
+</html>
