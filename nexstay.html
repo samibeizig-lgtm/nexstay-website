@@ -56,10 +56,18 @@ button{cursor:pointer;border:none;background:none;font-family:inherit}
 }
 .ni{width:100%;max-width:1240px;margin:0 auto;padding:0 20px;display:flex;align-items:center;justify-content:space-between}
 .logo{display:flex;flex-direction:column;line-height:1}
-.ln{font-family:'Playfair Display','Georgia',serif;font-size:22px;font-weight:700;letter-spacing:0;font-style:normal;white-space:nowrap}
-.ln .nx{color:#fff;letter-spacing:0;margin-right:0}
-.ln .st{color:var(--t);letter-spacing:0;margin-left:0}
-.ls{font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:var(--mg);margin-top:3px;font-family:var(--fb)}
+.ln{
+  display:inline-flex;align-items:baseline;gap:0;
+  font-family:'Playfair Display','Georgia',serif;
+  font-size:23px;font-weight:700;font-style:normal;
+  line-height:1;white-space:nowrap;
+}
+.ln .lnx{color:#fff;display:inline;letter-spacing:0}
+.ln .lsy{color:var(--t);display:inline;letter-spacing:0}
+.fln{display:inline-flex;align-items:baseline;gap:0}
+.fln .lnx{color:#fff;letter-spacing:0}
+.fln .lsy{color:var(--t);letter-spacing:0}
+.ls{font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:var(--mg);margin-top:4px;font-family:var(--fb);display:block}
 .ham{display:flex;flex-direction:column;gap:5px;padding:6px;cursor:pointer;z-index:201}
 .ham span{display:block;width:22px;height:1.5px;background:#fff;transition:.35s ease;transform-origin:center}
 .ham.op span:first-child{transform:translateY(6.5px) rotate(45deg)}
@@ -116,7 +124,7 @@ button{cursor:pointer;border:none;background:none;font-family:inherit}
 .hp{display:inline-flex;align-items:center;gap:8px;background:rgba(212,113,78,.18);border:1px solid rgba(212,113,78,.38);border-radius:30px;padding:7px 14px;margin-bottom:20px}
 .hpd{width:7px;height:7px;border-radius:50%;background:var(--t);animation:pd 2s infinite}
 @keyframes pd{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.5);opacity:.5}}
-.hpt{font-family:var(--fd);font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--t)}
+.hpt{font-family:var(--fb);font-size:10px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:#fff}
 .ht{font-family:'Playfair Display','Georgia',serif;font-size:clamp(40px,10vw,88px);font-weight:700;line-height:.95;letter-spacing:-.01em;color:#fff;margin-bottom:18px;text-shadow:0 2px 24px rgba(0,0,0,.45)}
 .ht em{font-style:italic;font-weight:400;color:var(--t)}
 .hd{font-size:16px;font-weight:400;line-height:1.75;color:#fff;margin-bottom:26px;max-width:500px;text-shadow:0 1px 8px rgba(0,0,0,.5)}
@@ -299,7 +307,7 @@ button{cursor:pointer;border:none;background:none;font-family:inherit}
 /* ── FOOTER ── */
 footer{background:var(--dk);padding:48px 20px 28px;border-top:1px solid rgba(255,255,255,.06)}
 .flogo{margin-bottom:12px}
-.fln{font-family:'Playfair Display','Georgia',serif;font-size:22px;font-weight:700;letter-spacing:0;white-space:nowrap}
+.fln{font-family:'Playfair Display','Georgia',serif;font-size:22px;font-weight:700;white-space:nowrap}
 .fls{font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:var(--mg);margin-top:2px;display:block}
 .fdsc{font-size:13px;font-weight:300;color:var(--mg);line-height:1.6;margin-bottom:18px;max-width:280px}
 .fsoc{display:flex;gap:8px;margin-bottom:32px}
@@ -332,7 +340,7 @@ footer{background:var(--dk);padding:48px 20px 28px;border-top:1px solid rgba(255
 <nav id="nav">
   <div class="ni">
     <a href="#hero" class="logo">
-      <div class="ln"><span class="nx">Nex</span><span class="st">stay</span></div>
+      <div class="ln"><span class="lnx">Nex</span><span class="lsy">stay</span></div>
       <span class="ls">Conciergerie</span>
     </a>
     <nav class="dnav">
@@ -641,7 +649,7 @@ footer{background:var(--dk);padding:48px 20px 28px;border-top:1px solid rgba(255
 <!-- FOOTER -->
 <footer>
   <div class="flogo">
-    <div class="fln"><span class="nx">Nex</span><span class="st">stay</span></div>
+    <div class="fln"><span class="lnx">Nex</span><span class="lsy">stay</span></div>
     <span class="fls">Conciergerie</span>
   </div>
   <p class="fdsc">La conciergerie Airbnb de référence en Tunisie.</p>
