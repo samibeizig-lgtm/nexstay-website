@@ -103,6 +103,13 @@
     .plan-panel.active { display: block; }
     @keyframes fadePlan { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:none} }
     .plan-panel.active { animation: fadePlan .3s ease; }
+    .plan-panel.active .pricing-card {
+      background: var(--dark);
+      border-color: rgba(255,255,255,0.08);
+    }
+    .plan-panel.active .pricing-card > div:first-child {
+      color: var(--terracotta) !important;
+    }
     .pricing-inner {
       position: relative;
       z-index: 1;
