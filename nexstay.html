@@ -202,51 +202,43 @@ button{cursor:pointer;border:none;background:none;font-family:inherit}
 .sc2 svg path,.sc2 svg circle,.sc2 svg polyline,.sc2 svg line,.sc2 svg rect{transition:stroke .4s}
 .sc2:hover svg path,.sc2:hover svg circle,.sc2:hover svg polyline,.sc2:hover svg line,.sc2:hover svg rect{stroke:rgba(255,255,255,.85)!important}
 
-/* ── COMMISSION PLANS ── */
+/* ── COMMISSION PLANS (tabs) ── */
 .plans-sec{background:var(--dk);padding:64px 20px}
-.plans-inner{max-width:1240px;margin:0 auto}
-.plans-grid{display:grid;grid-template-columns:1fr;gap:12px;margin-top:36px}
-@media(min-width:720px){.plans-grid{grid-template-columns:1fr 1fr}}
-@media(min-width:960px){.plans-grid{grid-template-columns:repeat(3,1fr)}}
-.plan{border-radius:3px;overflow:hidden;position:relative}
-.plan-ess{background:var(--ch)}
-.plan-pre{background:var(--t)}
-.plan-ali{background:var(--ch);border:1.5px solid rgba(212,113,78,.28)}
-.plan-hot{position:absolute;top:14px;right:14px;background:rgba(255,255,255,.22);color:#fff;font-family:var(--fd);font-size:8px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;padding:5px 12px;border-radius:30px}
-.plan-head{padding:28px 24px 18px}
-.plan-tag{display:inline-block;font-family:var(--fd);font-size:8px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;padding:5px 12px;border-radius:30px;margin-bottom:14px}
-.plan-ess .plan-tag{background:rgba(255,255,255,.08);color:rgba(255,255,255,.55)}
-.plan-pre .plan-tag{background:rgba(255,255,255,.2);color:#fff}
-.plan-ali .plan-tag{background:rgba(212,113,78,.18);color:var(--t)}
-.plan-nm{font-family:var(--fd);font-size:22px;font-weight:800;color:#fff;margin-bottom:8px}
-.plan-rt{display:flex;align-items:baseline;gap:2px;margin-bottom:4px}
-.plan-rt-num{font-family:var(--fd);font-weight:800;letter-spacing:-.04em;line-height:1}
-.plan-ess .plan-rt-num,.plan-ali .plan-rt-num{color:var(--t);font-size:54px}
-.plan-pre .plan-rt-num{color:#fff;font-size:54px}
-.plan-rt-fix{font-family:var(--fd);font-weight:800;letter-spacing:-.02em;line-height:1;font-size:28px}
-.plan-ess .plan-rt-fix,.plan-ali .plan-rt-fix{color:var(--t)}
-.plan-pre .plan-rt-fix{color:#fff}
-.plan-rt-pct{font-family:var(--fd);font-size:22px;font-weight:700;margin-bottom:6px}
-.plan-ess .plan-rt-pct,.plan-ali .plan-rt-pct{color:var(--t)}
-.plan-pre .plan-rt-pct{color:rgba(255,255,255,.85)}
-.plan-rt-note{font-size:12px;font-weight:300;color:rgba(255,255,255,.48);margin-bottom:0;line-height:1.4}
-.plan-div{height:1px;background:rgba(255,255,255,.1);margin:0}
-.plan-pre .plan-div{background:rgba(255,255,255,.22)}
-.plan-svcs{padding:18px 24px 20px;margin:0}
-.psv{display:flex;align-items:center;gap:9px;font-size:12.5px;font-weight:400;line-height:1.3;padding:5.5px 0;border-bottom:1px solid rgba(255,255,255,.05)}
-.psv:last-child{border-bottom:none}
-.psv.on{color:rgba(255,255,255,.88)}
-.psv.off{color:rgba(255,255,255,.28)}
-.psv-dot{width:17px;height:17px;border-radius:50%;flex-shrink:0;font-size:9px;font-weight:700;display:grid;place-items:center;line-height:1}
-.psv.on .psv-dot{background:rgba(255,255,255,.14);color:rgba(255,255,255,.9)}
-.plan-pre .psv.on .psv-dot{background:rgba(255,255,255,.28);color:#fff}
-.psv.off .psv-dot{background:rgba(255,255,255,.06);color:rgba(255,255,255,.28)}
-.plan-cta-wrap{padding:4px 24px 24px}
-.plan-cta{display:block;text-align:center;font-family:var(--fd);font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:14px;border-radius:60px;transition:background .3s,color .3s;color:#fff;background:rgba(255,255,255,.1)}
-.plan-cta:hover{background:rgba(255,255,255,.2)}
-.plan-pre .plan-cta{background:#fff;color:var(--t)}
-.plan-pre .plan-cta:hover{background:rgba(255,255,255,.9)}
-.plans-footnote{text-align:center;margin-top:20px;font-size:11px;color:rgba(255,255,255,.3);line-height:1.8}
+.plans-inner{max-width:860px;margin:0 auto}
+.plan-tabs{display:flex;gap:0;background:rgba(255,255,255,.07);border-radius:60px;padding:5px;margin:28px auto 0;max-width:380px}
+.ptab{flex:1;border-radius:60px;padding:14px 20px;cursor:pointer;border:none;background:none;transition:background .3s,color .3s;text-align:center}
+.ptab-name{font-family:var(--fd);font-size:13px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:rgba(255,255,255,.4);display:block;transition:color .3s}
+.ptab-rate{font-size:11px;font-weight:600;letter-spacing:.08em;color:rgba(255,255,255,.28);display:block;margin-top:2px;transition:color .3s;font-family:var(--fb)}
+.ptab.active .ptab-name{color:#fff}
+.ptab.active .ptab-rate{color:rgba(255,255,255,.75)}
+.ptab.ess-tab.active{background:var(--ch)}
+.ptab.pre-tab.active{background:var(--t)}
+.plan-panel{display:none;animation:fadePlan .3s ease}
+.plan-panel.active{display:block}
+@keyframes fadePlan{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.plan-pcard{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:3px;margin-top:24px;overflow:hidden}
+.plan-phead{display:flex;flex-direction:column;gap:20px;padding:28px 28px 22px;border-bottom:1px solid rgba(255,255,255,.08)}
+@media(min-width:580px){.plan-phead{flex-direction:row;align-items:flex-start;justify-content:space-between;gap:24px}}
+.plan-pname{font-family:var(--fd);font-size:10px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:8px}
+.plan-prate{font-family:var(--fd);font-size:clamp(54px,14vw,78px);font-weight:800;letter-spacing:-.04em;line-height:.95;margin-bottom:8px}
+#pp-ess .plan-prate{color:#fff}
+#pp-pre .plan-prate{color:var(--t)}
+.plan-punit{font-size:.42em;vertical-align:.1em;opacity:.75}
+.plan-pttc{display:inline-block;font-family:var(--fb);font-size:.18em;font-weight:700;letter-spacing:.1em;vertical-align:.35em;background:rgba(255,255,255,.12);border-radius:4px;padding:3px 8px;color:rgba(255,255,255,.8)}
+.plan-pnote{font-size:12px;font-weight:300;color:rgba(255,255,255,.4);line-height:1.6;max-width:320px}
+.plan-pcta{display:inline-flex;align-items:center;gap:8px;white-space:nowrap;background:var(--t);color:#fff;font-family:var(--fd);font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:14px 24px;border-radius:60px;transition:background .3s;flex-shrink:0;align-self:flex-start;margin-top:4px}
+.plan-pcta:hover{background:var(--td)}
+#pp-pre .plan-pcta{background:#fff;color:var(--t)}
+#pp-pre .plan-pcta:hover{background:rgba(255,255,255,.88);color:var(--td)}
+.plan-psvc-grid{display:grid;grid-template-columns:1fr;padding:0}
+@media(min-width:580px){.plan-psvc-grid{grid-template-columns:1fr 1fr}}
+.psvc-item{display:flex;align-items:center;gap:12px;padding:14px 24px;border-bottom:1px solid rgba(255,255,255,.06);font-size:13.5px;font-weight:400;color:rgba(255,255,255,.82);background:transparent;transition:background .2s}
+.psvc-item:last-child,.psvc-item:nth-last-child(2):not(:nth-child(odd)){border-bottom:none}
+@media(max-width:579px){.psvc-item:last-child{border-bottom:none}}
+.psvc-item:hover{background:rgba(255,255,255,.04)}
+.psvc-dot{width:20px;height:20px;border-radius:50%;background:rgba(212,113,78,.2);color:var(--t);font-size:11px;font-weight:800;display:grid;place-items:center;flex-shrink:0}
+#pp-pre .psvc-dot{background:rgba(212,113,78,.3);color:var(--t)}
+.plans-footnote{margin-top:16px;font-size:11px;font-weight:300;color:rgba(255,255,255,.3);line-height:1.8;text-align:center}
 
 /* ── SMART CALCULATOR ── */
 .csel-wrap{background:var(--dk);padding:28px 22px;border-radius:3px;margin-top:24px}
@@ -255,6 +247,9 @@ button{cursor:pointer;border:none;background:none;font-family:inherit}
 .csel-row{display:flex;flex-wrap:wrap;gap:6px}
 .csel-btn{font-family:var(--fb);font-size:13px;font-weight:500;color:rgba(255,255,255,.62);background:rgba(255,255,255,.07);border:1.5px solid rgba(255,255,255,.1);border-radius:30px;padding:8px 16px;transition:all .25s;cursor:pointer}
 .csel-btn.active,.csel-btn:hover{background:var(--t);border-color:var(--t);color:#fff}
+.csel-select{width:100%;font-family:var(--fb);font-size:14px;font-weight:400;color:#fff;background:rgba(255,255,255,.07) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='rgba(255,255,255,0.5)' stroke-width='2.5'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E") no-repeat right 14px center;border:1.5px solid rgba(255,255,255,.12);border-radius:30px;padding:11px 40px 11px 18px;outline:none;-webkit-appearance:none;appearance:none;cursor:pointer;transition:border-color .25s}
+.csel-select:focus{border-color:var(--t)}
+.csel-select option,.csel-select optgroup{background:#1e1e1e;color:#fff}
 .cres-box{background:rgba(212,113,78,.1);border:1px solid rgba(212,113,78,.28);border-radius:3px;padding:22px;margin-top:8px}
 .cres-row{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid rgba(255,255,255,.1)}
 @media(max-width:499px){.cres-row{grid-template-columns:1fr;gap:10px}}
@@ -547,114 +542,79 @@ footer{background:var(--dk);padding:48px 20px 28px;border-top:1px solid rgba(255
     <div class="lbl rv" style="justify-content:center;"><span class="lbl-l"></span><span class="lbl-t">Nos formules</span></div>
     <h2 class="ttl rv d1" style="color:#fff;text-align:center;">Transparent,<br><em>sans surprise</em></h2>
     <p class="bd rv d2" style="color:var(--mg);text-align:center;margin-bottom:0;">Pour appartements &amp; villas · Aucun frais caché · Sans engagement minimum</p>
-    <div class="plans-grid rv d2">
 
-      <!-- ESSENTIAL 15% -->
-      <div class="plan plan-ess">
-        <div class="plan-head">
-          <span class="plan-tag">Formule de base</span>
-          <div class="plan-nm">Essential</div>
-          <div class="plan-rt"><span class="plan-rt-num">15</span><span class="plan-rt-pct">%</span></div>
-          <p class="plan-rt-note">Commission sur les revenus locatifs</p>
-        </div>
-        <div class="plan-div"></div>
-        <ul class="plan-svcs">
-          <li class="psv on"><span class="psv-dot">✓</span>Accueil des voyageurs</li>
-          <li class="psv on"><span class="psv-dot">✓</span>Nettoyage professionnel</li>
-          <li class="psv on"><span class="psv-dot">✓</span>Gestion du linge</li>
-          <li class="psv off"><span class="psv-dot">—</span>Produits de nettoyage <sup>1</sup></li>
-          <li class="psv on"><span class="psv-dot">✓</span>Assistance de base</li>
-          <li class="psv off"><span class="psv-dot">—</span>Assistance 24/7</li>
-          <li class="psv on"><span class="psv-dot">✓</span>Création des annonces</li>
-          <li class="psv on"><span class="psv-dot">✓</span>Gestion des réservations</li>
-          <li class="psv off"><span class="psv-dot">—</span>Photographies pro</li>
-          <li class="psv on"><span class="psv-dot">✓</span>Gestion des contrats</li>
-          <li class="psv on"><span class="psv-dot">✓</span>Encaissement des paiements</li>
-          <li class="psv on"><span class="psv-dot">✓</span>Reporting mensuel</li>
-          <li class="psv off"><span class="psv-dot">—</span>Petites réparations <sup>2</sup></li>
-          <li class="psv off"><span class="psv-dot">—</span>Optimisation des tarifs</li>
-          <li class="psv off"><span class="psv-dot">—</span>Gestion des commentaires</li>
-          <li class="psv off"><span class="psv-dot">—</span>Produits d'accueil <sup>3</sup></li>
-          <li class="psv off"><span class="psv-dot">—</span>Panier de bienvenue <sup>4</sup></li>
-          <li class="psv off"><span class="psv-dot">—</span>Charges STEG / SONEDE <sup>5</sup></li>
-          <li class="psv off"><span class="psv-dot">—</span>Aménagement <sup>6</sup></li>
-        </ul>
-        <div class="plan-cta-wrap"><a href="#contact" class="plan-cta">Choisir Essential</a></div>
-      </div>
-
-      <!-- PREMIUM 25% -->
-      <div class="plan plan-pre">
-        <span class="plan-hot">Le plus populaire</span>
-        <div class="plan-head">
-          <span class="plan-tag">Formule complète</span>
-          <div class="plan-nm">Premium</div>
-          <div class="plan-rt"><span class="plan-rt-num">25</span><span class="plan-rt-pct">%</span></div>
-          <p class="plan-rt-note">Commission sur les revenus locatifs</p>
-        </div>
-        <div class="plan-div"></div>
-        <ul class="plan-svcs">
-          <li class="psv on"><span class="psv-dot">✓</span>Accueil des voyageurs</li>
-          <li class="psv on"><span class="psv-dot">✓</span>Nettoyage professionnel</li>
-          <li class="psv on"><span class="psv-dot">✓</span>Gestion du linge</li>
-          <li class="psv on"><span class="psv-dot">✓</span>Produits de nettoyage <sup>1</sup></li>
-          <li class="psv on"><span class="psv-dot">✓</span>Assistance de base</li>
-          <li class="psv on"><span class="psv-dot">✓</span>Assistance 24/7</li>
-          <li class="psv on"><span class="psv-dot">✓</span>Création des annonces</li>
-          <li class="psv on"><span class="psv-dot">✓</span>Gestion des réservations</li>
-          <li class="psv on"><span class="psv-dot">✓</span>Photographies pro</li>
-          <li class="psv on"><span class="psv-dot">✓</span>Gestion des contrats</li>
-          <li class="psv on"><span class="psv-dot">✓</span>Encaissement des paiements</li>
-          <li class="psv on"><span class="psv-dot">✓</span>Reporting mensuel</li>
-          <li class="psv on"><span class="psv-dot">✓</span>Petites réparations <sup>2</sup></li>
-          <li class="psv on"><span class="psv-dot">✓</span>Optimisation des tarifs</li>
-          <li class="psv on"><span class="psv-dot">✓</span>Gestion des commentaires</li>
-          <li class="psv on"><span class="psv-dot">✓</span>Produits d'accueil <sup>3</sup></li>
-          <li class="psv off"><span class="psv-dot">—</span>Panier de bienvenue <sup>4</sup></li>
-          <li class="psv off"><span class="psv-dot">—</span>Charges STEG / SONEDE <sup>5</sup></li>
-          <li class="psv off"><span class="psv-dot">—</span>Aménagement <sup>6</sup></li>
-        </ul>
-        <div class="plan-cta-wrap"><a href="#contact" class="plan-cta">Choisir Premium</a></div>
-      </div>
-
-      <!-- ALL INCLUSIVE -->
-      <div class="plan plan-ali">
-        <div class="plan-head">
-          <span class="plan-tag">Loyer fixe garanti</span>
-          <div class="plan-nm">All Inclusive</div>
-          <div class="plan-rt"><span class="plan-rt-fix">Loyer<br>fixe</span></div>
-          <p class="plan-rt-note">Nexstay fixe votre loyer · Zéro risque d'impayé</p>
-        </div>
-        <div class="plan-div"></div>
-        <ul class="plan-svcs">
-          <li class="psv on"><span class="psv-dot">✓</span>Accueil des voyageurs</li>
-          <li class="psv on"><span class="psv-dot">✓</span>Nettoyage professionnel</li>
-          <li class="psv on"><span class="psv-dot">✓</span>Gestion du linge</li>
-          <li class="psv on"><span class="psv-dot">✓</span>Produits de nettoyage <sup>1</sup></li>
-          <li class="psv on"><span class="psv-dot">✓</span>Assistance de base</li>
-          <li class="psv on"><span class="psv-dot">✓</span>Assistance 24/7</li>
-          <li class="psv on"><span class="psv-dot">✓</span>Création des annonces</li>
-          <li class="psv on"><span class="psv-dot">✓</span>Gestion des réservations</li>
-          <li class="psv on"><span class="psv-dot">✓</span>Photographies pro</li>
-          <li class="psv on"><span class="psv-dot">✓</span>Gestion des contrats</li>
-          <li class="psv on"><span class="psv-dot">✓</span>Encaissement des paiements</li>
-          <li class="psv on"><span class="psv-dot">✓</span>Reporting mensuel</li>
-          <li class="psv on"><span class="psv-dot">✓</span>Petites réparations <sup>2</sup></li>
-          <li class="psv on"><span class="psv-dot">✓</span>Optimisation des tarifs</li>
-          <li class="psv on"><span class="psv-dot">✓</span>Gestion des commentaires</li>
-          <li class="psv on"><span class="psv-dot">✓</span>Produits d'accueil <sup>3</sup></li>
-          <li class="psv on"><span class="psv-dot">✓</span>Panier de bienvenue <sup>4</sup></li>
-          <li class="psv on"><span class="psv-dot">✓</span>Charges STEG / SONEDE <sup>5</sup></li>
-          <li class="psv on"><span class="psv-dot">✓</span>Aménagement <sup>6</sup></li>
-        </ul>
-        <div class="plan-cta-wrap"><a href="#contact" class="plan-cta">Choisir All Inclusive</a></div>
-      </div>
-
+    <div class="plan-tabs rv d2">
+      <button class="ptab ess-tab active" data-pt="ess">
+        <span class="ptab-name">Essential</span>
+        <span class="ptab-rate">15% TTC</span>
+      </button>
+      <button class="ptab pre-tab" data-pt="pre">
+        <span class="ptab-name">Premium</span>
+        <span class="ptab-rate">25% TTC</span>
+      </button>
     </div>
+
+    <!-- PANEL ESSENTIAL -->
+    <div class="plan-panel active" id="pp-ess">
+      <div class="plan-pcard">
+        <div class="plan-phead">
+          <div>
+            <div class="plan-pname">Formule Essential</div>
+            <div class="plan-prate">15<span class="plan-punit">%</span> <span class="plan-pttc">TTC</span></div>
+            <p class="plan-pnote">Commission sur les revenus locatifs, toutes taxes comprises</p>
+          </div>
+          <a href="#contact" class="plan-pcta">Choisir Essential →</a>
+        </div>
+        <div class="plan-psvc-grid">
+          <div class="psvc-item"><span class="psvc-dot">✓</span>Accueil des voyageurs</div>
+          <div class="psvc-item"><span class="psvc-dot">✓</span>Nettoyage professionnel</div>
+          <div class="psvc-item"><span class="psvc-dot">✓</span>Gestion du linge</div>
+          <div class="psvc-item"><span class="psvc-dot">✓</span>Assistance de base</div>
+          <div class="psvc-item"><span class="psvc-dot">✓</span>Création des annonces</div>
+          <div class="psvc-item"><span class="psvc-dot">✓</span>Gestion des réservations</div>
+          <div class="psvc-item"><span class="psvc-dot">✓</span>Reporting mensuel</div>
+          <div class="psvc-item"><span class="psvc-dot">✓</span>Optimisation des tarifs</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PANEL PREMIUM -->
+    <div class="plan-panel" id="pp-pre">
+      <div class="plan-pcard">
+        <div class="plan-phead">
+          <div>
+            <div class="plan-pname">Formule Premium</div>
+            <div class="plan-prate">25<span class="plan-punit">%</span> <span class="plan-pttc">TTC</span></div>
+            <p class="plan-pnote">Commission sur les revenus locatifs, toutes taxes comprises</p>
+          </div>
+          <a href="#contact" class="plan-pcta">Choisir Premium →</a>
+        </div>
+        <div class="plan-psvc-grid">
+          <div class="psvc-item"><span class="psvc-dot">✓</span>Accueil des voyageurs</div>
+          <div class="psvc-item"><span class="psvc-dot">✓</span>Nettoyage professionnel</div>
+          <div class="psvc-item"><span class="psvc-dot">✓</span>Gestion du linge</div>
+          <div class="psvc-item"><span class="psvc-dot">✓</span>Produits de nettoyage <sup>1</sup></div>
+          <div class="psvc-item"><span class="psvc-dot">✓</span>Assistance 24/7</div>
+          <div class="psvc-item"><span class="psvc-dot">✓</span>Création des annonces</div>
+          <div class="psvc-item"><span class="psvc-dot">✓</span>Gestion des réservations</div>
+          <div class="psvc-item"><span class="psvc-dot">✓</span>Photographies pro</div>
+          <div class="psvc-item"><span class="psvc-dot">✓</span>Gestion des contrats</div>
+          <div class="psvc-item"><span class="psvc-dot">✓</span>Encaissement des paiements</div>
+          <div class="psvc-item"><span class="psvc-dot">✓</span>Reporting mensuel</div>
+          <div class="psvc-item"><span class="psvc-dot">✓</span>Petites réparations <sup>2</sup></div>
+          <div class="psvc-item"><span class="psvc-dot">✓</span>Optimisation des tarifs</div>
+          <div class="psvc-item"><span class="psvc-dot">✓</span>Gestion des commentaires</div>
+          <div class="psvc-item"><span class="psvc-dot">✓</span>Produits d'accueil <sup>3</sup></div>
+          <div class="psvc-item"><span class="psvc-dot">✓</span>Panier de bienvenue <sup>4</sup></div>
+        </div>
+      </div>
+    </div>
+
     <p class="plans-footnote rv d3">
-      <sup>1</sup> Détergent, balai, serpillère, lingette, désinfectant &nbsp;·&nbsp; <sup>2</sup> Réparations &gt; 50 DT à la charge du propriétaire<br>
-      <sup>3</sup> Savon, shampooing, gel douche, papier toilette &nbsp;·&nbsp; <sup>4</sup> Eau, thé, café, sucre, gâteaux tunisiens<br>
-      <sup>5</sup> Frais syndicat et taxes municipales restent à charge du propriétaire. All Inclusive comprend électricité, gaz, eau, internet et IPTV<br>
-      <sup>6</sup> Après accord des deux parties
+      <sup>1</sup> Détergent, balai, serpillère, lingette, désinfectant &nbsp;·&nbsp;
+      <sup>2</sup> Réparations &gt; 50 DT à la charge du propriétaire<br>
+      <sup>3</sup> Savon, shampooing, gel douche, papier toilette &nbsp;·&nbsp;
+      <sup>4</sup> Eau, thé, café, sucre, gâteaux tunisiens
     </p>
   </div>
 </section>
@@ -728,36 +688,59 @@ footer{background:var(--dk);padding:48px 20px 28px;border-top:1px solid rgba(255
 
     <div class="csel-group">
       <span class="csel-lbl">Emplacement</span>
-      <div class="csel-row" data-grp="loc">
-        <button class="csel-btn active" data-v="tunis">Grand Tunis</button>
-        <button class="csel-btn" data-v="hammamet">Hammamet</button>
-      </div>
+      <select class="csel-select" id="sel-loc" onchange="smartCalc()">
+        <optgroup label="Grand Tunis · Prestige">
+          <option value="gammarth">Gammarth</option>
+          <option value="sidibousaid">Sidi Bou Saïd</option>
+          <option value="jardins">Jardins de Carthage</option>
+        </optgroup>
+        <optgroup label="Grand Tunis · Nord">
+          <option value="marsa" selected>La Marsa</option>
+          <option value="lac2">Les Berges du Lac 2</option>
+          <option value="lac1">Les Berges du Lac 1</option>
+          <option value="ainzagnord">Ain Zaghouan Nord</option>
+          <option value="ainzag">Ain Zaghouan</option>
+        </optgroup>
+        <optgroup label="Grand Tunis · Ouest &amp; Centre">
+          <option value="menzah">El Menzah</option>
+          <option value="ennasr">Ennasr</option>
+          <option value="soukra">La Soukra</option>
+        </optgroup>
+        <optgroup label="Hammamet &amp; Littoral">
+          <option value="hammamet">Hammamet</option>
+          <option value="bordmer">Bord de mer (côtier)</option>
+        </optgroup>
+      </select>
     </div>
 
     <div class="csel-group">
       <span class="csel-lbl">Type de logement</span>
       <div class="csel-row" data-grp="type">
-        <button class="csel-btn active" data-v="studio">Studio</button>
-        <button class="csel-btn" data-v="t2">T2</button>
-        <button class="csel-btn" data-v="t3">T3</button>
+        <button class="csel-btn active" data-v="s1">S1</button>
+        <button class="csel-btn" data-v="s2">S2</button>
+        <button class="csel-btn" data-v="s3">S3</button>
         <button class="csel-btn" data-v="villa3">Villa 3 ch.</button>
         <button class="csel-btn" data-v="villa4">Villa 4+ ch.</button>
       </div>
     </div>
 
     <div class="csel-group">
-      <span class="csel-lbl">Piscine</span>
+      <span class="csel-lbl">Options</span>
       <div class="csel-row" data-grp="pool">
         <button class="csel-btn active" data-v="no">Sans piscine</button>
         <button class="csel-btn" data-v="yes">Avec piscine</button>
+      </div>
+      <div class="csel-row" data-grp="sea" style="margin-top:8px">
+        <button class="csel-btn active" data-v="no">Sans vue mer</button>
+        <button class="csel-btn" data-v="yes">Vue mer / Bord de mer</button>
       </div>
     </div>
 
     <div class="csel-group">
       <span class="csel-lbl">Formule Nexstay</span>
       <div class="csel-row" data-grp="formula">
-        <button class="csel-btn active" data-v="essential">Essential 15%</button>
-        <button class="csel-btn" data-v="premium">Premium 25%</button>
+        <button class="csel-btn active" data-v="essential">Essential 15% TTC</button>
+        <button class="csel-btn" data-v="premium">Premium 25% TTC</button>
       </div>
     </div>
 
@@ -929,28 +912,51 @@ const cobs=new IntersectionObserver(es=>{
 },{threshold:.5});
 document.querySelectorAll('[data-count]').forEach(el=>cobs.observe(el));
 
+// PLAN TABS
+document.querySelectorAll('.ptab').forEach(tab=>{
+  tab.addEventListener('click',function(){
+    document.querySelectorAll('.ptab').forEach(t=>t.classList.remove('active'));
+    document.querySelectorAll('.plan-panel').forEach(p=>p.classList.remove('active'));
+    this.classList.add('active');
+    document.getElementById('pp-'+this.dataset.pt).classList.add('active');
+  });
+});
+
 // SMART CALCULATOR
 const BASE={
-  tunis:   {studio:90, t2:135, t3:175, villa3:350, villa4:500},
-  hammamet:{studio:115,t2:175, t3:240, villa3:500, villa4:750}
+  gammarth:   {s1:115,s2:175,s3:240,villa3:520,villa4:780},
+  sidibousaid:{s1:120,s2:185,s3:260,villa3:550,villa4:820},
+  jardins:    {s1:105,s2:160,s3:220,villa3:460,villa4:700},
+  marsa:      {s1:100,s2:150,s3:210,villa3:450,villa4:680},
+  lac2:       {s1:95, s2:145,s3:195,villa3:420,villa4:640},
+  lac1:       {s1:90, s2:135,s3:185,villa3:400,villa4:600},
+  ainzagnord: {s1:85, s2:130,s3:175,villa3:380,villa4:560},
+  ainzag:     {s1:80, s2:125,s3:165,villa3:360,villa4:530},
+  menzah:     {s1:85, s2:130,s3:175,villa3:380,villa4:560},
+  ennasr:     {s1:80, s2:120,s3:160,villa3:350,villa4:520},
+  soukra:     {s1:80, s2:120,s3:160,villa3:350,villa4:520},
+  hammamet:   {s1:115,s2:175,s3:240,villa3:500,villa4:750},
+  bordmer:    {s1:140,s2:210,s3:290,villa3:600,villa4:900}
 };
-const POOL={studio:0,t2:0,t3:.2,villa3:.4,villa4:.4};
-const NIGHTS={tunis:20,hammamet:22};
+const NIGHTS={gammarth:20,sidibousaid:20,jardins:20,marsa:20,lac2:20,lac1:20,ainzagnord:20,ainzag:20,menzah:20,ennasr:20,soukra:20,hammamet:22,bordmer:22};
+const POOL={s1:0,s2:0,s3:.2,villa3:.4,villa4:.4};
 const COMM={essential:.15,premium:.25};
 
 function getGrpVal(g){return document.querySelector(`[data-grp="${g}"] .csel-btn.active`)?.dataset.v;}
 
 function smartCalc(){
-  const loc=getGrpVal('loc'),type=getGrpVal('type'),pool=getGrpVal('pool')==='yes',formula=getGrpVal('formula');
-  if(!loc||!type||!formula)return;
+  const loc=document.getElementById('sel-loc')?.value;
+  const type=getGrpVal('type'),pool=getGrpVal('pool')==='yes',sea=getGrpVal('sea')==='yes',formula=getGrpVal('formula');
+  if(!loc||!BASE[loc]||!type||!formula)return;
   let price=BASE[loc][type];
   if(pool)price=Math.round(price*(1+(POOL[type]||0)));
-  const nights=NIGHTS[loc],gross=price*nights,net=Math.round(gross*(1-COMM[formula]));
+  if(sea)price=Math.round(price*1.3);
+  const nights=NIGHTS[loc]||20,gross=price*nights,net=Math.round(gross*(1-COMM[formula]));
   document.getElementById('r_price').textContent=price.toLocaleString('fr-TN')+' DT';
   document.getElementById('r_nights').textContent=nights+' nuits';
   document.getElementById('r_gross').textContent=gross.toLocaleString('fr-TN')+' DT';
   document.getElementById('r_net').textContent=net.toLocaleString('fr-TN')+' DT';
-  document.getElementById('r_note').textContent=`Après commission ${COMM[formula]*100}% · Formule ${formula==='essential'?'Essential':'Premium'} · Estimation indicative basée sur les prix du marché tunisien`;
+  document.getElementById('r_note').textContent=`Après commission ${COMM[formula]*100}% TTC · Formule ${formula==='essential'?'Essential':'Premium'} · Estimation indicative`;
 }
 
 document.querySelectorAll('.csel-btn').forEach(btn=>{
