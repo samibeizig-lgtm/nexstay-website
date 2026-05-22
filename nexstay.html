@@ -211,7 +211,7 @@ button{cursor:pointer;border:none;background:none;font-family:inherit}
 .ptab-rate{font-size:11px;font-weight:600;letter-spacing:.08em;color:rgba(255,255,255,.28);display:block;margin-top:2px;transition:color .3s;font-family:var(--fb)}
 .ptab.active .ptab-name{color:#fff}
 .ptab.active .ptab-rate{color:rgba(255,255,255,.75)}
-.ptab.ess-tab.active{background:var(--ch)}
+.ptab.ess-tab.active{background:var(--t)}
 .ptab.pre-tab.active{background:var(--t)}
 .plan-panel{display:none;animation:fadePlan .3s ease}
 .plan-panel.active{display:block}
@@ -221,7 +221,7 @@ button{cursor:pointer;border:none;background:none;font-family:inherit}
 @media(min-width:580px){.plan-phead{flex-direction:row;align-items:flex-start;justify-content:space-between;gap:24px}}
 .plan-pname{font-family:var(--fd);font-size:10px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:8px}
 .plan-prate{font-family:var(--fd);font-size:clamp(54px,14vw,78px);font-weight:800;letter-spacing:-.04em;line-height:.95;margin-bottom:8px}
-#pp-ess .plan-prate{color:#fff}
+#pp-ess .plan-prate{color:var(--t)}
 #pp-pre .plan-prate{color:var(--t)}
 .plan-punit{font-size:.42em;vertical-align:.1em;opacity:.75}
 .plan-pttc{display:inline-block;font-family:var(--fb);font-size:.18em;font-weight:700;letter-spacing:.1em;vertical-align:.35em;background:rgba(255,255,255,.12);border-radius:4px;padding:3px 8px;color:rgba(255,255,255,.8)}
@@ -544,18 +544,18 @@ footer{background:var(--dk);padding:48px 20px 28px;border-top:1px solid rgba(255
     <p class="bd rv d2" style="color:var(--mg);text-align:center;margin-bottom:0;">Pour appartements &amp; villas · Aucun frais caché · Sans engagement minimum</p>
 
     <div class="plan-tabs rv d2">
-      <button class="ptab ess-tab active" data-pt="ess">
+      <button class="ptab ess-tab" data-pt="ess">
         <span class="ptab-name">Essential</span>
         <span class="ptab-rate">15% TTC</span>
       </button>
-      <button class="ptab pre-tab" data-pt="pre">
-        <span class="ptab-name">Premium</span>
-        <span class="ptab-rate">25% TTC</span>
+      <button class="ptab pre-tab active" data-pt="pre">
+        <span class="ptab-name">Premium ★</span>
+        <span class="ptab-rate">25% TTC · La plus populaire</span>
       </button>
     </div>
 
     <!-- PANEL ESSENTIAL -->
-    <div class="plan-panel active" id="pp-ess">
+    <div class="plan-panel" id="pp-ess">
       <div class="plan-pcard">
         <div class="plan-phead">
           <div>
@@ -579,7 +579,7 @@ footer{background:var(--dk);padding:48px 20px 28px;border-top:1px solid rgba(255
     </div>
 
     <!-- PANEL PREMIUM -->
-    <div class="plan-panel" id="pp-pre">
+    <div class="plan-panel active" id="pp-pre">
       <div class="plan-pcard">
         <div class="plan-phead">
           <div>
@@ -611,10 +611,10 @@ footer{background:var(--dk);padding:48px 20px 28px;border-top:1px solid rgba(255
     </div>
 
     <p class="plans-footnote rv d3">
-      <sup>1</sup> Détergent, balai, serpillère, lingette, désinfectant &nbsp;·&nbsp;
-      <sup>2</sup> Réparations &gt; 50 DT à la charge du propriétaire<br>
-      <sup>3</sup> Savon, shampooing, gel douche, papier toilette &nbsp;·&nbsp;
-      <sup>4</sup> Eau, thé, café, sucre, gâteaux tunisiens
+      1. Produits de nettoyage : détergent, balai, serpillère, lingette, désinfectant<br>
+      2. Petites réparations : les réparations supérieures à 50 DT restent à la charge du propriétaire<br>
+      3. Produits d'accueil : savon, shampooing, gel douche, papier toilette<br>
+      4. Panier de bienvenue : eau, thé, café, sucre, gâteaux tunisiens
     </p>
   </div>
 </section>
@@ -689,27 +689,18 @@ footer{background:var(--dk);padding:48px 20px 28px;border-top:1px solid rgba(255
     <div class="csel-group">
       <span class="csel-lbl">Emplacement</span>
       <select class="csel-select" id="sel-loc" onchange="smartCalc()">
-        <optgroup label="Grand Tunis · Prestige">
-          <option value="gammarth">Gammarth</option>
-          <option value="sidibousaid">Sidi Bou Saïd</option>
-          <option value="jardins">Jardins de Carthage</option>
-        </optgroup>
-        <optgroup label="Grand Tunis · Nord">
-          <option value="marsa" selected>La Marsa</option>
-          <option value="lac2">Les Berges du Lac 2</option>
-          <option value="lac1">Les Berges du Lac 1</option>
-          <option value="ainzagnord">Ain Zaghouan Nord</option>
-          <option value="ainzag">Ain Zaghouan</option>
-        </optgroup>
-        <optgroup label="Grand Tunis · Ouest &amp; Centre">
-          <option value="menzah">El Menzah</option>
-          <option value="ennasr">Ennasr</option>
-          <option value="soukra">La Soukra</option>
-        </optgroup>
-        <optgroup label="Hammamet &amp; Littoral">
-          <option value="hammamet">Hammamet</option>
-          <option value="bordmer">Bord de mer (côtier)</option>
-        </optgroup>
+        <option value="ainzag">Ain Zaghouan</option>
+        <option value="ainzagnord">Ain Zaghouan Nord</option>
+        <option value="ennasr">Ennasr</option>
+        <option value="gammarth">Gammarth</option>
+        <option value="hammamet">Hammamet</option>
+        <option value="marsa">La Marsa</option>
+        <option value="soukra">La Soukra</option>
+        <option value="lac1">Lac 1</option>
+        <option value="lac2">Lac 2</option>
+        <option value="jardins">Les Jardins de Carthage</option>
+        <option value="menzah">Menzah</option>
+        <option value="sidibousaid">Sidi Bou Saïd</option>
       </select>
     </div>
 
@@ -778,7 +769,7 @@ footer{background:var(--dk);padding:48px 20px 28px;border-top:1px solid rgba(255
     Avis Google · Nexstay Tunisie
   </p>
   <div class="tgrid" style="margin-top:24px;">
-    <div class="tc tdk rv">
+    <div class="tc rv">
       <div class="tstars"><svg class="tstar" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg class="tstar" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg class="tstar" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg class="tstar" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg class="tstar" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
       <p class="ttxt">"Équipe très professionnelle, réactive et honnête. Ils gèrent tout de A à Z, je n'ai plus à m'inquiéter de rien. Mes revenus ont largement dépassé mes attentes. Je recommande vivement !"</p>
       <div class="tau"><div class="tav">S</div><div><div class="tname">Sami Belhadj</div><div class="trole">Propriétaire · Ain Zaghouan</div></div></div>
