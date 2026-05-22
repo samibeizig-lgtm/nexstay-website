@@ -91,28 +91,85 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // ── REVENUE CALCULATOR ────────────────────────
-  const calcForm = document.getElementById('revenueCalc');
-  if (calcForm) {
-    const nightsInput = document.getElementById('calcNights');
-    const priceInput = document.getElementById('calcPrice');
+  // ── PLAN TABS ─────────────────────────────────
+  document.querySelectorAll('.ptab').forEach(tab => {
+    tab.addEventListener('click', function() {
+      document.querySelectorAll('.ptab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.plan-panel').forEach(p => p.classList.remove('active'));
+      this.classList.add('active');
+      const panel = document.getElementById('pp-' + this.dataset.pt);
+      if (panel) panel.classList.add('active');
+    });
+  });
+
+  // ── SMART CALCULATOR ──────────────────────────
+  const BASE = {
+    gammarth:    {s1:115, s2:175, s3:240, villa3:520, villa4:780},
+    sidibousaid: {s1:120, s2:185, s3:260, villa3:550, villa4:820},
+    jardins:     {s1:105, s2:160, s3:220, villa3:460, villa4:700},
+    marsa:       {s1:100, s2:150, s3:210, villa3:450, villa4:680},
+    lac2:        {s1:95,  s2:145, s3:195, villa3:420, villa4:640},
+    lac1:        {s1:90,  s2:135, s3:185, villa3:400, villa4:600},
+    ainzagnord:  {s1:85,  s2:130, s3:175, villa3:380, villa4:560},
+    ainzag:      {s1:80,  s2:125, s3:165, villa3:360, villa4:530},
+    menzah:      {s1:85,  s2:130, s3:175, villa3:380, villa4:560},
+    ennasr:      {s1:80,  s2:120, s3:160, villa3:350, villa4:520},
+    soukra:      {s1:80,  s2:120, s3:160, villa3:350, villa4:520},
+    hammamet:    {s1:115, s2:175, s3:240, villa3:500, villa4:750}
+  };
+  const NIGHTS = {
+    gammarth:20, sidibousaid:20, jardins:20, marsa:20, lac2:20, lac1:20,
+    ainzagnord:20, ainzag:20, menzah:20, ennasr:20, soukra:20, hammamet:22
+  };
+  const POOL = {s1:0, s2:0, s3:0.2, villa3:0.4, villa4:0.4};
+  const COMM = {essential:0.15, premium:0.25};
+
+  function getGrpVal(g) {
+    const btn = document.querySelector(`[data-grp="${g}"] .csel-btn.active`);
+    return btn ? btn.dataset.v : null;
+  }
+
+  function smartCalc() {
+    const locEl = document.getElementById('sel-loc');
+    if (!locEl) return;
+    const loc = locEl.value;
+    const type = getGrpVal('type');
+    const pool = getGrpVal('pool') === 'yes';
+    const sea = getGrpVal('sea') === 'yes';
+    const formula = getGrpVal('formula');
     const resultEl = document.getElementById('calcResult');
-    const resultAmount = document.getElementById('calcAmount');
+    if (!loc || !BASE[loc] || !type || !formula) {
+      if (resultEl) resultEl.style.display = 'none';
+      return;
+    }
+    let price = BASE[loc][type];
+    if (pool) price = Math.round(price * (1 + (POOL[type] || 0)));
+    if (sea) price = Math.round(price * 1.3);
+    const nights = NIGHTS[loc] || 20;
+    const gross = price * nights;
+    const net = Math.round(gross * (1 - COMM[formula]));
+    const el = (id) => document.getElementById(id);
+    if (el('r_price')) el('r_price').textContent = price.toLocaleString('fr-TN') + ' DT';
+    if (el('r_nights')) el('r_nights').textContent = nights + ' nuits';
+    if (el('r_gross')) el('r_gross').textContent = gross.toLocaleString('fr-TN') + ' DT';
+    if (el('r_net')) el('r_net').textContent = net.toLocaleString('fr-TN') + ' DT';
+    if (el('r_note')) el('r_note').textContent = `Après commission ${COMM[formula]*100}% TTC · Formule ${formula === 'essential' ? 'Essential' : 'Premium'} · Estimation indicative`;
+    if (resultEl) resultEl.style.display = 'block';
+  }
 
-    const calculate = () => {
-      const nights = parseFloat(nightsInput.value) || 0;
-      const price = parseFloat(priceInput.value) || 0;
-      if (nights > 0 && price > 0) {
-        const gross = nights * price;
-        const commission = 0.25;
-        const ownerRevenue = gross * (1 - commission);
-        resultAmount.textContent = Math.round(ownerRevenue).toLocaleString('fr-TN') + ' DT';
-        resultEl.style.display = 'block';
-      }
-    };
-
-    nightsInput?.addEventListener('input', calculate);
-    priceInput?.addEventListener('input', calculate);
+  const selLoc = document.getElementById('sel-loc');
+  if (selLoc) {
+    selLoc.addEventListener('change', smartCalc);
+    document.querySelectorAll('.csel-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const grp = this.closest('[data-grp]');
+        if (!grp) return;
+        grp.querySelectorAll('.csel-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        smartCalc();
+      });
+    });
+    smartCalc();
   }
 
   // ── PROPERTY FILTER ───────────────────────────

@@ -87,21 +87,22 @@
       overflow: hidden;
       text-align: center;
     }
-    .pricing-section::before {
-      content: '25%';
-      position: absolute;
-      font-family: var(--font-display);
-      font-size: 40vw;
-      font-weight: 800;
-      letter-spacing: -0.05em;
-      color: rgba(255,255,255,0.05);
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      white-space: nowrap;
-      pointer-events: none;
-      line-height: 1;
+    /* ── PLAN TABS ── */
+    .plan-tabs {
+      display: flex; gap: 0; background: rgba(255,255,255,.1);
+      border-radius: 60px; padding: 5px; margin: 28px auto 0; max-width: 480px;
     }
+    .ptab {
+      flex: 1; border-radius: 60px; padding: 14px 16px; cursor: pointer;
+      border: none; background: none; transition: background .3s, color .3s;
+      text-align: center; font-family: var(--font-display); font-size: 13px;
+      font-weight: 600; color: rgba(255,255,255,.65); letter-spacing: 0.04em;
+    }
+    .ptab.active { background: rgba(255,255,255,.2); color: #fff; }
+    .plan-panel { display: none; }
+    .plan-panel.active { display: block; }
+    @keyframes fadePlan { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:none} }
+    .plan-panel.active { animation: fadePlan .3s ease; }
     .pricing-inner {
       position: relative;
       z-index: 1;
@@ -245,7 +246,7 @@
           <div class="section-label reveal"><span class="section-label-line"></span><span class="section-label-text">Notre approche</span></div>
           <h2 class="display-md reveal reveal-delay-1" style="margin-bottom:24px;">Une expertise complète au service de votre bien</h2>
           <p class="body-lg reveal reveal-delay-2" style="color:var(--gray);margin-bottom:32px;">Nexstay prend en charge intégralement la gestion de votre logement sur Airbnb et les plateformes de location courte durée. De la création de votre annonce à l'encaissement des loyers, en passant par l'accueil des voyageurs, le ménage professionnel et l'optimisation des revenus — vous déléguez, nous opérons.</p>
-          <p class="reveal reveal-delay-3" style="font-size:15px;font-weight:300;line-height:1.7;color:var(--gray);margin-bottom:40px;">Notre commission unique de 25% tout inclus couvre l'ensemble de nos prestations, sans frais cachés ni surprises. Vous recevez 75% des revenus bruts, chaque mois, avec un rapport détaillé.</p>
+          <p class="reveal reveal-delay-3" style="font-size:15px;font-weight:300;line-height:1.7;color:var(--gray);margin-bottom:40px;">Nos formules Essential (15% TTC) et Premium (25% TTC) couvrent l'ensemble de nos prestations, sans frais cachés ni surprises. Vous recevez vos revenus chaque mois, avec un rapport détaillé.</p>
           <a href="proprietaires.html" class="btn btn-primary btn-lg reveal reveal-delay-4">
             <span>Je confie mon bien</span>
             <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
@@ -489,39 +490,78 @@
   </div>
 
   <!-- 3. PRICING SECTION -->
-  <section class="pricing-section">
-    <div class="container pricing-inner">
+  <section class="pricing-section" style="text-align:center;">
+    <div class="container pricing-inner" style="max-width:860px;">
       <div class="section-label reveal" style="justify-content:center;margin-bottom:32px;">
         <span class="section-label-line" style="background:rgba(255,255,255,0.4);"></span>
-        <span class="section-label-text" style="color:rgba(255,255,255,0.7);">Notre tarification</span>
+        <span class="section-label-text" style="color:rgba(255,255,255,0.7);">Nos formules</span>
       </div>
-      <h2 class="display-md white reveal reveal-delay-1" style="margin-bottom:16px;">Une commission simple<br>et transparente</h2>
-      <span class="pricing-big-num reveal reveal-delay-2">25%</span>
-      <p class="pricing-subtitle reveal reveal-delay-3">Tout inclus. Aucun frais caché.</p>
-      <div class="pricing-cards">
-        <div class="pricing-card reveal reveal-delay-1">
-          <div class="pricing-card-icon">
-            <svg width="28" height="28" fill="none" stroke="rgba(255,255,255,0.8)" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      <h2 class="display-md white reveal reveal-delay-1" style="margin-bottom:16px;">Choisissez votre formule</h2>
+      <p class="pricing-subtitle reveal reveal-delay-2" style="font-size:16px;">Deux formules adaptées à vos besoins. Sans frais cachés.</p>
+
+      <!-- TABS -->
+      <div class="plan-tabs reveal reveal-delay-2">
+        <button class="ptab ess-tab" data-pt="ess">Essential — 15% TTC</button>
+        <button class="ptab pre-tab active" data-pt="pre">★ Premium — 25% TTC</button>
+      </div>
+
+      <!-- Essential Panel -->
+      <div id="pp-ess" class="plan-panel" style="margin-top:36px;">
+        <div class="pricing-cards" style="justify-content:center;">
+          <div class="pricing-card" style="text-align:left;min-width:260px;">
+            <div style="font-family:var(--font-display);font-size:13px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.6);margin-bottom:16px;">Inclus dans Essential</div>
+            <ul style="list-style:none;display:flex;flex-direction:column;gap:10px;">
+              <li style="color:rgba(255,255,255,0.85);font-size:14px;font-weight:300;">✓ Accueil des voyageurs (remise des clés)</li>
+              <li style="color:rgba(255,255,255,0.85);font-size:14px;font-weight:300;">✓ Nettoyage professionnel après chaque séjour</li>
+              <li style="color:rgba(255,255,255,0.85);font-size:14px;font-weight:300;">✓ Gestion du linge de maison</li>
+              <li style="color:rgba(255,255,255,0.85);font-size:14px;font-weight:300;">✓ Assistance de base pour les voyageurs</li>
+              <li style="color:rgba(255,255,255,0.85);font-size:14px;font-weight:300;">✓ Création et publication des annonces</li>
+              <li style="color:rgba(255,255,255,0.85);font-size:14px;font-weight:300;">✓ Gestion des réservations et calendrier</li>
+              <li style="color:rgba(255,255,255,0.85);font-size:14px;font-weight:300;">✓ Reporting mensuel</li>
+              <li style="color:rgba(255,255,255,0.85);font-size:14px;font-weight:300;">✓ Optimisation des tarifs</li>
+            </ul>
           </div>
-          <div class="pricing-card-title">Gestion complète</div>
-          <div class="pricing-card-sub">Annonces, calendrier, contrats</div>
-        </div>
-        <div class="pricing-card reveal reveal-delay-2">
-          <div class="pricing-card-icon">
-            <svg width="28" height="28" fill="none" stroke="rgba(255,255,255,0.8)" stroke-width="1.5" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-          </div>
-          <div class="pricing-card-title">Ménage inclus</div>
-          <div class="pricing-card-sub">Nettoyage &amp; linge professionnel</div>
-        </div>
-        <div class="pricing-card reveal reveal-delay-3">
-          <div class="pricing-card-icon">
-            <svg width="28" height="28" fill="none" stroke="rgba(255,255,255,0.8)" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-          </div>
-          <div class="pricing-card-title">Support 24/7 inclus</div>
-          <div class="pricing-card-sub">Voyageurs &amp; urgences</div>
         </div>
       </div>
-      <div class="reveal reveal-delay-4">
+
+      <!-- Premium Panel -->
+      <div id="pp-pre" class="plan-panel active" style="margin-top:36px;">
+        <div class="pricing-cards" style="justify-content:center;">
+          <div class="pricing-card" style="text-align:left;min-width:260px;">
+            <div style="font-family:var(--font-display);font-size:13px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.6);margin-bottom:16px;">Inclus dans Premium</div>
+            <ul style="list-style:none;display:flex;flex-direction:column;gap:10px;">
+              <li style="color:rgba(255,255,255,0.85);font-size:14px;font-weight:300;">✓ Accueil des voyageurs (remise des clés)</li>
+              <li style="color:rgba(255,255,255,0.85);font-size:14px;font-weight:300;">✓ Nettoyage professionnel après chaque séjour</li>
+              <li style="color:rgba(255,255,255,0.85);font-size:14px;font-weight:300;">✓ Gestion du linge de maison</li>
+              <li style="color:rgba(255,255,255,0.85);font-size:14px;font-weight:300;">✓ Produits de nettoyage et d'hygiène <sup>1</sup></li>
+              <li style="color:rgba(255,255,255,0.85);font-size:14px;font-weight:300;">✓ Assistance 24/7 pour les voyageurs</li>
+              <li style="color:rgba(255,255,255,0.85);font-size:14px;font-weight:300;">✓ Création et publication des annonces</li>
+              <li style="color:rgba(255,255,255,0.85);font-size:14px;font-weight:300;">✓ Gestion des réservations et calendrier</li>
+              <li style="color:rgba(255,255,255,0.85);font-size:14px;font-weight:300;">✓ Photographies professionnelles</li>
+              <li style="color:rgba(255,255,255,0.85);font-size:14px;font-weight:300;">✓ Gestion des contrats de location</li>
+              <li style="color:rgba(255,255,255,0.85);font-size:14px;font-weight:300;">✓ Encaissement des paiements</li>
+              <li style="color:rgba(255,255,255,0.85);font-size:14px;font-weight:300;">✓ Reporting mensuel</li>
+              <li style="color:rgba(255,255,255,0.85);font-size:14px;font-weight:300;">✓ Entretien et petites réparations (&lt; 50 DT) <sup>2</sup></li>
+              <li style="color:rgba(255,255,255,0.85);font-size:14px;font-weight:300;">✓ Optimisation des tarifs</li>
+              <li style="color:rgba(255,255,255,0.85);font-size:14px;font-weight:300;">✓ Gestion des commentaires et avis</li>
+              <li style="color:rgba(255,255,255,0.85);font-size:14px;font-weight:300;">✓ Produits d'accueil <sup>3</sup></li>
+              <li style="color:rgba(255,255,255,0.85);font-size:14px;font-weight:300;">✓ Panier de bienvenue <sup>4</sup></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footnotes -->
+      <div class="reveal reveal-delay-3" style="margin-top:32px;text-align:left;max-width:600px;margin-left:auto;margin-right:auto;">
+        <p style="font-size:12px;color:rgba(255,255,255,0.45);line-height:1.8;">
+          1. Produits de nettoyage et d'hygiène (détergent, balai, pelle, serpillère, lingette, désinfectant…)<br>
+          2. Les réparations dépassant 50 DT sont à la charge du propriétaire.<br>
+          3. Produits d'accueil (savon, shampooing, gel douche, papier toilette, essuie-tout, coton-tige…)<br>
+          4. Panier de bienvenue (eau, thé, café, sucre, gâteaux tunisiens)
+        </p>
+      </div>
+
+      <div class="reveal reveal-delay-4" style="margin-top:40px;">
         <a href="proprietaires.html" class="btn btn-dark btn-lg">
           <span>Calculer mes revenus</span>
           <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
@@ -562,7 +602,7 @@
             <div class="faq-icon"><svg width="14" height="14" fill="none" stroke="white" stroke-width="2.5" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
           </button>
           <div class="faq-answer">
-            <div class="faq-answer-inner">Nous vous reversons 75% des revenus bruts générés par votre bien, après déduction de notre commission de 25%. Un relevé mensuel détaillé vous est adressé avec toutes les réservations et les montants correspondants.</div>
+            <div class="faq-answer-inner">Selon votre formule (Essential 15% ou Premium 25% TTC), nous déduisons notre commission des revenus bruts générés. Un relevé mensuel détaillé vous est adressé avec toutes les réservations et les montants correspondants.</div>
           </div>
         </div>
         <div class="faq-item">

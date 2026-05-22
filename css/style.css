@@ -352,14 +352,21 @@ button {
   font-weight: 800;
   letter-spacing: -0.02em;
   line-height: 1;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0;
 }
 
 .nav-logo-text .logo-nex {
   color: var(--white);
+  display: inline;
+  letter-spacing: 0;
 }
 
 .nav-logo-text .logo-stay {
   color: var(--terracotta);
+  display: inline;
+  letter-spacing: 0;
 }
 
 .nav-logo-sub {
@@ -1068,7 +1075,7 @@ button {
 }
 
 .testimonial-card:first-child {
-  background: var(--dark);
+  /* uniform white background - same as all cards */
 }
 
 .testimonial-stars {
@@ -1094,7 +1101,7 @@ button {
 }
 
 .testimonial-card:first-child .testimonial-text {
-  color: var(--white);
+  color: var(--dark);
 }
 
 .testimonial-author {
@@ -1128,7 +1135,7 @@ button {
 }
 
 .testimonial-card:first-child .testimonial-name {
-  color: var(--white);
+  color: var(--dark);
 }
 
 .testimonial-role {
@@ -1138,7 +1145,7 @@ button {
 }
 
 .testimonial-card:first-child .testimonial-role {
-  color: var(--mid-gray);
+  color: var(--gray);
 }
 
 /* ============ CTA BAND ============ */
@@ -1223,6 +1230,9 @@ button {
   letter-spacing: -0.025em;
   line-height: 1;
   margin-bottom: 4px;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0;
 }
 
 .footer-logo-text .logo-nex { color: var(--white); }

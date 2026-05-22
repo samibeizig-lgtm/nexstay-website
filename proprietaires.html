@@ -210,6 +210,26 @@
       color: var(--gray);
     }
 
+    /* ── SMART CALCULATOR ── */
+    .csel-select {
+      width: 100%; font-family: var(--font-body); font-size: 14px; font-weight: 400;
+      color: #fff; background: rgba(255,255,255,.07);
+      border: 1.5px solid rgba(255,255,255,.12); border-radius: 30px;
+      padding: 11px 40px 11px 18px; outline: none;
+      -webkit-appearance: none; appearance: none; cursor: pointer;
+      transition: border-color .25s;
+    }
+    .csel-select:focus { border-color: var(--terracotta); }
+    .csel-btn {
+      font-family: var(--font-body); font-size: 13px; font-weight: 500;
+      color: rgba(255,255,255,.62); background: rgba(255,255,255,.07);
+      border: 1.5px solid rgba(255,255,255,.1); border-radius: 30px;
+      padding: 8px 16px; transition: all .25s; cursor: pointer;
+    }
+    .csel-btn.active, .csel-btn:hover {
+      background: var(--terracotta); border-color: var(--terracotta); color: #fff;
+    }
+    .calc-stat-num { min-width: 100px; font-size: 24px; }
     @media (max-width: 1024px) {
       .calc-split { grid-template-columns: 1fr; min-height: auto; }
       .calc-split-left { padding: 60px 40px; }
@@ -317,22 +337,92 @@
     <div class="calc-split-left">
       <div class="section-label reveal" style="margin-bottom:20px;"><span class="section-label-line"></span><span class="section-label-text">Simulateur</span></div>
       <h2 class="display-md white reveal reveal-delay-1" style="margin-bottom:20px;">Estimez vos revenus<br>potentiels</h2>
-      <p class="reveal reveal-delay-2" style="font-size:15px;font-weight:300;color:var(--mid-gray);line-height:1.7;margin-bottom:40px;">Saisissez le nombre de nuits louées par mois et votre tarif moyen pour obtenir une estimation de vos revenus nets après commission Nexstay.</p>
-      <form id="revenueCalc" style="width:100%;">
-        <div class="form-group reveal reveal-delay-2">
-          <label class="form-label white" for="calcNights">Nombre de nuits / mois</label>
-          <input type="number" id="calcNights" class="form-input dark-input" placeholder="ex: 18" min="1" max="31" />
+      <p class="reveal reveal-delay-2" style="font-size:15px;font-weight:300;color:var(--mid-gray);line-height:1.7;margin-bottom:32px;">Sélectionnez votre emplacement, le type de bien et les options pour obtenir une estimation personnalisée de vos revenus nets.</p>
+
+      <!-- SMART CALCULATOR -->
+      <div id="smartCalc" style="width:100%;">
+        <!-- Location -->
+        <div class="form-group reveal reveal-delay-2" style="margin-bottom:18px;">
+          <label class="form-label white" style="margin-bottom:8px;">Emplacement</label>
+          <select id="sel-loc" class="csel-select">
+            <option value="">Choisir un emplacement…</option>
+            <option value="ainzag">Ain Zaghouan</option>
+            <option value="ainzagnord">Ain Zaghouan Nord</option>
+            <option value="ennasr">Ennasr</option>
+            <option value="gammarth">Gammarth</option>
+            <option value="hammamet">Hammamet</option>
+            <option value="marsa">La Marsa</option>
+            <option value="soukra">La Soukra</option>
+            <option value="lac1">Lac 1</option>
+            <option value="lac2">Lac 2</option>
+            <option value="jardins">Les Jardins de Carthage</option>
+            <option value="menzah">Menzah</option>
+            <option value="sidibousaid">Sidi Bou Saïd</option>
+          </select>
         </div>
-        <div class="form-group reveal reveal-delay-3">
-          <label class="form-label white" for="calcPrice">Prix moyen par nuit en DT</label>
-          <input type="number" id="calcPrice" class="form-input dark-input" placeholder="ex: 120" min="1" />
+
+        <!-- Type -->
+        <div class="form-group reveal reveal-delay-2" style="margin-bottom:18px;">
+          <label class="form-label white" style="margin-bottom:8px;">Type de bien</label>
+          <div data-grp="type" style="display:flex;flex-wrap:wrap;gap:8px;">
+            <button type="button" class="csel-btn" data-v="s1">S1</button>
+            <button type="button" class="csel-btn" data-v="s2">S2</button>
+            <button type="button" class="csel-btn" data-v="s3">S3</button>
+            <button type="button" class="csel-btn" data-v="villa3">Villa 3 ch.</button>
+            <button type="button" class="csel-btn" data-v="villa4">Villa 4+ ch.</button>
+          </div>
         </div>
-        <div id="calcResult" class="calc-result reveal" style="display:none;">
-          <div class="calc-result-label">Vos revenus mensuels estimés</div>
-          <div id="calcAmount" class="calc-result-amount">0 DT</div>
-          <div class="calc-result-period">Après commission Nexstay de 25%</div>
+
+        <!-- Options row -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:18px;" class="reveal reveal-delay-3">
+          <div>
+            <label class="form-label white" style="margin-bottom:8px;">Piscine</label>
+            <div data-grp="pool" style="display:flex;gap:8px;">
+              <button type="button" class="csel-btn active" data-v="no">Non</button>
+              <button type="button" class="csel-btn" data-v="yes">Oui</button>
+            </div>
+          </div>
+          <div>
+            <label class="form-label white" style="margin-bottom:8px;">Vue/bord de mer</label>
+            <div data-grp="sea" style="display:flex;gap:8px;">
+              <button type="button" class="csel-btn active" data-v="no">Non</button>
+              <button type="button" class="csel-btn" data-v="yes">Oui +30%</button>
+            </div>
+          </div>
         </div>
-      </form>
+
+        <!-- Formula -->
+        <div class="form-group reveal reveal-delay-3" style="margin-bottom:24px;">
+          <label class="form-label white" style="margin-bottom:8px;">Formule</label>
+          <div data-grp="formula" style="display:flex;gap:8px;">
+            <button type="button" class="csel-btn" data-v="essential">Essential 15%</button>
+            <button type="button" class="csel-btn active" data-v="premium">Premium 25%</button>
+          </div>
+        </div>
+
+        <!-- Result -->
+        <div id="calcResult" class="calc-result" style="display:none;">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
+            <div style="text-align:center;">
+              <div class="calc-result-label" style="font-size:11px;">Prix / nuit estimé</div>
+              <div id="r_price" style="font-family:var(--font-display);font-size:22px;font-weight:800;color:var(--terracotta);">—</div>
+            </div>
+            <div style="text-align:center;">
+              <div class="calc-result-label" style="font-size:11px;">Nuits / mois</div>
+              <div id="r_nights" style="font-family:var(--font-display);font-size:22px;font-weight:800;color:var(--terracotta);">—</div>
+            </div>
+          </div>
+          <div style="text-align:center;border-top:1px solid rgba(212,113,78,0.3);padding-top:12px;">
+            <div class="calc-result-label">Revenus bruts estimés</div>
+            <div id="r_gross" class="calc-result-amount" style="font-size:28px;">—</div>
+          </div>
+          <div style="text-align:center;margin-top:12px;">
+            <div class="calc-result-label">Vos revenus nets</div>
+            <div id="r_net" class="calc-result-amount">—</div>
+            <div id="r_note" class="calc-result-period" style="margin-top:6px;font-size:11px;"></div>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="calc-split-right">
       <div class="calc-split-right-inner">
@@ -344,8 +434,8 @@
               <span class="calc-stat-label">de revenus en moyenne<br>pour nos propriétaires</span>
             </div>
             <div class="calc-stat-item reveal reveal-delay-1">
-              <span class="calc-stat-num">25%</span>
-              <span class="calc-stat-label">commission tout inclus,<br>aucun frais caché</span>
+              <span class="calc-stat-num">15–25%</span>
+              <span class="calc-stat-label">commissions Essential &amp; Premium,<br>sans frais cachés</span>
             </div>
             <div class="calc-stat-item reveal reveal-delay-2">
               <span class="calc-stat-num">75%</span>
@@ -383,7 +473,7 @@
           <div class="timeline-num">03</div>
           <div class="timeline-body">
             <h3 class="timeline-title">Signature du mandat</h3>
-            <p class="timeline-desc">Nous signons ensemble le mandat de gestion. Notre commission de 25% couvre l'intégralité de nos prestations.</p>
+            <p class="timeline-desc">Nous signons ensemble le mandat de gestion. Votre formule (Essential 15% ou Premium 25% TTC) est définie selon vos besoins.</p>
           </div>
         </div>
         <div class="timeline-item reveal reveal-delay-3">
@@ -420,7 +510,7 @@
         </div>
       </div>
       <div class="testimonials-grid">
-        <div class="testimonial-card reveal" style="background:var(--dark);">
+        <div class="testimonial-card reveal">
           <div class="testimonial-stars">
             <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
             <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
@@ -428,12 +518,12 @@
             <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
             <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
           </div>
-          <p class="testimonial-text" style="color:var(--white);">"Depuis que j'ai confié mon appartement à La Marsa à Nexstay, mes revenus ont augmenté de 40%. L'équipe est irréprochable et les voyageurs adorent le service."</p>
+          <p class="testimonial-text">"Depuis que j'ai confié mon appartement à La Marsa à Nexstay, mes revenus ont augmenté de 40%. L'équipe est irréprochable et les voyageurs adorent le service."</p>
           <div class="testimonial-author">
-            <div class="testimonial-avatar" style="background:rgba(212,113,78,.15);color:var(--terracotta);">S</div>
+            <div class="testimonial-avatar">S</div>
             <div>
-              <div class="testimonial-name" style="color:var(--white);">Sara Ben Khaled</div>
-              <div class="testimonial-role">Propriétaire · La Marsa</div>
+              <div class="testimonial-name">Sara Ben Khaled</div>
+              <div class="testimonial-role" style="color:var(--terracotta);">★ Google · Propriétaire · La Marsa</div>
             </div>
           </div>
         </div>
@@ -450,7 +540,7 @@
             <div class="testimonial-avatar">A</div>
             <div>
               <div class="testimonial-name">Ali Gannoun</div>
-              <div class="testimonial-role">Propriétaire · Ariana</div>
+              <div class="testimonial-role" style="color:var(--terracotta);">★ Google · Propriétaire · Ariana</div>
             </div>
           </div>
         </div>
@@ -467,7 +557,7 @@
             <div class="testimonial-avatar">W</div>
             <div>
               <div class="testimonial-name">Walid Sahli</div>
-              <div class="testimonial-role">Propriétaire · Ain Zaghouan</div>
+              <div class="testimonial-role" style="color:var(--terracotta);">★ Google · Propriétaire · Ain Zaghouan</div>
             </div>
           </div>
         </div>
