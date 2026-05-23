@@ -12,20 +12,6 @@
     return window.innerWidth > 1024 ? 3 : window.innerWidth > 600 ? 2 : 1;
   }
 
-  function setCardWidths() {
-    const outer = document.getElementById('reviews-outer');
-    const track = document.getElementById('reviews-track');
-    if (!outer || !track || !track.children.length) return;
-    const pv = getPerView();
-    const gap = 24;
-    const w = Math.floor((outer.offsetWidth - gap * (pv - 1)) / pv);
-    Array.from(track.children).forEach(function (card) {
-      card.style.width = w + 'px';
-      card.style.flexShrink = '0';
-      card.style.flexGrow = '0';
-    });
-  }
-
   let carouselState = null;
 
   function initCarousel() {
@@ -42,68 +28,61 @@
 
     function cards() { return Array.from(track.children); }
 
-    function totalSlides() {
-      return Math.max(1, cards().length - getPerView() + 1);
-    }
+    function go(idx) {
+      const pv = getPerView();
+      const outerW = outer.offsetWidth;
+      if (!outerW) return;
+      const cardW = Math.floor((outerW - 24 * (pv - 1)) / pv);
 
-    function updateControls() {
-      const slides = totalSlides();
+      // Apply width to every card so they all match
+      cards().forEach(function (c) { c.style.width = cardW + 'px'; });
+
+      const slides = Math.max(1, cards().length - pv + 1);
+      current = Math.max(0, Math.min(idx, slides - 1));
+      track.style.transform = 'translateX(-' + (current * (cardW + 24)) + 'px)';
+
+      // Controls
       if (controlsEl) controlsEl.style.display = slides <= 1 ? 'none' : 'flex';
       if (dotsEl) {
         dotsEl.innerHTML = '';
-        for (let i = 0; i < slides; i++) {
-          const dot = document.createElement('button');
+        for (var i = 0; i < slides; i++) {
+          var dot = document.createElement('button');
           dot.className = 'carousel-dot' + (i === current ? ' active' : '');
           dot.setAttribute('aria-label', 'Avis ' + (i + 1));
-          dot.addEventListener('click', () => { clearAuto(); go(i); });
+          (function (n) { dot.addEventListener('click', function () { clearAuto(); go(n); }); })(i);
           dotsEl.appendChild(dot);
         }
       }
       if (prevBtn) prevBtn.disabled = current === 0;
-      if (nextBtn) nextBtn.disabled = current >= totalSlides() - 1;
-    }
-
-    function go(idx) {
-      const slides = totalSlides();
-      current = Math.max(0, Math.min(idx, slides - 1));
-      const c = cards();
-      if (!c.length) return;
-      // Use offsetWidth after layout; fallback to JS-computed width
-      const cardW = (c[0].offsetWidth || Math.floor((outer.offsetWidth - 24 * (getPerView() - 1)) / getPerView())) + 24;
-      track.style.transform = 'translateX(-' + (current * cardW) + 'px)';
-      updateControls();
+      if (nextBtn) nextBtn.disabled = current >= slides - 1;
     }
 
     function clearAuto() { clearInterval(autoTimer); autoTimer = null; }
 
     function startAuto() {
       clearAuto();
-      autoTimer = setInterval(() => {
-        go(current >= totalSlides() - 1 ? 0 : current + 1);
+      autoTimer = setInterval(function () {
+        var pv = getPerView();
+        var slides = Math.max(1, cards().length - pv + 1);
+        go(current >= slides - 1 ? 0 : current + 1);
       }, 5000);
     }
 
-    if (prevBtn) prevBtn.addEventListener('click', () => { clearAuto(); go(current - 1); });
-    if (nextBtn) nextBtn.addEventListener('click', () => { clearAuto(); go(current + 1); });
+    if (prevBtn) prevBtn.addEventListener('click', function () { clearAuto(); go(current - 1); });
+    if (nextBtn) nextBtn.addEventListener('click', function () { clearAuto(); go(current + 1); });
 
-    let touchX = 0;
-    outer.addEventListener('touchstart', e => { touchX = e.touches[0].clientX; }, { passive: true });
-    outer.addEventListener('touchend', e => {
-      const diff = touchX - e.changedTouches[0].clientX;
+    var touchX = 0;
+    outer.addEventListener('touchstart', function (e) { touchX = e.touches[0].clientX; }, { passive: true });
+    outer.addEventListener('touchend', function (e) {
+      var diff = touchX - e.changedTouches[0].clientX;
       if (Math.abs(diff) > 50) { clearAuto(); go(current + (diff > 0 ? 1 : -1)); }
     }, { passive: true });
 
-    window.addEventListener('resize', () => { setCardWidths(); go(current); }, { passive: true });
+    window.addEventListener('resize', function () { go(current); }, { passive: true });
 
-    setCardWidths();
     go(0);
     startAuto();
-    carouselState = {
-      reset: function () {
-        current = 0;
-        requestAnimationFrame(function () { setCardWidths(); go(0); startAuto(); });
-      }
-    };
+    carouselState = { reset: function () { current = 0; go(0); startAuto(); } };
   }
 
   function renderGoogleReviews(place) {
