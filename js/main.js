@@ -4,7 +4,7 @@
 
 // ── GOOGLE REVIEWS (Places API New — REST) ───
 (function () {
-  const GKEY = 'AIzaSyDgXz9oADCDRFL6i4XXoutL8PpytQfyWsY';
+  const GKEY = 'AIzaSyBhu0EBc9ZEWf6effAuxDn_JW4VCuXXej0';
   const API = 'https://places.googleapis.com/v1';
   const STAR = '<svg class=”star” viewBox=”0 0 24 24”><path d=”M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z”/></svg>';
 
