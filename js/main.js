@@ -85,6 +85,14 @@
     carouselState = { reset: function () { current = 0; go(0); startAuto(); } };
   }
 
+  function esc(str) {
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
   function renderGoogleReviews(place) {
     const grid = document.getElementById('reviews-grid');
     const outer = document.getElementById('reviews-outer');
@@ -133,13 +141,14 @@
       var card = document.createElement('div');
       card.className = 'testimonial-card';
       card.innerHTML =
-        '<div class=”testimonial-stars”>' + STAR.repeat(r.rating) + '</div>' +
-        '<p class=”testimonial-text”>”' + text + '”</p>' +
+        '<div class=”testimonial-stars”>' + STAR.repeat(Math.min(5, Math.max(0, Math.floor(r.rating || 0)))) + '</div>' +
+        '<p class=”testimonial-text”>“' + esc(text) + '”</p>' +
         '<div class=”testimonial-author”><div class=”testimonial-avatar-slot”></div>' +
-        '<div><div class=”testimonial-name”>' + name + '</div>' +
-        '<div class=”testimonial-role” style=”color:var(--terracotta);”>★ Google · ' + time + '</div>' +
+        '<div><div class=”testimonial-name”>' + esc(name) + '</div>' +
+        '<div class=”testimonial-role” style=”color:var(--terracotta);”>★ Google · ' + esc(time) + '</div>' +
         '</div></div>';
-      card.querySelector('.testimonial-avatar-slot').replaceWith(avatarEl);
+      var slot = card.querySelector('.testimonial-avatar-slot');
+      if (slot) slot.replaceWith(avatarEl);
       track.appendChild(card);
     });
 
