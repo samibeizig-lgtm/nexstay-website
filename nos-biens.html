@@ -6,6 +6,37 @@
   <title>Nos Biens — Nexstay Conciergerie</title>
   <meta name="description" content="Découvrez notre portefeuille de biens gérés par Nexstay Conciergerie à travers la Tunisie — La Marsa, Ain Zaghouan, Ariana, Mrezga, Soukra et Lac 2." />
   <link rel="stylesheet" href="css/style.css" />
+  <style>
+    a.prop-card-img {
+      display: block;
+      text-decoration: none;
+    }
+    a.prop-card-img::after {
+      content: 'Voir sur Airbnb ↗';
+      position: absolute;
+      bottom: 16px;
+      left: 50%;
+      transform: translateX(-50%) translateY(10px);
+      background: rgba(255,90,95,0.93);
+      color: #fff;
+      padding: 7px 18px;
+      border-radius: 30px;
+      font-family: var(--font-display);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      opacity: 0;
+      transition: opacity 0.22s, transform 0.22s;
+      white-space: nowrap;
+      pointer-events: none;
+      z-index: 3;
+    }
+    a.prop-card-img:hover::after {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+  </style>
 </head>
 <body>
 
@@ -75,10 +106,10 @@
 
         <!-- 1. IDEAL APPART AIN ZAGHOUAN -->
         <div class="prop-card reveal" data-city="Ain Zaghouan" style="transition: opacity 0.3s, transform 0.3s;">
-          <div class="prop-card-img">
+          <a href="#" class="prop-card-img" target="_blank" rel="noopener noreferrer">
             <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=600&q=80" alt="Ideal Appart Ain Zaghouan" loading="lazy" />
             <span class="prop-badge">Ain Zaghouan</span>
-          </div>
+          </a>
           <div class="prop-card-body">
             <div class="prop-city">
               <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
@@ -109,10 +140,10 @@
 
         <!-- 2. IDEAL APPART LES PALMIERS -->
         <div class="prop-card reveal" data-city="La Marsa" style="transition: opacity 0.3s, transform 0.3s;">
-          <div class="prop-card-img">
+          <a href="#" class="prop-card-img" target="_blank" rel="noopener noreferrer">
             <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=600&q=80" alt="Ideal Appart Les Palmiers" loading="lazy" />
             <span class="prop-badge">La Marsa</span>
-          </div>
+          </a>
           <div class="prop-card-body">
             <div class="prop-city">
               <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
@@ -143,10 +174,10 @@
 
         <!-- 3. IDEAL APPART MARSA JADE -->
         <div class="prop-card reveal" data-city="La Marsa" style="transition: opacity 0.3s, transform 0.3s;">
-          <div class="prop-card-img">
+          <a href="#" class="prop-card-img" target="_blank" rel="noopener noreferrer">
             <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=600&q=80" alt="Ideal Appart Marsa Jade" loading="lazy" />
             <span class="prop-badge">La Marsa</span>
-          </div>
+          </a>
           <div class="prop-card-body">
             <div class="prop-city">
               <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
@@ -173,10 +204,10 @@
 
         <!-- 4. IDEAL APPART NORTH 22 -->
         <div class="prop-card reveal" data-city="Ain Zaghouan" style="transition: opacity 0.3s, transform 0.3s;">
-          <div class="prop-card-img">
+          <a href="#" class="prop-card-img" target="_blank" rel="noopener noreferrer">
             <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=600&q=80" alt="Ideal Appart North 22" loading="lazy" />
             <span class="prop-badge">Ain Zaghouan</span>
-          </div>
+          </a>
           <div class="prop-card-body">
             <div class="prop-city">
               <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
@@ -207,10 +238,10 @@
 
         <!-- 5. IDEAL APPART MARSA PRESTIGE -->
         <div class="prop-card reveal" data-city="La Marsa" style="transition: opacity 0.3s, transform 0.3s;">
-          <div class="prop-card-img">
+          <a href="#" class="prop-card-img" target="_blank" rel="noopener noreferrer">
             <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=600&q=80" alt="Ideal Appart Marsa Prestige" loading="lazy" />
             <span class="prop-badge">La Marsa</span>
-          </div>
+          </a>
           <div class="prop-card-body">
             <div class="prop-city">
               <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
@@ -237,10 +268,10 @@
 
         <!-- 6. DAR HOUTA MREZGA -->
         <div class="prop-card reveal" data-city="Mrezga" style="transition: opacity 0.3s, transform 0.3s;">
-          <div class="prop-card-img">
+          <a href="#" class="prop-card-img" target="_blank" rel="noopener noreferrer">
             <img src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=600&q=80" alt="Dar Houta Mrezga" loading="lazy" />
             <span class="prop-badge">Mrezga</span>
-          </div>
+          </a>
           <div class="prop-card-body">
             <div class="prop-city">
               <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
@@ -271,10 +302,10 @@
 
         <!-- 7. IDEAL APPART FRENCH STYLE -->
         <div class="prop-card reveal" data-city="Ariana" style="transition: opacity 0.3s, transform 0.3s;">
-          <div class="prop-card-img">
+          <a href="#" class="prop-card-img" target="_blank" rel="noopener noreferrer">
             <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=600&q=80" alt="Ideal Appart French Style" loading="lazy" />
             <span class="prop-badge">Ariana</span>
-          </div>
+          </a>
           <div class="prop-card-body">
             <div class="prop-city">
               <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
@@ -305,10 +336,10 @@
 
         <!-- 8. IDEAL APPART EL WAHAT VIP -->
         <div class="prop-card reveal" data-city="Ain Zaghouan" style="transition: opacity 0.3s, transform 0.3s;">
-          <div class="prop-card-img">
+          <a href="#" class="prop-card-img" target="_blank" rel="noopener noreferrer">
             <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=600&q=80" alt="Ideal Appart El Wahat VIP" loading="lazy" />
             <span class="prop-badge">Ain Zaghouan</span>
-          </div>
+          </a>
           <div class="prop-card-body">
             <div class="prop-city">
               <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
@@ -339,10 +370,10 @@
 
         <!-- 9. IDEAL APPART GREEN CALLIGRAPHY -->
         <div class="prop-card reveal" data-city="Ain Zaghouan" style="transition: opacity 0.3s, transform 0.3s;">
-          <div class="prop-card-img">
+          <a href="#" class="prop-card-img" target="_blank" rel="noopener noreferrer">
             <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=600&q=80" alt="Ideal Appart Green Calligraphy" loading="lazy" />
             <span class="prop-badge">Ain Zaghouan</span>
-          </div>
+          </a>
           <div class="prop-card-body">
             <div class="prop-city">
               <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
@@ -369,10 +400,10 @@
 
         <!-- 10. IDEAL APPART GREEN TOUCH -->
         <div class="prop-card reveal" data-city="Ain Zaghouan" style="transition: opacity 0.3s, transform 0.3s;">
-          <div class="prop-card-img">
+          <a href="#" class="prop-card-img" target="_blank" rel="noopener noreferrer">
             <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=600&q=80" alt="Ideal Appart Green Touch" loading="lazy" />
             <span class="prop-badge">Ain Zaghouan</span>
-          </div>
+          </a>
           <div class="prop-card-body">
             <div class="prop-city">
               <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
@@ -399,10 +430,10 @@
 
         <!-- 11. IDEAL APPART GREEN VIBES -->
         <div class="prop-card reveal" data-city="Ain Zaghouan" style="transition: opacity 0.3s, transform 0.3s;">
-          <div class="prop-card-img">
+          <a href="#" class="prop-card-img" target="_blank" rel="noopener noreferrer">
             <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=600&q=80" alt="Ideal Appart Green Vibes" loading="lazy" />
             <span class="prop-badge">Ain Zaghouan</span>
-          </div>
+          </a>
           <div class="prop-card-body">
             <div class="prop-city">
               <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
@@ -429,10 +460,10 @@
 
         <!-- 12. IDEAL APPART PARK SUITE -->
         <div class="prop-card reveal" data-city="Ain Zaghouan" style="transition: opacity 0.3s, transform 0.3s;">
-          <div class="prop-card-img">
+          <a href="#" class="prop-card-img" target="_blank" rel="noopener noreferrer">
             <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=600&q=80" alt="Ideal Appart Park Suite" loading="lazy" />
             <span class="prop-badge">Ain Zaghouan</span>
-          </div>
+          </a>
           <div class="prop-card-body">
             <div class="prop-city">
               <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
@@ -463,10 +494,10 @@
 
         <!-- 13. IDEAL APPART ZEPHYR GARDEN -->
         <div class="prop-card reveal" data-city="Soukra" style="transition: opacity 0.3s, transform 0.3s;">
-          <div class="prop-card-img">
+          <a href="#" class="prop-card-img" target="_blank" rel="noopener noreferrer">
             <img src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=600&q=80" alt="Ideal Appart Zephyr Garden" loading="lazy" />
             <span class="prop-badge">Soukra</span>
-          </div>
+          </a>
           <div class="prop-card-body">
             <div class="prop-city">
               <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
@@ -493,10 +524,10 @@
 
         <!-- 14. MODERN MEETS BERBER HERITAGE -->
         <div class="prop-card reveal" data-city="Lac 2" style="transition: opacity 0.3s, transform 0.3s;">
-          <div class="prop-card-img">
+          <a href="#" class="prop-card-img" target="_blank" rel="noopener noreferrer">
             <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=600&q=80" alt="Modern Meets Berber Heritage" loading="lazy" />
             <span class="prop-badge">Lac 2</span>
-          </div>
+          </a>
           <div class="prop-card-body">
             <div class="prop-city">
               <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
@@ -523,10 +554,10 @@
 
         <!-- 15. VILLA PUPPUTIA -->
         <div class="prop-card reveal" data-city="Mrezga" style="transition: opacity 0.3s, transform 0.3s;">
-          <div class="prop-card-img">
+          <a href="#" class="prop-card-img" target="_blank" rel="noopener noreferrer">
             <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=600&q=80" alt="Villa Pupputia" loading="lazy" />
             <span class="prop-badge">Mrezga</span>
-          </div>
+          </a>
           <div class="prop-card-body">
             <div class="prop-city">
               <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
