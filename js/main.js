@@ -130,23 +130,58 @@
     if (carouselState) { carouselState.reset(); } else { initCarousel(); }
   }
 
+  function fetchDetails(placeId) {
+    const dummy = document.createElement('div');
+    document.body.appendChild(dummy);
+    const svc = new google.maps.places.PlacesService(dummy);
+    svc.getDetails({
+      placeId: placeId,
+      fields: ['reviews', 'rating', 'user_ratings_total', 'url']
+    }, function (place, status) {
+      dummy.remove();
+      if (status !== google.maps.places.PlacesServiceStatus.OK || !place) {
+        console.warn('[Nexstay Reviews] getDetails:', status);
+        return;
+      }
+      // Update "Voir les avis" link with the real Google Maps place URL
+      const reviewLink = document.querySelector('.btn-google-link');
+      if (reviewLink && place.url) reviewLink.href = place.url;
+      renderGoogleReviews(place);
+    });
+  }
+
   window.initGoogleReviews = function () {
     const dummy = document.createElement('div');
     document.body.appendChild(dummy);
     const svc = new google.maps.places.PlacesService(dummy);
-    svc.findPlaceFromQuery({ query: 'Nexstay Conciergerie', fields: ['place_id'] }, function (results, status) {
+
+    // Primary: look up by phone number (most precise for a known business)
+    svc.findPlaceFromPhoneNumber({
+      phoneNumber: '+21627973200',
+      fields: ['place_id']
+    }, function (results, status) {
       dummy.remove();
-      if (status !== google.maps.places.PlacesServiceStatus.OK || !results || !results.length) return;
+      if (status === google.maps.places.PlacesServiceStatus.OK && results && results.length) {
+        fetchDetails(results[0].place_id);
+        return;
+      }
+      console.warn('[Nexstay Reviews] findPlaceFromPhoneNumber:', status, '— falling back to textSearch');
+
+      // Fallback: text search with Tunis location bias
       const dummy2 = document.createElement('div');
       document.body.appendChild(dummy2);
       const svc2 = new google.maps.places.PlacesService(dummy2);
-      svc2.getDetails({
-        placeId: results[0].place_id,
-        fields: ['reviews', 'rating', 'user_ratings_total']
-      }, function (place, detailStatus) {
+      svc2.textSearch({
+        query: 'Nexstay Conciergerie Tunis',
+        location: new google.maps.LatLng(36.8, 10.18),
+        radius: 50000
+      }, function (results2, status2) {
         dummy2.remove();
-        if (detailStatus !== google.maps.places.PlacesServiceStatus.OK || !place) return;
-        renderGoogleReviews(place);
+        if (status2 === google.maps.places.PlacesServiceStatus.OK && results2 && results2.length) {
+          fetchDetails(results2[0].place_id);
+        } else {
+          console.warn('[Nexstay Reviews] textSearch:', status2);
+        }
       });
     });
   };
