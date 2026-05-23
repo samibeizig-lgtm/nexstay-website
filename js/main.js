@@ -12,6 +12,20 @@
     return window.innerWidth > 1024 ? 3 : window.innerWidth > 600 ? 2 : 1;
   }
 
+  function setCardWidths() {
+    const outer = document.getElementById('reviews-outer');
+    const track = document.getElementById('reviews-track');
+    if (!outer || !track || !track.children.length) return;
+    const pv = getPerView();
+    const gap = 24;
+    const w = Math.floor((outer.offsetWidth - gap * (pv - 1)) / pv);
+    Array.from(track.children).forEach(function (card) {
+      card.style.width = w + 'px';
+      card.style.flexShrink = '0';
+      card.style.flexGrow = '0';
+    });
+  }
+
   let carouselState = null;
 
   function initCarousel() {
@@ -54,7 +68,8 @@
       current = Math.max(0, Math.min(idx, slides - 1));
       const c = cards();
       if (!c.length) return;
-      const cardW = c[0].offsetWidth + 24;
+      // Use offsetWidth after layout; fallback to JS-computed width
+      const cardW = (c[0].offsetWidth || Math.floor((outer.offsetWidth - 24 * (getPerView() - 1)) / getPerView())) + 24;
       track.style.transform = 'translateX(-' + (current * cardW) + 'px)';
       updateControls();
     }
@@ -78,11 +93,17 @@
       if (Math.abs(diff) > 50) { clearAuto(); go(current + (diff > 0 ? 1 : -1)); }
     }, { passive: true });
 
-    window.addEventListener('resize', () => go(current), { passive: true });
+    window.addEventListener('resize', () => { setCardWidths(); go(current); }, { passive: true });
 
+    setCardWidths();
     go(0);
     startAuto();
-    carouselState = { reset: () => { current = 0; go(0); startAuto(); } };
+    carouselState = {
+      reset: function () {
+        current = 0;
+        requestAnimationFrame(function () { setCardWidths(); go(0); startAuto(); });
+      }
+    };
   }
 
   function renderGoogleReviews(place) {
@@ -112,29 +133,42 @@
     if (!reviews.length) return;
 
     track.innerHTML = '';
-    reviews.forEach(r => {
+    reviews.forEach(function (r) {
       const name = (r.authorAttribution && r.authorAttribution.displayName) || 'Anonyme';
-      const photo = (r.authorAttribution && r.authorAttribution.photoUri) || '';
+      const photoUri = (r.authorAttribution && r.authorAttribution.photoUri) || '';
       const rawText = (r.text && r.text.text) || '';
-      const text = rawText.length > 320 ? rawText.slice(0, 317) + '…' : rawText;
+      const text = rawText.length > 280 ? rawText.slice(0, 277) + '…' : rawText;
       const time = r.relativePublishTimeDescription || '';
-      const initials = name.split(' ').map(function(w) { return w[0]; }).join('').slice(0, 2).toUpperCase();
+      const initials = name.split(' ').map(function (w) { return w[0] || ''; }).join('').slice(0, 2).toUpperCase() || '?';
+
+      // Build avatar element — start with initials, swap to photo if it loads
+      const avatarEl = document.createElement('div');
+      avatarEl.className = 'testimonial-avatar';
+      avatarEl.textContent = initials;
+      if (photoUri) {
+        const img = new Image();
+        img.onload = function () {
+          img.style.cssText = 'width:100%;height:100%;object-fit:cover;border-radius:50%;';
+          img.alt = '';
+          avatarEl.textContent = '';
+          avatarEl.appendChild(img);
+        };
+        img.src = photoUri;
+      }
 
       const card = document.createElement('div');
       card.className = 'testimonial-card';
-      const photoHTML = photo
-        ? '<img src=”' + photo + '” alt=”” style=”width:100%;height:100%;object-fit:cover;” onerror=”this.parentElement.textContent=\'' + initials + '\'”>'
-        : initials;
       card.innerHTML =
         '<div class=”testimonial-stars”>' + STAR.repeat(r.rating) + '</div>' +
         '<p class=”testimonial-text”>”' + text + '”</p>' +
         '<div class=”testimonial-author”>' +
-          '<div class=”testimonial-avatar”>' + photoHTML + '</div>' +
+          '<div class=”testimonial-avatar-slot”></div>' +
           '<div>' +
             '<div class=”testimonial-name”>' + name + '</div>' +
             '<div class=”testimonial-role” style=”color:var(--terracotta);”>★ Google · ' + time + '</div>' +
           '</div>' +
         '</div>';
+      card.querySelector('.testimonial-avatar-slot').replaceWith(avatarEl);
       track.appendChild(card);
     });
 

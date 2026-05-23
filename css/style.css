@@ -1231,7 +1231,8 @@ button {
 }
 
 .testimonials-carousel-track .testimonial-card {
-  flex: 0 0 calc((100% - 48px) / 3);
+  flex-shrink: 0;
+  flex-grow: 0;
   min-width: 0;
 }
 
@@ -1976,10 +1977,6 @@ button {
     grid-column: span 2;
   }
 
-  .testimonials-carousel-track .testimonial-card {
-    flex: 0 0 calc(50% - 12px);
-  }
-
   .reviews-header-right {
     display: none;
   }
@@ -2061,10 +2058,6 @@ button {
 
   .testimonials-grid .testimonial-card:nth-child(3) {
     grid-column: span 1;
-  }
-
-  .testimonials-carousel-track .testimonial-card {
-    flex: 0 0 100%;
   }
 
   .section-header {
