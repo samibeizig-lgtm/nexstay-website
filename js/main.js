@@ -2,9 +2,11 @@
    NEXSTAY CONCIERGERIE — MAIN JAVASCRIPT
    ============================================ */
 
-// ── GOOGLE REVIEWS ────────────────────────────
+// ── GOOGLE REVIEWS (Places API New — REST) ───
 (function () {
-  const STAR = '<svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>';
+  const GKEY = 'AIzaSyDgXz9oADCDRFL6i4XXoutL8PpytQfyWsY';
+  const API = 'https://places.googleapis.com/v1';
+  const STAR = '<svg class=”star” viewBox=”0 0 24 24”><path d=”M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z”/></svg>';
 
   function getPerView() {
     return window.innerWidth > 1024 ? 3 : window.innerWidth > 600 ? 2 : 1;
@@ -98,8 +100,12 @@
         gStars.textContent = '★'.repeat(r) + '☆'.repeat(5 - r);
       }
     }
-    if (place.user_ratings_total && gCount) {
-      gCount.textContent = place.user_ratings_total + ' avis Google';
+    if (place.userRatingCount && gCount) {
+      gCount.textContent = place.userRatingCount + ' avis Google';
+    }
+    if (place.googleMapsUri) {
+      const link = document.querySelector('.btn-google-link');
+      if (link) link.href = place.googleMapsUri;
     }
 
     const reviews = (place.reviews || []).filter(r => r.rating >= 4).slice(0, 5);
@@ -107,21 +113,26 @@
 
     track.innerHTML = '';
     reviews.forEach(r => {
-      const initials = r.author_name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
-      const text = r.text.length > 320 ? r.text.slice(0, 317) + '…' : r.text;
+      const name = (r.authorAttribution && r.authorAttribution.displayName) || 'Anonyme';
+      const photo = (r.authorAttribution && r.authorAttribution.photoUri) || '';
+      const rawText = (r.text && r.text.text) || '';
+      const text = rawText.length > 320 ? rawText.slice(0, 317) + '…' : rawText;
+      const time = r.relativePublishTimeDescription || '';
+      const initials = name.split(' ').map(function(w) { return w[0]; }).join('').slice(0, 2).toUpperCase();
+
       const card = document.createElement('div');
       card.className = 'testimonial-card';
-      const photoHTML = r.profile_photo_url
-        ? '<img src="' + r.profile_photo_url + '" alt="" style="width:100%;height:100%;object-fit:cover;" onerror="this.parentElement.textContent=\'' + initials + '\'">'
+      const photoHTML = photo
+        ? '<img src=”' + photo + '” alt=”” style=”width:100%;height:100%;object-fit:cover;” onerror=”this.parentElement.textContent=\'' + initials + '\'”>'
         : initials;
       card.innerHTML =
-        '<div class="testimonial-stars">' + STAR.repeat(r.rating) + '</div>' +
-        '<p class="testimonial-text">“' + text + '”</p>' +
-        '<div class="testimonial-author">' +
-          '<div class="testimonial-avatar">' + photoHTML + '</div>' +
+        '<div class=”testimonial-stars”>' + STAR.repeat(r.rating) + '</div>' +
+        '<p class=”testimonial-text”>”' + text + '”</p>' +
+        '<div class=”testimonial-author”>' +
+          '<div class=”testimonial-avatar”>' + photoHTML + '</div>' +
           '<div>' +
-            '<div class="testimonial-name">' + r.author_name + '</div>' +
-            '<div class="testimonial-role" style="color:var(--terracotta);">★ Google · ' + r.relative_time_description + '</div>' +
+            '<div class=”testimonial-name”>' + name + '</div>' +
+            '<div class=”testimonial-role” style=”color:var(--terracotta);”>★ Google · ' + time + '</div>' +
           '</div>' +
         '</div>';
       track.appendChild(card);
@@ -130,70 +141,70 @@
     if (carouselState) { carouselState.reset(); } else { initCarousel(); }
   }
 
-  function fetchDetails(placeId) {
-    const dummy = document.createElement('div');
-    document.body.appendChild(dummy);
-    const svc = new google.maps.places.PlacesService(dummy);
-    svc.getDetails({
-      placeId: placeId,
-      fields: ['reviews', 'rating', 'user_ratings_total', 'url']
-    }, function (place, status) {
-      dummy.remove();
-      if (status !== google.maps.places.PlacesServiceStatus.OK || !place) {
-        console.warn('[Nexstay Reviews] getDetails:', status);
+  async function loadGoogleReviews() {
+    try {
+      // Step 1: find the place via text search with Tunis location bias
+      const searchRes = await fetch(API + '/places:searchText', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Goog-Api-Key': GKEY,
+          'X-Goog-FieldMask': 'places.id'
+        },
+        body: JSON.stringify({
+          textQuery: 'Nexstay Conciergerie',
+          languageCode: 'fr',
+          locationBias: {
+            circle: { center: { latitude: 36.8, longitude: 10.18 }, radius: 50000.0 }
+          },
+          maxResultCount: 1
+        })
+      });
+
+      const searchData = await searchRes.json();
+      if (searchData.error) {
+        console.warn('[Nexstay Reviews] searchText error:', searchData.error.message);
         return;
       }
-      // Update "Voir les avis" link with the real Google Maps place URL
-      const reviewLink = document.querySelector('.btn-google-link');
-      if (reviewLink && place.url) reviewLink.href = place.url;
-      renderGoogleReviews(place);
-    });
-  }
-
-  window.initGoogleReviews = function () {
-    const dummy = document.createElement('div');
-    document.body.appendChild(dummy);
-    const svc = new google.maps.places.PlacesService(dummy);
-
-    // Primary: look up by phone number (most precise for a known business)
-    svc.findPlaceFromPhoneNumber({
-      phoneNumber: '+21627973200',
-      fields: ['place_id']
-    }, function (results, status) {
-      dummy.remove();
-      if (status === google.maps.places.PlacesServiceStatus.OK && results && results.length) {
-        fetchDetails(results[0].place_id);
+      if (!searchData.places || !searchData.places.length) {
+        console.warn('[Nexstay Reviews] no place found');
         return;
       }
-      console.warn('[Nexstay Reviews] findPlaceFromPhoneNumber:', status, '— falling back to textSearch');
 
-      // Fallback: text search with Tunis location bias
-      const dummy2 = document.createElement('div');
-      document.body.appendChild(dummy2);
-      const svc2 = new google.maps.places.PlacesService(dummy2);
-      svc2.textSearch({
-        query: 'Nexstay Conciergerie Tunis',
-        location: new google.maps.LatLng(36.8, 10.18),
-        radius: 50000
-      }, function (results2, status2) {
-        dummy2.remove();
-        if (status2 === google.maps.places.PlacesServiceStatus.OK && results2 && results2.length) {
-          fetchDetails(results2[0].place_id);
-        } else {
-          console.warn('[Nexstay Reviews] textSearch:', status2);
+      const placeId = searchData.places[0].id;
+
+      // Step 2: fetch reviews + rating from the place resource
+      const detailRes = await fetch(API + '/places/' + placeId + '?languageCode=fr', {
+        headers: {
+          'X-Goog-Api-Key': GKEY,
+          'X-Goog-FieldMask': 'rating,userRatingCount,reviews,googleMapsUri'
         }
       });
-    });
-  };
+
+      const place = await detailRes.json();
+      if (place.error) {
+        console.warn('[Nexstay Reviews] getPlace error:', place.error.message);
+        return;
+      }
+
+      renderGoogleReviews(place);
+
+    } catch (err) {
+      console.warn('[Nexstay Reviews]', err.message);
+    }
+  }
 
   window._initReviewCarousel = initCarousel;
+  window._loadGoogleReviews = loadGoogleReviews;
 })();
+
 
 document.addEventListener('DOMContentLoaded', () => {
 
-  // ── REVIEWS CAROUSEL INIT ─────────────────────
+  // ── REVIEWS CAROUSEL + GOOGLE PLACES ─────────
   if (document.getElementById('reviews-track')) {
     if (window._initReviewCarousel) window._initReviewCarousel();
+    if (window._loadGoogleReviews) window._loadGoogleReviews();
   }
 
   // ── NAV SCROLL BEHAVIOUR ──────────────────────
