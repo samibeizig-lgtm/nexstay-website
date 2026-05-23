@@ -345,14 +345,14 @@ button {
   display: inline-grid;
   grid-template-columns: max-content;
   flex-shrink: 0;
-  row-gap: 5px;
+  row-gap: 3px;
 }
 
 .nav-logo-text {
   font-family: 'Playfair Display', serif;
-  font-size: 26px;
+  font-size: 48px;
   font-weight: 700;
-  letter-spacing: 0.06em;
+  letter-spacing: 0;
   line-height: 1;
   display: block;
   white-space: nowrap;
@@ -369,12 +369,11 @@ button {
 .nav-logo-sub {
   display: block;
   font-family: var(--font-body);
-  font-size: 11px;
+  font-size: 20.66px;
   font-weight: 600;
-  letter-spacing: 0.38em;
+  letter-spacing: 0;
   text-transform: uppercase;
   color: var(--mid-gray);
-  margin-top: 4px;
 }
 
 .nav-links {
