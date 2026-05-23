@@ -28,20 +28,7 @@
 
     function cards() { return Array.from(track.children); }
 
-    function go(idx) {
-      const pv = getPerView();
-      const outerW = outer.offsetWidth;
-      if (!outerW) return;
-      const cardW = Math.floor((outerW - 24 * (pv - 1)) / pv);
-
-      // Apply width to every card so they all match
-      cards().forEach(function (c) { c.style.width = cardW + 'px'; });
-
-      const slides = Math.max(1, cards().length - pv + 1);
-      current = Math.max(0, Math.min(idx, slides - 1));
-      track.style.transform = 'translateX(-' + (current * (cardW + 24)) + 'px)';
-
-      // Controls
+    function updateControls(slides) {
       if (controlsEl) controlsEl.style.display = slides <= 1 ? 'none' : 'flex';
       if (dotsEl) {
         dotsEl.innerHTML = '';
@@ -55,6 +42,16 @@
       }
       if (prevBtn) prevBtn.disabled = current === 0;
       if (nextBtn) nextBtn.disabled = current >= slides - 1;
+    }
+
+    function go(idx) {
+      const pv = getPerView();
+      const all = cards();
+      const slides = Math.max(1, all.length - pv + 1);
+      current = Math.max(0, Math.min(idx, slides - 1));
+      const target = all[current];
+      if (target) outer.scrollTo({ left: target.offsetLeft, behavior: 'smooth' });
+      updateControls(slides);
     }
 
     function clearAuto() { clearInterval(autoTimer); autoTimer = null; }
@@ -71,14 +68,7 @@
     if (prevBtn) prevBtn.addEventListener('click', function () { clearAuto(); go(current - 1); });
     if (nextBtn) nextBtn.addEventListener('click', function () { clearAuto(); go(current + 1); });
 
-    var touchX = 0;
-    outer.addEventListener('touchstart', function (e) { touchX = e.touches[0].clientX; }, { passive: true });
-    outer.addEventListener('touchend', function (e) {
-      var diff = touchX - e.changedTouches[0].clientX;
-      if (Math.abs(diff) > 50) { clearAuto(); go(current + (diff > 0 ? 1 : -1)); }
-    }, { passive: true });
-
-    window.addEventListener('resize', function () { go(current); }, { passive: true });
+    window.addEventListener('resize', function () { updateControls(Math.max(1, cards().length - getPerView() + 1)); }, { passive: true });
 
     go(0);
     startAuto();

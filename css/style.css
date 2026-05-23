@@ -1219,20 +1219,35 @@ button {
 
 /* ── TESTIMONIALS CAROUSEL ── */
 .testimonials-carousel-outer {
-  position: relative;
-  overflow: hidden;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
 }
+.testimonials-carousel-outer::-webkit-scrollbar { display: none; }
 
 .testimonials-carousel-track {
   display: flex;
   gap: 24px;
-  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  will-change: transform;
 }
 
 .testimonials-carousel-track .testimonial-card {
   flex: none;
-  min-width: 0;
+  width: calc((100% - 48px) / 3);
+  min-width: 260px;
+  scroll-snap-align: start;
+}
+
+@media (max-width: 1024px) {
+  .testimonials-carousel-track .testimonial-card {
+    width: calc((100% - 24px) / 2);
+  }
+}
+
+@media (max-width: 600px) {
+  .testimonials-carousel-track .testimonial-card {
+    width: 100%;
+  }
 }
 
 .carousel-controls {
