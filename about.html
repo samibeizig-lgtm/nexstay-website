@@ -6,6 +6,11 @@
   <title>À Propos — Nexstay Conciergerie</title>
   <meta name="description" content="L'histoire de Nexstay Conciergerie professionnelle — fondée à Tunis, passionnée d'hospitalité et de conciergerie courte durée en Tunisie." />
   <link rel="stylesheet" href="css/style.css" />
+  <style>
+    @media (max-width: 768px) {
+      .split-about > div:first-child { padding: 48px 24px !important; }
+    }
+  </style>
 </head>
 <body>
 
@@ -58,7 +63,7 @@
 
   <!-- SECTION 1 — STORY SPLIT -->
   <section class="section" style="background:var(--white);padding-bottom:0;">
-    <div style="display:grid;grid-template-columns:1fr 1fr;min-height:600px;" class="split-about">
+    <div data-mob1 style="display:grid;grid-template-columns:1fr 1fr;min-height:600px;" class="split-about">
       <!-- Left: Story Text -->
       <div class="split-content" style="padding:80px 80px;display:flex;flex-direction:column;justify-content:center;">
         <div class="section-label reveal">
@@ -95,7 +100,7 @@
         <span class="section-label-line"></span>
         <span class="section-label-text" style="color:var(--terracotta);">Qui nous sommes</span>
       </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:60px;margin-top:48px;" class="mission-grid">
+      <div data-mob1 style="display:grid;grid-template-columns:1fr 1fr;gap:60px;margin-top:48px;" class="mission-grid">
         <!-- Mission -->
         <div class="reveal reveal-delay-1">
           <div style="display:flex;align-items:center;gap:16px;margin-bottom:28px;">
@@ -124,7 +129,7 @@
           <p class="body-md" style="color:var(--mid-gray);line-height:1.8;">
             Devenir la référence de la conciergerie professionnelle en Tunisie, en combinant technologie, expertise terrain et service humain exceptionnel. Expansion progressive dans les principales villes touristiques.
           </p>
-          <div style="margin-top:32px;display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+          <div data-mob2 style="margin-top:32px;display:grid;grid-template-columns:1fr 1fr;gap:20px;">
             <div style="padding:20px;background:rgba(255,255,255,0.04);border-radius:4px;border:1px solid rgba(255,255,255,0.06);">
               <div style="font-family:var(--font-display);font-size:22px;font-weight:800;color:var(--terracotta);letter-spacing:-0.03em;">Grand Tunis</div>
               <div style="font-size:13px;color:var(--mid-gray);margin-top:4px;">Zone couverte</div>
@@ -194,7 +199,7 @@
         <p class="body-lg reveal reveal-delay-2" style="color:var(--gray);margin-top:16px;max-width:480px;margin-left:auto;margin-right:auto;">Des professionnels dévoués qui font de chaque séjour une expérience à part entière.</p>
       </div>
 
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:32px;" class="team-grid">
+      <div data-mob1 style="display:grid;grid-template-columns:repeat(3,1fr);gap:32px;" class="team-grid">
 
         <!-- Imen Karoui -->
         <div class="reveal reveal-delay-1" style="text-align:center;">

@@ -2217,3 +2217,22 @@ button {
   background: var(--terracotta);
   border-color: var(--terracotta);
 }
+
+/* ── RESPONSIVE DATA ATTRIBUTES (override inline grid styles) ── */
+@media (max-width: 768px) {
+  [data-mob1] {
+    grid-template-columns: 1fr !important;
+    min-height: auto !important;
+  }
+  [data-mob2] {
+    grid-template-columns: 1fr 1fr !important;
+  }
+  [data-mobpad] {
+    padding: 48px 24px !important;
+  }
+  [data-mobmw] {
+    min-width: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+}
