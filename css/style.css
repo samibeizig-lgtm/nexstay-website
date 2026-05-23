@@ -1231,7 +1231,7 @@ button {
 }
 
 .testimonials-carousel-track .testimonial-card {
-  flex: 0 0 calc(33.333% - 16px);
+  flex: none;
   min-width: 0;
 }
 
@@ -2102,6 +2102,10 @@ button {
 
   .display-xl {
     font-size: clamp(44px, 12vw, 80px);
+  }
+
+  .testimonials-carousel-track .testimonial-card {
+    padding: 32px 24px;
   }
 }
 
