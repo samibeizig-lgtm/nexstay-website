@@ -229,7 +229,7 @@ button {
   content: '';
   position: absolute;
   inset: 0;
-  background: var(--terracotta);
+  background: var(--white);
   transform: translateX(-101%);
   transition: transform 0.4s var(--ease);
   z-index: 0;
@@ -239,10 +239,16 @@ button {
 .btn-dark svg {
   position: relative;
   z-index: 1;
+  transition: color 0.4s var(--ease);
 }
 
 .btn-dark:hover::before {
   transform: translateX(0);
+}
+
+.btn-dark:hover span,
+.btn-dark:hover svg {
+  color: var(--dark);
 }
 
 .btn-outline {
