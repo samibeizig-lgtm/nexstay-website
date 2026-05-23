@@ -2,7 +2,164 @@
    NEXSTAY CONCIERGERIE — MAIN JAVASCRIPT
    ============================================ */
 
+// ── GOOGLE REVIEWS ────────────────────────────
+(function () {
+  const STAR = '<svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>';
+
+  function getPerView() {
+    return window.innerWidth > 1024 ? 3 : window.innerWidth > 600 ? 2 : 1;
+  }
+
+  let carouselState = null;
+
+  function initCarousel() {
+    const outer = document.getElementById('reviews-outer');
+    const track = document.getElementById('reviews-track');
+    const controlsEl = document.getElementById('carousel-controls');
+    const dotsEl = document.getElementById('carousel-dots');
+    const prevBtn = document.getElementById('carousel-prev');
+    const nextBtn = document.getElementById('carousel-next');
+    if (!track || !outer) return;
+
+    let current = 0;
+    let autoTimer = null;
+
+    function cards() { return Array.from(track.children); }
+
+    function totalSlides() {
+      return Math.max(1, cards().length - getPerView() + 1);
+    }
+
+    function updateControls() {
+      const slides = totalSlides();
+      if (controlsEl) controlsEl.style.display = slides <= 1 ? 'none' : 'flex';
+      if (dotsEl) {
+        dotsEl.innerHTML = '';
+        for (let i = 0; i < slides; i++) {
+          const dot = document.createElement('button');
+          dot.className = 'carousel-dot' + (i === current ? ' active' : '');
+          dot.setAttribute('aria-label', 'Avis ' + (i + 1));
+          dot.addEventListener('click', () => { clearAuto(); go(i); });
+          dotsEl.appendChild(dot);
+        }
+      }
+      if (prevBtn) prevBtn.disabled = current === 0;
+      if (nextBtn) nextBtn.disabled = current >= totalSlides() - 1;
+    }
+
+    function go(idx) {
+      const slides = totalSlides();
+      current = Math.max(0, Math.min(idx, slides - 1));
+      const c = cards();
+      if (!c.length) return;
+      const cardW = c[0].offsetWidth + 24;
+      track.style.transform = 'translateX(-' + (current * cardW) + 'px)';
+      updateControls();
+    }
+
+    function clearAuto() { clearInterval(autoTimer); autoTimer = null; }
+
+    function startAuto() {
+      clearAuto();
+      autoTimer = setInterval(() => {
+        go(current >= totalSlides() - 1 ? 0 : current + 1);
+      }, 5000);
+    }
+
+    if (prevBtn) prevBtn.addEventListener('click', () => { clearAuto(); go(current - 1); });
+    if (nextBtn) nextBtn.addEventListener('click', () => { clearAuto(); go(current + 1); });
+
+    let touchX = 0;
+    outer.addEventListener('touchstart', e => { touchX = e.touches[0].clientX; }, { passive: true });
+    outer.addEventListener('touchend', e => {
+      const diff = touchX - e.changedTouches[0].clientX;
+      if (Math.abs(diff) > 50) { clearAuto(); go(current + (diff > 0 ? 1 : -1)); }
+    }, { passive: true });
+
+    window.addEventListener('resize', () => go(current), { passive: true });
+
+    go(0);
+    startAuto();
+    carouselState = { reset: () => { current = 0; go(0); startAuto(); } };
+  }
+
+  function renderGoogleReviews(place) {
+    const track = document.getElementById('reviews-track');
+    if (!track) return;
+
+    const gRating = document.getElementById('g-rating');
+    const gStars = document.getElementById('g-stars');
+    const gCount = document.getElementById('g-count');
+
+    if (place.rating) {
+      if (gRating) gRating.textContent = place.rating.toFixed(1).replace('.', ',');
+      if (gStars) {
+        const r = Math.round(place.rating);
+        gStars.textContent = '★'.repeat(r) + '☆'.repeat(5 - r);
+      }
+    }
+    if (place.user_ratings_total && gCount) {
+      gCount.textContent = place.user_ratings_total + ' avis Google';
+    }
+
+    const reviews = (place.reviews || []).filter(r => r.rating >= 4).slice(0, 5);
+    if (!reviews.length) return;
+
+    track.innerHTML = '';
+    reviews.forEach(r => {
+      const initials = r.author_name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
+      const text = r.text.length > 320 ? r.text.slice(0, 317) + '…' : r.text;
+      const card = document.createElement('div');
+      card.className = 'testimonial-card';
+      const photoHTML = r.profile_photo_url
+        ? '<img src="' + r.profile_photo_url + '" alt="" style="width:100%;height:100%;object-fit:cover;" onerror="this.parentElement.textContent=\'' + initials + '\'">'
+        : initials;
+      card.innerHTML =
+        '<div class="testimonial-stars">' + STAR.repeat(r.rating) + '</div>' +
+        '<p class="testimonial-text">“' + text + '”</p>' +
+        '<div class="testimonial-author">' +
+          '<div class="testimonial-avatar">' + photoHTML + '</div>' +
+          '<div>' +
+            '<div class="testimonial-name">' + r.author_name + '</div>' +
+            '<div class="testimonial-role" style="color:var(--terracotta);">★ Google · ' + r.relative_time_description + '</div>' +
+          '</div>' +
+        '</div>';
+      track.appendChild(card);
+    });
+
+    if (carouselState) { carouselState.reset(); } else { initCarousel(); }
+  }
+
+  window.initGoogleReviews = function () {
+    const dummy = document.createElement('div');
+    document.body.appendChild(dummy);
+    const svc = new google.maps.places.PlacesService(dummy);
+    svc.findPlaceFromQuery({ query: 'Nexstay Conciergerie', fields: ['place_id'] }, function (results, status) {
+      dummy.remove();
+      if (status !== google.maps.places.PlacesServiceStatus.OK || !results || !results.length) return;
+      const dummy2 = document.createElement('div');
+      document.body.appendChild(dummy2);
+      const svc2 = new google.maps.places.PlacesService(dummy2);
+      svc2.getDetails({
+        placeId: results[0].place_id,
+        fields: ['reviews', 'rating', 'user_ratings_total']
+      }, function (place, detailStatus) {
+        dummy2.remove();
+        if (detailStatus !== google.maps.places.PlacesServiceStatus.OK || !place) return;
+        renderGoogleReviews(place);
+      });
+    });
+  };
+
+  window._initReviewCarousel = initCarousel;
+})();
+
 document.addEventListener('DOMContentLoaded', () => {
+
+  // ── REVIEWS CAROUSEL INIT ─────────────────────
+  if (document.getElementById('reviews-track')) {
+    if (window._initReviewCarousel) window._initReviewCarousel();
+  }
 
   // ── NAV SCROLL BEHAVIOUR ──────────────────────
   const nav = document.querySelector('.nav');
