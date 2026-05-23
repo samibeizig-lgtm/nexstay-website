@@ -344,8 +344,9 @@ button {
 .nav-logo {
   display: flex;
   flex-direction: column;
-  align-items: stretch;
+  align-items: flex-start;
   flex-shrink: 0;
+  width: max-content;
 }
 
 .nav-logo-text {
@@ -376,10 +377,10 @@ button {
   display: block;
   font-family: var(--font-body);
   font-size: 8.5px;
-  font-weight: 500;
+  font-weight: 600;
   text-transform: uppercase;
   color: var(--mid-gray);
-  margin-top: 5px;
+  margin-top: 4px;
   width: 100%;
   text-align: justify;
   text-align-last: justify;
@@ -1249,14 +1250,12 @@ button {
 .footer-logo-sub {
   font-family: var(--font-body);
   font-size: 10px;
-  font-weight: 400;
+  font-weight: 500;
+  letter-spacing: 0.38em;
   text-transform: uppercase;
   color: var(--mid-gray);
   margin-bottom: 24px;
   display: block;
-  width: 100%;
-  text-align: justify;
-  text-align-last: justify;
 }
 
 .footer-desc {
