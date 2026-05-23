@@ -403,7 +403,7 @@
           <div class="section-label reveal"><span class="section-label-line"></span><span class="section-label-text">Témoignages</span></div>
           <h2 class="display-md reveal reveal-delay-1">Ils nous font confiance</h2>
         </div>
-        <div class="reviews-header-right reveal reveal-delay-1">
+        <div class="reviews-header-right">
           <div class="google-badge">
             <svg class="google-badge-logo" width="28" height="28" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
@@ -417,61 +417,62 @@
             </div>
             <div>
               <div class="google-badge-count" id="g-count">avis Google</div>
-              <a href="https://www.google.com/maps/search/Nexstay+Conciergerie" target="_blank" rel="noopener" class="btn-google-link">Voir les avis →</a>
+              <a href="https://www.google.com/maps/search/Nexstay+Conciergerie" target="_blank" rel="noopener" class="btn-google-link" id="reviews-link">Voir les avis →</a>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Carousel outer -->
-      <div class="testimonials-carousel-outer" id="reviews-outer">
-        <div class="testimonials-carousel-track" id="reviews-track">
-          <div class="testimonial-card">
-            <div class="testimonial-stars">
-              <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-              <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-              <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-              <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-              <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-            </div>
-            <p class="testimonial-text">"Depuis que j'ai confié mon appartement à La Marsa à Nexstay, mes revenus ont augmenté de 40%. L'équipe est irréprochable et les voyageurs adorent le service."</p>
-            <div class="testimonial-author">
-              <div class="testimonial-avatar">S</div>
-              <div><div class="testimonial-name">Sara Ben Khaled</div><div class="testimonial-role" style="color:var(--terracotta);">★ Google · Propriétaire · La Marsa</div></div>
-            </div>
+      <!-- Fallback grid — toujours visible, remplacé par le carousel quand les avis chargent -->
+      <div class="testimonials-grid" id="reviews-grid">
+        <div class="testimonial-card reveal">
+          <div class="testimonial-stars">
+            <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
           </div>
-          <div class="testimonial-card">
-            <div class="testimonial-stars">
-              <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-              <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-              <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-              <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-              <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-            </div>
-            <p class="testimonial-text">"Séjour parfait à Ain Zaghouan. Check-in fluide, appartement impeccable, équipements au top. On recommande à 100% !"</p>
-            <div class="testimonial-author">
-              <div class="testimonial-avatar">K</div>
-              <div><div class="testimonial-name">Karl Schmidt</div><div class="testimonial-role" style="color:var(--terracotta);">★ Google · Voyageur · Allemagne</div></div>
-            </div>
+          <p class="testimonial-text">"Depuis que j'ai confié mon appartement à La Marsa à Nexstay, mes revenus ont augmenté de 40%. L'équipe est irréprochable et les voyageurs adorent le service."</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">S</div>
+            <div><div class="testimonial-name">Sara Ben Khaled</div><div class="testimonial-role" style="color:var(--terracotta);">★ Google · Propriétaire · La Marsa</div></div>
           </div>
-          <div class="testimonial-card">
-            <div class="testimonial-stars">
-              <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-              <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-              <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-              <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-              <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-            </div>
-            <p class="testimonial-text">"J'avais peur de déléguer la gestion de mon appartement, mais Nexstay m'a rassuré dès le départ. Professionnalisme, transparence et vraie réactivité."</p>
-            <div class="testimonial-author">
-              <div class="testimonial-avatar">W</div>
-              <div><div class="testimonial-name">Walid Sahli</div><div class="testimonial-role" style="color:var(--terracotta);">★ Google · Propriétaire · Ain Zaghouan</div></div>
-            </div>
+        </div>
+        <div class="testimonial-card reveal reveal-delay-1">
+          <div class="testimonial-stars">
+            <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          </div>
+          <p class="testimonial-text">"Séjour parfait à Ain Zaghouan. Check-in fluide, appartement impeccable, équipements au top. On recommande à 100% !"</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">K</div>
+            <div><div class="testimonial-name">Karl Schmidt</div><div class="testimonial-role" style="color:var(--terracotta);">★ Google · Voyageur · Allemagne</div></div>
+          </div>
+        </div>
+        <div class="testimonial-card reveal reveal-delay-2">
+          <div class="testimonial-stars">
+            <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          </div>
+          <p class="testimonial-text">"J'avais peur de déléguer la gestion de mon appartement, mais Nexstay m'a rassuré dès le départ. Professionnalisme, transparence et vraie réactivité."</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">W</div>
+            <div><div class="testimonial-name">Walid Sahli</div><div class="testimonial-role" style="color:var(--terracotta);">★ Google · Propriétaire · Ain Zaghouan</div></div>
           </div>
         </div>
       </div>
 
-      <!-- Carousel controls -->
+      <!-- Carousel — injecté par JS quand les avis Google chargent -->
+      <div class="testimonials-carousel-outer" id="reviews-outer" style="display:none;">
+        <div class="testimonials-carousel-track" id="reviews-track"></div>
+      </div>
       <div class="carousel-controls" id="carousel-controls" style="display:none;">
         <button class="carousel-arrow" id="carousel-prev" aria-label="Précédent">
           <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>

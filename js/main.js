@@ -86,46 +86,41 @@
   }
 
   function renderGoogleReviews(place) {
+    const grid = document.getElementById('reviews-grid');
+    const outer = document.getElementById('reviews-outer');
     const track = document.getElementById('reviews-track');
-    if (!track) return;
+    if (!track || !grid || !outer) return;
 
+    // Update badge
     const gRating = document.getElementById('g-rating');
-    const gStars = document.getElementById('g-stars');
-    const gCount = document.getElementById('g-count');
-
+    const gStars  = document.getElementById('g-stars');
+    const gCount  = document.getElementById('g-count');
+    const gLink   = document.getElementById('reviews-link');
     if (place.rating) {
       if (gRating) gRating.textContent = place.rating.toFixed(1).replace('.', ',');
-      if (gStars) {
-        const r = Math.round(place.rating);
-        gStars.textContent = '★'.repeat(r) + '☆'.repeat(5 - r);
-      }
+      if (gStars)  { var r = Math.round(place.rating); gStars.textContent = '★'.repeat(r) + '☆'.repeat(5 - r); }
     }
-    if (place.userRatingCount && gCount) {
-      gCount.textContent = place.userRatingCount + ' avis Google';
-    }
-    if (place.googleMapsUri) {
-      const link = document.querySelector('.btn-google-link');
-      if (link) link.href = place.googleMapsUri;
-    }
+    if (place.userRatingCount && gCount) gCount.textContent = place.userRatingCount + ' avis Google';
+    if (place.googleMapsUri   && gLink)  gLink.href = place.googleMapsUri;
 
-    const reviews = (place.reviews || []).filter(r => r.rating >= 4).slice(0, 5);
+    var reviews = (place.reviews || []).filter(function (r) { return r.rating >= 4; }).slice(0, 5);
     if (!reviews.length) return;
 
+    // Build cards
     track.innerHTML = '';
     reviews.forEach(function (r) {
-      const name = (r.authorAttribution && r.authorAttribution.displayName) || 'Anonyme';
-      const photoUri = (r.authorAttribution && r.authorAttribution.photoUri) || '';
-      const rawText = (r.text && r.text.text) || '';
-      const text = rawText.length > 280 ? rawText.slice(0, 277) + '…' : rawText;
-      const time = r.relativePublishTimeDescription || '';
-      const initials = name.split(' ').map(function (w) { return w[0] || ''; }).join('').slice(0, 2).toUpperCase() || '?';
+      var name     = (r.authorAttribution && r.authorAttribution.displayName) || 'Anonyme';
+      var photoUri = (r.authorAttribution && r.authorAttribution.photoUri)    || '';
+      var rawText  = (r.text && r.text.text) || '';
+      var text     = rawText.length > 280 ? rawText.slice(0, 277) + '…' : rawText;
+      var time     = r.relativePublishTimeDescription || '';
+      var initials = name.split(' ').map(function (w) { return w[0] || ''; }).join('').slice(0, 2).toUpperCase() || '?';
 
-      // Build avatar element — start with initials, swap to photo if it loads
-      const avatarEl = document.createElement('div');
+      var avatarEl = document.createElement('div');
       avatarEl.className = 'testimonial-avatar';
       avatarEl.textContent = initials;
       if (photoUri) {
-        const img = new Image();
+        var img = new Image();
         img.onload = function () {
           img.style.cssText = 'width:100%;height:100%;object-fit:cover;border-radius:50%;';
           img.alt = '';
@@ -135,23 +130,23 @@
         img.src = photoUri;
       }
 
-      const card = document.createElement('div');
+      var card = document.createElement('div');
       card.className = 'testimonial-card';
       card.innerHTML =
         '<div class=”testimonial-stars”>' + STAR.repeat(r.rating) + '</div>' +
         '<p class=”testimonial-text”>”' + text + '”</p>' +
-        '<div class=”testimonial-author”>' +
-          '<div class=”testimonial-avatar-slot”></div>' +
-          '<div>' +
-            '<div class=”testimonial-name”>' + name + '</div>' +
-            '<div class=”testimonial-role” style=”color:var(--terracotta);”>★ Google · ' + time + '</div>' +
-          '</div>' +
-        '</div>';
+        '<div class=”testimonial-author”><div class=”testimonial-avatar-slot”></div>' +
+        '<div><div class=”testimonial-name”>' + name + '</div>' +
+        '<div class=”testimonial-role” style=”color:var(--terracotta);”>★ Google · ' + time + '</div>' +
+        '</div></div>';
       card.querySelector('.testimonial-avatar-slot').replaceWith(avatarEl);
       track.appendChild(card);
     });
 
-    if (carouselState) { carouselState.reset(); } else { initCarousel(); }
+    // Swap grid → carousel
+    grid.style.display  = 'none';
+    outer.style.display = 'block';
+    initCarousel();
   }
 
   async function loadGoogleReviews() {
@@ -207,18 +202,14 @@
     }
   }
 
-  window._initReviewCarousel = initCarousel;
   window._loadGoogleReviews = loadGoogleReviews;
 })();
 
 
 document.addEventListener('DOMContentLoaded', () => {
 
-  // ── REVIEWS CAROUSEL + GOOGLE PLACES ─────────
-  if (document.getElementById('reviews-track')) {
-    if (window._initReviewCarousel) window._initReviewCarousel();
-    if (window._loadGoogleReviews) window._loadGoogleReviews();
-  }
+  // ── GOOGLE REVIEWS ────────────────────────────
+  try { if (window._loadGoogleReviews) window._loadGoogleReviews(); } catch (e) { /* silent */ }
 
   // ── NAV SCROLL BEHAVIOUR ──────────────────────
   const nav = document.querySelector('.nav');
