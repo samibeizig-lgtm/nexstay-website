@@ -285,4 +285,21 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  // ── LOGO SUB ALIGNMENT ────────────────────────
+  function alignLogoSub() {
+    const mainText = document.querySelector('.nav-logo-text');
+    const subText  = document.querySelector('.nav-logo-sub');
+    if (!mainText || !subText) return;
+    subText.style.letterSpacing = '0';
+    const mainW  = mainText.getBoundingClientRect().width;
+    const subW   = subText.getBoundingClientRect().width;
+    const chars  = subText.textContent.trim().length;
+    if (mainW > subW && chars > 1) {
+      const gap = (mainW - subW) / (chars - 1);
+      subText.style.letterSpacing = (gap / parseFloat(getComputedStyle(subText).fontSize)) + 'em';
+    }
+  }
+  document.fonts.ready.then(alignLogoSub);
+  window.addEventListener('resize', alignLogoSub);
+
 });
