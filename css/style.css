@@ -204,7 +204,7 @@ button {
   content: '';
   position: absolute;
   inset: 0;
-  background: var(--dark);
+  background: var(--white);
   transform: translateX(-101%);
   transition: transform 0.4s var(--ease);
   z-index: 0;
@@ -214,10 +214,16 @@ button {
 .btn-primary svg {
   position: relative;
   z-index: 1;
+  transition: color 0.4s var(--ease);
 }
 
 .btn-primary:hover::before {
   transform: translateX(0);
+}
+
+.btn-primary:hover span,
+.btn-primary:hover svg {
+  color: var(--dark);
 }
 
 .btn-dark {
