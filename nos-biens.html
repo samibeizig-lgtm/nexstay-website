@@ -919,11 +919,14 @@
         .catch(function () { return { results: {} }; })
         .then(function (data) {
           var results = data.results || {};
+          console.log('[AVAIL] results:', JSON.stringify(results));
+          console.log('[AVAIL] total cards:', cards.length);
 
           cards.forEach(function (card) {
             var slug  = card.dataset.slug;
             var badge = card.querySelector('.avail-badge');
             var avail = slug ? results[slug] : null;
+            console.log('[AVAIL] slug="' + slug + '" avail=' + avail + ' → ' + (avail === true ? 'SHOW' : 'HIDE'));
 
             if (avail === true) {
               card.removeAttribute('data-hidden');
@@ -938,8 +941,16 @@
             }
           });
 
+          var shown = cards.filter(function(c){ return !c.hasAttribute('data-hidden'); });
+          console.log('[AVAIL] cards shown after forEach:', shown.length, shown.map(function(c){ return c.dataset.slug; }));
+
           btnEl.disabled = false;
           btnEl.innerHTML = '<svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> Rechercher';
+
+          setTimeout(function() {
+            var shownAfter = cards.filter(function(c){ return !c.hasAttribute('data-hidden') && c.offsetParent !== null; });
+            console.log('[AVAIL] cards actually visible 500ms later:', shownAfter.length, shownAfter.map(function(c){ return c.dataset.slug; }));
+          }, 500);
         });
     }
   });
