@@ -911,6 +911,8 @@
       const results = await Promise.all(fetches);
 
       window._availActive = true;
+      const show = window._showCard || (c => { c.style.display = ''; c.style.opacity = '1'; c.style.transform = ''; });
+      const hide = window._hideCard || (c => { c.style.opacity = '0'; c.style.transform = 'scale(0.95)'; setTimeout(() => { c.style.display = 'none'; }, 300); });
 
       results.forEach((data, i) => {
         const card  = cards[i];
@@ -918,8 +920,8 @@
         const badge = card.querySelector('.avail-badge');
 
         if (data && data.available === true) {
-          // Confirmed available
           card.dataset.avail = 'true';
+          show(card);
           if (badge && slug) {
             const href = `https://www.airbnb.com/h/${slug}?check_in=${ci}&check_out=${co}`;
             badge.innerHTML = `<a href="${href}" class="avail-book-btn" target="_blank" rel="noopener">
@@ -927,16 +929,11 @@
               Réserver sur Airbnb
             </a>`;
           }
-        } else if (data && data.available === false) {
-          // Confirmed unavailable
-          card.dataset.avail = 'false';
         } else {
-          // No iCal configured or error → hide (dates active but unknown)
           card.dataset.avail = 'false';
+          hide(card);
         }
       });
-
-      if (window._applyFilters) window._applyFilters();
     }
   })();
   </script>

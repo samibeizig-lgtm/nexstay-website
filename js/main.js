@@ -393,6 +393,9 @@ document.addEventListener('DOMContentLoaded', () => {
     card.style.transform = 'scale(0.95)';
     setTimeout(() => { card.style.display = 'none'; }, 300);
   }
+  window._showCard = showCard;
+  window._hideCard = hideCard;
+  }
   function applyFilters() {
     propCards.forEach(card => {
       const cityOk   = activeCity === 'all' || card.getAttribute('data-city') === activeCity;
