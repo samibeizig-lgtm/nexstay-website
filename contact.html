@@ -58,6 +58,17 @@
   }
   </script>
 
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {"@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://www.nexstay.tn/"},
+      {"@type": "ListItem", "position": 2, "name": "Contact", "item": "https://www.nexstay.tn/contact.html"}
+    ]
+  }
+  </script>
+
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
@@ -87,6 +98,24 @@
     <a href="contact.html" class="btn btn-primary btn-lg"><span>Nous contacter</span></a>
   </div>
 
+  <nav class="breadcrumb-bar" aria-label="Fil d'Ariane">
+    <div class="container">
+      <ol class="breadcrumb-list">
+        <li itemscope itemtype="https://schema.org/ListItem" itemprop="item">
+          <a href="index.html" class="breadcrumb-link" itemprop="item" href="index.html">
+            <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            <span itemprop="name">Accueil</span>
+          </a>
+          <meta itemprop="position" content="1" />
+        </li>
+        <li itemscope itemtype="https://schema.org/ListItem" itemprop="item" aria-current="page">
+          <span class="breadcrumb-current" itemprop="name">Contact</span>
+          <meta itemprop="position" content="2" />
+        </li>
+      </ol>
+    </div>
+  </nav>
+
   <!-- PAGE HERO -->
   <section class="page-hero">
     <div class="page-hero-bg">
@@ -94,11 +123,6 @@
     </div>
     <div class="page-hero-content">
       <div class="container">
-        <nav class="breadcrumb" aria-label="Fil d'Ariane">
-          <a href="index.html" class="breadcrumb-item">Accueil</a>
-          <span class="breadcrumb-sep">—</span>
-          <span class="breadcrumb-item active">Contact</span>
-        </nav>
         <div class="section-label reveal">
           <span class="section-label-line"></span>
           <span class="section-label-text">Écrivez-nous</span>
