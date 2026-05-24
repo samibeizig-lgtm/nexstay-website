@@ -266,6 +266,9 @@
         </button>
       </div>
 
+      <!-- Availability status message -->
+      <p id="availStatus" style="font-family:var(--font-display);font-size:13px;color:var(--gray);margin:0 0 8px;min-height:1.4em;"></p>
+
       <!-- Properties Grid -->
       <div class="properties-grid">
 
@@ -911,6 +914,8 @@
       document.getElementById('datePillIn').classList.add('is-active');
       document.getElementById('datePillOut').classList.add('is-active');
       document.querySelectorAll('.avail-badge').forEach(function (b) { b.innerHTML = ''; });
+      var statusEl = document.getElementById('availStatus');
+      if (statusEl) statusEl.textContent = '';
 
       var cards = Array.from(document.querySelectorAll('.prop-card[data-slug]'));
 
@@ -919,17 +924,21 @@
         .catch(function () { return { results: {} }; })
         .then(function (data) {
           var results = data.results || {};
+          var nbAvail = 0;
 
           cards.forEach(function (card) {
             var slug  = card.dataset.slug;
             var badge = card.querySelector('.avail-badge');
-            var avail = slug ? results[slug] : null;
+            var avail = slug && results[slug] === true;
 
-            if (avail === true) {
+            if (avail) {
+              nbAvail++;
+              clearTimeout(card._hideTimer);
               card.removeAttribute('data-hidden');
-              card.classList.add('visible');   // force .reveal.visible → opacity:1
-              card.style.opacity   = '';       // clear any inline override
-              card.style.transform = '';
+              card.classList.add('visible');
+              card.style.display   = '';
+              card.style.opacity   = '1';
+              card.style.transform = 'none';
               if (badge && slug) {
                 var href = 'https://www.airbnb.com/h/' + slug + '?check_in=' + ci + '&check_out=' + co;
                 badge.innerHTML = '<a href="' + href + '" class="avail-book-btn" target="_blank" rel="noopener">'
@@ -937,12 +946,20 @@
                   + ' Réserver sur Airbnb</a>';
               }
             } else {
-              card.setAttribute('data-hidden', '1');
+              clearTimeout(card._hideTimer);
+              card.style.display = 'none';
+              card.removeAttribute('data-hidden');
             }
           });
 
           btnEl.disabled = false;
           btnEl.innerHTML = '<svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> Rechercher';
+
+          if (statusEl) {
+            statusEl.textContent = nbAvail === 0
+              ? 'Aucun bien disponible pour ces dates.'
+              : nbAvail + ' bien' + (nbAvail > 1 ? 's' : '') + ' disponible' + (nbAvail > 1 ? 's' : '') + ' pour ces dates.';
+          }
         });
     }
   });

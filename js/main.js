@@ -385,13 +385,14 @@ document.addEventListener('DOMContentLoaded', () => {
   let minRooms = 'all';
 
   function showCard(card) {
+    clearTimeout(card._hideTimer);
     card.style.display = '';
     setTimeout(() => { card.style.opacity = 1; card.style.transform = ''; }, 10);
   }
   function hideCard(card) {
     card.style.opacity = 0;
     card.style.transform = 'scale(0.95)';
-    setTimeout(() => { card.style.display = 'none'; }, 300);
+    card._hideTimer = setTimeout(() => { card.style.display = 'none'; }, 300);
   }
   window._showCard = showCard;
   window._hideCard = hideCard;
@@ -443,9 +444,16 @@ document.addEventListener('DOMContentLoaded', () => {
       if (filterRooms)  { filterRooms.value  = 'all'; filterRooms.classList.remove('is-active'); }
       // reset date availability filter
       window._availActive = false;
-      document.querySelectorAll('.prop-card[data-avail]').forEach(c => c.removeAttribute('data-avail'));
-      document.querySelectorAll('.prop-card[data-hidden]').forEach(c => c.removeAttribute('data-hidden'));
+      document.querySelectorAll('.prop-card[data-slug]').forEach(c => {
+        clearTimeout(c._hideTimer);
+        c.style.display   = '';
+        c.style.opacity   = '';
+        c.style.transform = '';
+        c.removeAttribute('data-hidden');
+      });
       document.querySelectorAll('.avail-badge').forEach(b => b.innerHTML = '');
+      const statusEl = document.getElementById('availStatus');
+      if (statusEl) statusEl.textContent = '';
       const ci = document.getElementById('avCheckIn');
       const co = document.getElementById('avCheckOut');
       if (ci) { ci.value = ''; ci.closest('.date-pill')?.classList.remove('is-active'); }
