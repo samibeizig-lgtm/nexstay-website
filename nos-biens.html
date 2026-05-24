@@ -92,6 +92,64 @@
       opacity: 1;
       transform: translateX(-50%) translateY(0);
     }
+
+    /* ── Availability Date Picker ── */
+    .avail-datepicker {
+      background: var(--dark, #1a1a2e);
+      border-radius: 14px;
+      padding: 18px 24px;
+      margin-bottom: 24px;
+    }
+    .avail-datepicker-inner { display: flex; align-items: center; flex-wrap: wrap; gap: 16px; }
+    .avail-datepicker-title {
+      display: flex; align-items: center; gap: 8px;
+      font-family: var(--font-display); font-size: 13px; font-weight: 600;
+      color: rgba(255,255,255,.85); letter-spacing: .04em; text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .avail-datepicker-title svg { opacity: .7; }
+    .avail-datepicker-fields { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; flex: 1; }
+    .avail-field-wrap { display: flex; flex-direction: column; gap: 3px; }
+    .avail-label { font-size: 10px; font-weight: 600; color: rgba(255,255,255,.45); text-transform: uppercase; letter-spacing: .06em; }
+    .avail-input {
+      background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.14);
+      border-radius: 8px; padding: 8px 12px; color: #fff;
+      font-family: var(--font-body, inherit); font-size: 13px;
+      cursor: pointer; outline: none; transition: border-color .2s;
+      color-scheme: dark;
+    }
+    .avail-input:focus { border-color: rgba(255,90,95,.7); }
+    .avail-arrow { opacity: .4; flex-shrink: 0; color: #fff; margin-top: 14px; }
+    .avail-clear {
+      display: flex; align-items: center; gap: 6px;
+      background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.14);
+      border-radius: 8px; padding: 8px 12px; color: rgba(255,255,255,.7);
+      font-size: 12px; font-weight: 500; cursor: pointer; transition: background .2s;
+      margin-top: 14px;
+    }
+    .avail-clear:hover { background: rgba(255,255,255,.14); }
+    .avail-hint { font-size: 11px; color: rgba(255,255,255,.35); margin: 0; flex-basis: 100%; }
+
+    /* ── Availability badge on cards ── */
+    .avail-badge { min-height: 0; transition: all .2s; }
+    .avail-badge:empty { margin: 0; padding: 0; }
+    .avail-badge .badge-chip {
+      display: inline-flex; align-items: center; gap: 5px;
+      border-radius: 20px; padding: 4px 10px;
+      font-size: 11px; font-weight: 600; letter-spacing: .04em;
+      margin-bottom: 10px;
+    }
+    .avail-badge .badge-chip.loading { background: rgba(0,0,0,.06); color: #888; }
+    .avail-badge .badge-chip.available { background: #e6f9ee; color: #1a7a40; }
+    .avail-badge .badge-chip.unavailable { background: #fdecea; color: #c0392b; }
+    .avail-badge .badge-chip.no-ical { background: rgba(0,0,0,.06); color: #888; }
+    .avail-badge .badge-chip.book-link {
+      background: #FF5A5F; color: #fff; text-decoration: none; cursor: pointer;
+      transition: background .18s;
+    }
+    .avail-badge .badge-chip.book-link:hover { background: #e0474c; }
+    .prop-card.unavail { opacity: .5; }
+    .prop-card.unavail .prop-card-img { pointer-events: none; }
   </style>
 </head>
 <body>
@@ -199,16 +257,43 @@
         </button>
       </div>
 
+      <!-- Availability Date Picker -->
+      <div class="avail-datepicker reveal" id="availPicker">
+        <div class="avail-datepicker-inner">
+          <div class="avail-datepicker-title">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            Vérifier les disponibilités
+          </div>
+          <div class="avail-datepicker-fields">
+            <div class="avail-field-wrap">
+              <label class="avail-label" for="avCheckIn">Arrivée</label>
+              <input type="date" id="avCheckIn" class="avail-input" autocomplete="off" />
+            </div>
+            <svg class="avail-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            <div class="avail-field-wrap">
+              <label class="avail-label" for="avCheckOut">Départ</label>
+              <input type="date" id="avCheckOut" class="avail-input" autocomplete="off" />
+            </div>
+            <button class="avail-clear" id="avClear" aria-label="Effacer les dates" style="display:none">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              Effacer
+            </button>
+          </div>
+          <p class="avail-hint" id="avHint">Sélectionnez vos dates pour voir la disponibilité en temps réel</p>
+        </div>
+      </div>
+
       <!-- Properties Grid -->
       <div class="properties-grid">
 
         <!-- 1. IDEAL APPART AIN ZAGHOUAN -->
-        <div class="prop-card reveal" data-city="Ain Zaghouan" data-guests="4" data-rooms="2" style="transition: opacity 0.3s, transform 0.3s;">
+        <div class="prop-card reveal" data-city="Ain Zaghouan" data-guests="4" data-rooms="2" style="transition: opacity 0.3s, transform 0.3s;" data-slug="iaaz">
           <a href="https://airbnb.com/h/iaaz" class="prop-card-img" target="_blank" rel="noopener noreferrer">
             <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=600&q=80" alt="Ideal Appart Ain Zaghouan" loading="lazy" width="600" height="400" />
             <span class="prop-badge">Ain Zaghouan</span>
           </a>
           <div class="prop-card-body">
+            <div class="avail-badge" aria-live="polite"></div>
             <div class="prop-city">
               <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
               Résidence Hasdrubal, Ain Zaghouan
@@ -237,12 +322,13 @@
         </div>
 
         <!-- 2. IDEAL APPART LES PALMIERS -->
-        <div class="prop-card reveal" data-city="La Marsa" data-guests="3" data-rooms="1" style="transition: opacity 0.3s, transform 0.3s;">
+        <div class="prop-card reveal" data-city="La Marsa" data-guests="3" data-rooms="1" style="transition: opacity 0.3s, transform 0.3s;" data-slug="idealme">
           <a href="https://airbnb.com/h/idealme" class="prop-card-img" target="_blank" rel="noopener noreferrer">
             <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=600&q=80" alt="Ideal Appart Les Palmiers" loading="lazy" width="600" height="400" />
             <span class="prop-badge">La Marsa</span>
           </a>
           <div class="prop-card-body">
+            <div class="avail-badge" aria-live="polite"></div>
             <div class="prop-city">
               <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
               6 Rue des Palmiers, La Marsa
@@ -271,12 +357,13 @@
         </div>
 
         <!-- 3. IDEAL APPART MARSA JADE -->
-        <div class="prop-card reveal" data-city="La Marsa" data-guests="2" data-rooms="1" style="transition: opacity 0.3s, transform 0.3s;">
+        <div class="prop-card reveal" data-city="La Marsa" data-guests="2" data-rooms="1" style="transition: opacity 0.3s, transform 0.3s;" data-slug="idealappartmj">
           <a href="https://airbnb.com/h/idealappartmj" class="prop-card-img" target="_blank" rel="noopener noreferrer">
             <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=600&q=80" alt="Ideal Appart Marsa Jade" loading="lazy" width="600" height="400" />
             <span class="prop-badge">La Marsa</span>
           </a>
           <div class="prop-card-body">
+            <div class="avail-badge" aria-live="polite"></div>
             <div class="prop-city">
               <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
               Résidence Marsa Jade, La Marsa
@@ -301,12 +388,13 @@
         </div>
 
         <!-- 4. IDEAL APPART NORTH 22 -->
-        <div class="prop-card reveal" data-city="Ain Zaghouan" data-guests="4" data-rooms="1" style="transition: opacity 0.3s, transform 0.3s;">
+        <div class="prop-card reveal" data-city="Ain Zaghouan" data-guests="4" data-rooms="1" style="transition: opacity 0.3s, transform 0.3s;" data-slug="north22">
           <a href="https://airbnb.com/h/north22" class="prop-card-img" target="_blank" rel="noopener noreferrer">
             <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=600&q=80" alt="Ideal Appart North 22" loading="lazy" width="600" height="400" />
             <span class="prop-badge">Ain Zaghouan</span>
           </a>
           <div class="prop-card-body">
+            <div class="avail-badge" aria-live="polite"></div>
             <div class="prop-city">
               <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
               Résidence The 22, Ain Zaghouan Nord
@@ -335,12 +423,13 @@
         </div>
 
         <!-- 5. IDEAL APPART MARSA PRESTIGE -->
-        <div class="prop-card reveal" data-city="La Marsa" data-guests="2" data-rooms="1" style="transition: opacity 0.3s, transform 0.3s;">
+        <div class="prop-card reveal" data-city="La Marsa" data-guests="2" data-rooms="1" style="transition: opacity 0.3s, transform 0.3s;" data-slug="iamp">
           <a href="https://airbnb.com/h/iamp" class="prop-card-img" target="_blank" rel="noopener noreferrer">
             <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=600&q=80" alt="Ideal Appart Marsa Prestige" loading="lazy" width="600" height="400" />
             <span class="prop-badge">La Marsa</span>
           </a>
           <div class="prop-card-body">
+            <div class="avail-badge" aria-live="polite"></div>
             <div class="prop-city">
               <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
               Rue du Stade, La Marsa
@@ -365,12 +454,13 @@
         </div>
 
         <!-- 6. DAR HOUTA MREZGA -->
-        <div class="prop-card reveal" data-city="Mrezga" data-guests="4" data-rooms="1" style="transition: opacity 0.3s, transform 0.3s;">
+        <div class="prop-card reveal" data-city="Mrezga" data-guests="4" data-rooms="1" style="transition: opacity 0.3s, transform 0.3s;" data-slug="houta">
           <a href="https://airbnb.com/h/houta" class="prop-card-img" target="_blank" rel="noopener noreferrer">
             <img src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=600&q=80" alt="Dar Houta Mrezga" loading="lazy" width="600" height="400" />
             <span class="prop-badge">Mrezga</span>
           </a>
           <div class="prop-card-body">
+            <div class="avail-badge" aria-live="polite"></div>
             <div class="prop-city">
               <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
               Avenue Mrezga, Mrezga
@@ -399,12 +489,13 @@
         </div>
 
         <!-- 7. IDEAL APPART FRENCH STYLE -->
-        <div class="prop-card reveal" data-city="Ariana" data-guests="4" data-rooms="2" style="transition: opacity 0.3s, transform 0.3s;">
+        <div class="prop-card reveal" data-city="Ariana" data-guests="4" data-rooms="2" style="transition: opacity 0.3s, transform 0.3s;" data-slug="frenchst">
           <a href="https://airbnb.com/h/frenchst" class="prop-card-img" target="_blank" rel="noopener noreferrer">
             <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=600&q=80" alt="Ideal Appart French Style" loading="lazy" width="600" height="400" />
             <span class="prop-badge">Ariana</span>
           </a>
           <div class="prop-card-body">
+            <div class="avail-badge" aria-live="polite"></div>
             <div class="prop-city">
               <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
               Résidence Phoenix, Ariana
@@ -433,12 +524,13 @@
         </div>
 
         <!-- 8. IDEAL APPART EL WAHAT VIP -->
-        <div class="prop-card reveal" data-city="Ain Zaghouan" data-guests="3" data-rooms="1" style="transition: opacity 0.3s, transform 0.3s;">
+        <div class="prop-card reveal" data-city="Ain Zaghouan" data-guests="3" data-rooms="1" style="transition: opacity 0.3s, transform 0.3s;" data-slug="idealappartw">
           <a href="https://airbnb.com/h/idealappartw" class="prop-card-img" target="_blank" rel="noopener noreferrer">
             <img src="https://images.unsplash.com/photo-1779636599601-9d08ef2436d5?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Ideal Appart El Wahat VIP" loading="lazy" width="1074" height="716" />
             <span class="prop-badge">Ain Zaghouan</span>
           </a>
           <div class="prop-card-body">
+            <div class="avail-badge" aria-live="polite"></div>
             <div class="prop-city">
               <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
               Résidence Hanine, Ain Zaghouan
@@ -467,12 +559,13 @@
         </div>
 
         <!-- 9. IDEAL APPART GREEN CALLIGRAPHY -->
-        <div class="prop-card reveal" data-city="Ain Zaghouan" data-guests="4" data-rooms="1" style="transition: opacity 0.3s, transform 0.3s;">
+        <div class="prop-card reveal" data-city="Ain Zaghouan" data-guests="4" data-rooms="1" style="transition: opacity 0.3s, transform 0.3s;" data-slug="greencal">
           <a href="https://airbnb.com/h/greencal" class="prop-card-img" target="_blank" rel="noopener noreferrer">
             <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=600&q=80" alt="Ideal Appart Green Calligraphy" loading="lazy" width="600" height="400" />
             <span class="prop-badge">Ain Zaghouan</span>
           </a>
           <div class="prop-card-body">
+            <div class="avail-badge" aria-live="polite"></div>
             <div class="prop-city">
               <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
               Résidence Green 2, Ain Zaghouan Nord
@@ -497,12 +590,13 @@
         </div>
 
         <!-- 10. IDEAL APPART GREEN TOUCH -->
-        <div class="prop-card reveal" data-city="Ain Zaghouan" data-guests="3" data-rooms="1" style="transition: opacity 0.3s, transform 0.3s;">
+        <div class="prop-card reveal" data-city="Ain Zaghouan" data-guests="3" data-rooms="1" style="transition: opacity 0.3s, transform 0.3s;" data-slug="greent">
           <a href="https://airbnb.com/h/greent" class="prop-card-img" target="_blank" rel="noopener noreferrer">
             <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=600&q=80" alt="Ideal Appart Green Touch" loading="lazy" width="600" height="400" />
             <span class="prop-badge">Ain Zaghouan</span>
           </a>
           <div class="prop-card-body">
+            <div class="avail-badge" aria-live="polite"></div>
             <div class="prop-city">
               <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
               Résidence Green 2, Ain Zaghouan Nord
@@ -527,12 +621,13 @@
         </div>
 
         <!-- 11. IDEAL APPART GREEN VIBES -->
-        <div class="prop-card reveal" data-city="Ain Zaghouan" data-guests="4" data-rooms="1" style="transition: opacity 0.3s, transform 0.3s;">
+        <div class="prop-card reveal" data-city="Ain Zaghouan" data-guests="4" data-rooms="1" style="transition: opacity 0.3s, transform 0.3s;" data-slug="gnvibes">
           <a href="https://airbnb.com/h/gnvibes" class="prop-card-img" target="_blank" rel="noopener noreferrer">
             <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=600&q=80" alt="Ideal Appart Green Vibes" loading="lazy" width="600" height="400" />
             <span class="prop-badge">Ain Zaghouan</span>
           </a>
           <div class="prop-card-body">
+            <div class="avail-badge" aria-live="polite"></div>
             <div class="prop-city">
               <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
               Résidence Green 2, Ain Zaghouan Nord
@@ -557,12 +652,13 @@
         </div>
 
         <!-- 12. IDEAL APPART PARK SUITE -->
-        <div class="prop-card reveal" data-city="Ain Zaghouan" data-guests="4" data-rooms="1" style="transition: opacity 0.3s, transform 0.3s;">
+        <div class="prop-card reveal" data-city="Ain Zaghouan" data-guests="4" data-rooms="1" style="transition: opacity 0.3s, transform 0.3s;" data-slug="iamonta">
           <a href="https://airbnb.com/h/iamonta" class="prop-card-img" target="_blank" rel="noopener noreferrer">
             <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=600&q=80" alt="Ideal Appart Park Suite" loading="lazy" width="600" height="400" />
             <span class="prop-badge">Ain Zaghouan</span>
           </a>
           <div class="prop-card-body">
+            <div class="avail-badge" aria-live="polite"></div>
             <div class="prop-city">
               <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
               Résidence Montazah, Ain Zaghouan
@@ -591,12 +687,13 @@
         </div>
 
         <!-- 13. IDEAL APPART ZEPHYR GARDEN -->
-        <div class="prop-card reveal" data-city="Soukra" data-guests="3" data-rooms="1" style="transition: opacity 0.3s, transform 0.3s;">
+        <div class="prop-card reveal" data-city="Soukra" data-guests="3" data-rooms="1" style="transition: opacity 0.3s, transform 0.3s;" data-slug="zephyrg">
           <a href="https://airbnb.com/h/zephyrg" class="prop-card-img" target="_blank" rel="noopener noreferrer">
             <img src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=600&q=80" alt="Ideal Appart Zephyr Garden" loading="lazy" width="600" height="400" />
             <span class="prop-badge">Soukra</span>
           </a>
           <div class="prop-card-body">
+            <div class="avail-badge" aria-live="polite"></div>
             <div class="prop-city">
               <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
               Résidence Zephyr 2, Soukra
@@ -621,12 +718,13 @@
         </div>
 
         <!-- 14. MODERN MEETS BERBER HERITAGE -->
-        <div class="prop-card reveal" data-city="Lac 2" data-guests="2" data-rooms="1" style="transition: opacity 0.3s, transform 0.3s;">
+        <div class="prop-card reveal" data-city="Lac 2" data-guests="2" data-rooms="1" style="transition: opacity 0.3s, transform 0.3s;" data-slug="modern-meets-tuniso-berber-heritage">
           <a href="https://airbnb.com/h/modern-meets-tuniso-berber-heritage" class="prop-card-img" target="_blank" rel="noopener noreferrer">
             <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=600&q=80" alt="Modern Meets Berber Heritage" loading="lazy" width="600" height="400" />
             <span class="prop-badge">Lac 2</span>
           </a>
           <div class="prop-card-body">
+            <div class="avail-badge" aria-live="polite"></div>
             <div class="prop-city">
               <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
               Les Berges du Lac 2
@@ -651,12 +749,13 @@
         </div>
 
         <!-- 15. VILLA PUPPUTIA -->
-        <div class="prop-card reveal" data-city="Mrezga" data-guests="4" data-rooms="1" style="transition: opacity 0.3s, transform 0.3s;">
+        <div class="prop-card reveal" data-city="Mrezga" data-guests="4" data-rooms="1" style="transition: opacity 0.3s, transform 0.3s;" data-slug="pupput">
           <a href="https://airbnb.com/h/pupput" class="prop-card-img" target="_blank" rel="noopener noreferrer">
             <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=600&q=80" alt="Villa Pupputia" loading="lazy" width="600" height="400" />
             <span class="prop-badge">Mrezga</span>
           </a>
           <div class="prop-card-body">
+            <div class="avail-badge" aria-live="polite"></div>
             <div class="prop-city">
               <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
               Avenue Mrezga, Mrezga
@@ -685,12 +784,13 @@
         </div>
 
         <!-- 16. VILLA LES JASMINS -->
-        <div class="prop-card reveal" data-city="Mrezga" data-guests="9" data-rooms="5" style="transition: opacity 0.3s, transform 0.3s;">
+        <div class="prop-card reveal" data-city="Mrezga" data-guests="9" data-rooms="5" style="transition: opacity 0.3s, transform 0.3s;" data-slug="">
           <a href="#" class="prop-card-img" target="_blank" rel="noopener noreferrer">
             <img src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=600&q=80" alt="Villa les Jasmins" loading="lazy" width="600" height="400" />
             <span class="prop-badge">Mrezga</span>
           </a>
           <div class="prop-card-body">
+            <div class="avail-badge" aria-live="polite"></div>
             <div class="prop-city">
               <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
               Avenue Mrezga, Mrezga
@@ -803,5 +903,123 @@
   </footer>
 
   <script src="js/main.js"></script>
+  <script>
+  (function () {
+    const inEl  = document.getElementById('avCheckIn');
+    const outEl = document.getElementById('avCheckOut');
+    const clear = document.getElementById('avClear');
+    const hint  = document.getElementById('avHint');
+
+    // Set min date to today
+    const today = new Date().toISOString().slice(0, 10);
+    inEl.min  = today;
+    outEl.min = today;
+
+    inEl.addEventListener('change', onDateChange);
+    outEl.addEventListener('change', onDateChange);
+    clear.addEventListener('click', clearDates);
+
+    function onDateChange() {
+      const ci = inEl.value, co = outEl.value;
+      if (ci) { outEl.min = ci; }
+      if (ci && !co) return;          // wait for checkout
+      if (ci && co && co <= ci) {
+        outEl.value = '';
+        hint.textContent = 'La date de départ doit être après l\'arrivée.';
+        return;
+      }
+      if (ci && co) checkAll(ci, co);
+    }
+
+    function clearDates() {
+      inEl.value = ''; outEl.value = '';
+      outEl.min  = today;
+      clear.style.display = 'none';
+      hint.textContent = 'Sélectionnez vos dates pour voir la disponibilité en temps réel';
+      document.querySelectorAll('.prop-card').forEach(c => {
+        c.classList.remove('unavail');
+        const b = c.querySelector('.avail-badge');
+        if (b) b.innerHTML = '';
+      });
+    }
+
+    async function checkAll(ci, co) {
+      clear.style.display = 'flex';
+      hint.textContent = 'Vérification en cours…';
+
+      const cards = Array.from(document.querySelectorAll('.prop-card[data-slug]'));
+
+      // Show loading state
+      cards.forEach(card => {
+        const slug = card.dataset.slug;
+        const b = card.querySelector('.avail-badge');
+        if (!b) return;
+        if (!slug) {
+          b.innerHTML = chip('no-ical', '⬜', 'Nous contacter');
+        } else {
+          b.innerHTML = chip('loading', '…', 'Vérification');
+        }
+      });
+
+      // Fetch availability in parallel
+      const results = await Promise.allSettled(
+        cards.map(card => {
+          const slug = card.dataset.slug;
+          if (!slug) return Promise.resolve({ slug, available: null, reason: 'no_ical' });
+          return fetch(`/.netlify/functions/availability?slug=${encodeURIComponent(slug)}&checkin=${ci}&checkout=${co}`)
+            .then(r => r.json());
+        })
+      );
+
+      let availCount = 0, unavailCount = 0;
+
+      results.forEach((res, i) => {
+        const card = cards[i];
+        const b    = card.querySelector('.avail-badge');
+        if (!b) return;
+
+        const data = res.status === 'fulfilled' ? res.value : null;
+        const slug = card.dataset.slug;
+
+        if (!slug) {
+          b.innerHTML = chip('no-ical', '⬜', 'Nous contacter');
+          return;
+        }
+        if (!data || data.error) {
+          b.innerHTML = chip('loading', '?', 'Erreur réseau');
+          return;
+        }
+        if (data.available === null) {
+          b.innerHTML = chip('no-ical', '⬜', 'Non configuré');
+          return;
+        }
+        if (data.available) {
+          availCount++;
+          card.classList.remove('unavail');
+          const href = buildAirbnbUrl(slug, ci, co);
+          b.innerHTML = `<a href="${href}" class="badge-chip book-link available" target="_blank" rel="noopener">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            Disponible — Réserver
+          </a>`;
+        } else {
+          unavailCount++;
+          card.classList.add('unavail');
+          b.innerHTML = chip('unavailable', '✕', 'Indisponible');
+        }
+      });
+
+      const nights = Math.round((new Date(co) - new Date(ci)) / 86400000);
+      hint.textContent = `${availCount} bien${availCount !== 1 ? 's' : ''} disponible${availCount !== 1 ? 's' : ''} pour ${nights} nuit${nights !== 1 ? 's' : ''} · ${unavailCount} indisponible${unavailCount !== 1 ? 's' : ''}`;
+    }
+
+    function chip(cls, icon, label) {
+      return `<div class="badge-chip ${cls}">${icon} ${label}</div>`;
+    }
+
+    function buildAirbnbUrl(slug, ci, co) {
+      return `https://www.airbnb.com/h/${slug}?check_in=${ci}&check_out=${co}`;
+    }
+  })();
+  </script>
 </body>
 </html>
