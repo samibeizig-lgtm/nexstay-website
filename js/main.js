@@ -444,6 +444,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // reset date availability filter
       window._availActive = false;
       document.querySelectorAll('.prop-card[data-avail]').forEach(c => c.removeAttribute('data-avail'));
+      document.querySelectorAll('.prop-card[data-hidden]').forEach(c => c.removeAttribute('data-hidden'));
       document.querySelectorAll('.avail-badge').forEach(b => b.innerHTML = '');
       const ci = document.getElementById('avCheckIn');
       const co = document.getElementById('avCheckOut');

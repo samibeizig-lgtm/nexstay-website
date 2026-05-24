@@ -139,6 +139,11 @@
       margin-bottom: 8px; transition: background .18s;
     }
     .avail-book-btn:hover { background: #e0474c; }
+
+    /* availability filter — !important overrides .reveal opacity:0 */
+    .prop-card[data-hidden] {
+      display: none !important;
+    }
   </style>
 </head>
 <body>
@@ -921,9 +926,7 @@
             var avail = slug ? results[slug] : null;
 
             if (avail === true) {
-              card.style.display   = '';
-              card.style.opacity   = '1';
-              card.style.transform = '';
+              card.removeAttribute('data-hidden');
               if (badge && slug) {
                 var href = 'https://www.airbnb.com/h/' + slug + '?check_in=' + ci + '&check_out=' + co;
                 badge.innerHTML = '<a href="' + href + '" class="avail-book-btn" target="_blank" rel="noopener">'
@@ -931,9 +934,7 @@
                   + ' Réserver sur Airbnb</a>';
               }
             } else {
-              card.style.opacity   = '0';
-              card.style.transform = 'scale(0.95)';
-              setTimeout(function () { card.style.display = 'none'; }, 300);
+              card.setAttribute('data-hidden', '1');
             }
           });
 
