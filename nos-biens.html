@@ -898,35 +898,40 @@
 
       const cards = Array.from(document.querySelectorAll('.prop-card[data-slug]'));
 
-      const results = await Promise.allSettled(
-        cards.map(card => {
-          const slug = card.dataset.slug;
-          if (!slug) return Promise.resolve({ available: null });
-          return fetch(`/.netlify/functions/availability?slug=${encodeURIComponent(slug)}&checkin=${ci}&checkout=${co}`)
-            .then(r => r.json());
-        })
-      );
+      // Fetch each property — never rejects (errors return null)
+      const fetches = cards.map(card => {
+        const slug = card.dataset.slug;
+        if (!slug) return Promise.resolve(null);
+        const url = `/.netlify/functions/availability?slug=${encodeURIComponent(slug)}&checkin=${ci}&checkout=${co}`;
+        return fetch(url)
+          .then(r => r.ok ? r.json() : null)
+          .catch(() => null);
+      });
+
+      const results = await Promise.all(fetches);
 
       window._availActive = true;
 
-      results.forEach((res, i) => {
-        const card = cards[i];
-        const slug = card.dataset.slug;
-        const data = res.status === 'fulfilled' ? res.value : null;
+      results.forEach((data, i) => {
+        const card  = cards[i];
+        const slug  = card.dataset.slug;
         const badge = card.querySelector('.avail-badge');
 
-        if (!slug || !data || data.available === null) {
-          card.dataset.avail = 'false'; // non configuré → cacher
-        } else if (data.available) {
+        if (data && data.available === true) {
+          // Confirmed available
           card.dataset.avail = 'true';
-          if (badge) {
+          if (badge && slug) {
             const href = `https://www.airbnb.com/h/${slug}?check_in=${ci}&check_out=${co}`;
             badge.innerHTML = `<a href="${href}" class="avail-book-btn" target="_blank" rel="noopener">
               <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
               Réserver sur Airbnb
             </a>`;
           }
+        } else if (data && data.available === false) {
+          // Confirmed unavailable
+          card.dataset.avail = 'false';
         } else {
+          // No iCal configured or error → hide (dates active but unknown)
           card.dataset.avail = 'false';
         }
       });
