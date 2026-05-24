@@ -4,7 +4,7 @@
 
   <!-- Homepage — priorité maximale -->
   <url>
-    <loc>https://nexstay.tn/</loc>
+    <loc>https://www.nexstay.tn/</loc>
     <lastmod>2026-05-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
@@ -12,7 +12,7 @@
 
   <!-- Propriétaires — page commerciale clé -->
   <url>
-    <loc>https://nexstay.tn/proprietaires.html</loc>
+    <loc>https://www.nexstay.tn/proprietaires.html</loc>
     <lastmod>2026-05-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
@@ -20,7 +20,7 @@
 
   <!-- Services -->
   <url>
-    <loc>https://nexstay.tn/services.html</loc>
+    <loc>https://www.nexstay.tn/services.html</loc>
     <lastmod>2026-05-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
@@ -28,7 +28,7 @@
 
   <!-- Nos biens -->
   <url>
-    <loc>https://nexstay.tn/nos-biens.html</loc>
+    <loc>https://www.nexstay.tn/nos-biens.html</loc>
     <lastmod>2026-05-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -36,7 +36,7 @@
 
   <!-- À propos -->
   <url>
-    <loc>https://nexstay.tn/about.html</loc>
+    <loc>https://www.nexstay.tn/about.html</loc>
     <lastmod>2026-05-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -44,7 +44,7 @@
 
   <!-- Contact -->
   <url>
-    <loc>https://nexstay.tn/contact.html</loc>
+    <loc>https://www.nexstay.tn/contact.html</loc>
     <lastmod>2026-05-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>

@@ -10,7 +10,7 @@ Allow: /js/main.js
 Allow: /css/style.css
 
 # Sitemap
-Sitemap: https://nexstay.tn/sitemap.xml
+Sitemap: https://www.nexstay.tn/sitemap.xml
 
 # Temps de crawl recommandé (en secondes)
 Crawl-delay: 1
