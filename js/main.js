@@ -395,16 +395,18 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   function applyFilters() {
     propCards.forEach(card => {
-      const cityOk = activeCity === 'all' || card.getAttribute('data-city') === activeCity;
+      const cityOk   = activeCity === 'all' || card.getAttribute('data-city') === activeCity;
       const guestsOk = minGuests === 'all' || parseInt(card.getAttribute('data-guests') || 0) >= parseInt(minGuests);
       const roomsOk  = minRooms  === 'all' || parseInt(card.getAttribute('data-rooms')  || 0) >= parseInt(minRooms);
-      cityOk && guestsOk && roomsOk ? showCard(card) : hideCard(card);
+      const availOk  = !window._availActive || card.getAttribute('data-avail') !== 'false';
+      cityOk && guestsOk && roomsOk && availOk ? showCard(card) : hideCard(card);
     });
     if (filterReset) {
-      const active = activeCity !== 'all' || minGuests !== 'all' || minRooms !== 'all';
+      const active = activeCity !== 'all' || minGuests !== 'all' || minRooms !== 'all' || window._availActive;
       filterReset.style.display = active ? '' : 'none';
     }
   }
+  window._applyFilters = applyFilters;
 
   if (filterBtns.length && propCards.length) {
     filterBtns.forEach(btn => {
@@ -436,6 +438,13 @@ document.addEventListener('DOMContentLoaded', () => {
       filterBtns.forEach(b => b.classList.toggle('active', b.getAttribute('data-filter') === 'all'));
       if (filterGuests) { filterGuests.value = 'all'; filterGuests.classList.remove('is-active'); }
       if (filterRooms)  { filterRooms.value  = 'all'; filterRooms.classList.remove('is-active'); }
+      // reset date availability filter
+      window._availActive = false;
+      document.querySelectorAll('.prop-card[data-avail]').forEach(c => c.removeAttribute('data-avail'));
+      const ci = document.getElementById('avCheckIn');
+      const co = document.getElementById('avCheckOut');
+      if (ci) { ci.value = ''; ci.classList.remove('is-active'); }
+      if (co) { co.value = ''; co.classList.remove('is-active'); }
       applyFilters();
     });
   }

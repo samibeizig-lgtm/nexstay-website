@@ -93,63 +93,29 @@
       transform: translateX(-50%) translateY(0);
     }
 
-    /* ── Availability Date Picker ── */
-    .avail-datepicker {
-      background: var(--dark, #1a1a2e);
-      border-radius: 14px;
-      padding: 18px 24px;
-      margin-bottom: 24px;
+    /* ── Date filter inputs (same style as .filter-select) ── */
+    .date-filter-input {
+      font-family: var(--font-display);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      padding: 10px 12px 10px 34px;
+      border-radius: 30px;
+      border: 1.5px solid var(--light-gray);
+      color: var(--gray);
+      background: var(--white);
+      cursor: pointer;
+      outline: none;
+      transition: border-color 0.25s, color 0.25s;
+      width: 148px;
     }
-    .avail-datepicker-inner { display: flex; align-items: center; flex-wrap: wrap; gap: 16px; }
-    .avail-datepicker-title {
-      display: flex; align-items: center; gap: 8px;
-      font-family: var(--font-display); font-size: 13px; font-weight: 600;
-      color: rgba(255,255,255,.85); letter-spacing: .04em; text-transform: uppercase;
-      white-space: nowrap;
-    }
-    .avail-datepicker-title svg { opacity: .7; }
-    .avail-datepicker-fields { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; flex: 1; }
-    .avail-field-wrap { display: flex; flex-direction: column; gap: 3px; }
-    .avail-label { font-size: 10px; font-weight: 600; color: rgba(255,255,255,.45); text-transform: uppercase; letter-spacing: .06em; }
-    .avail-input {
-      background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.14);
-      border-radius: 8px; padding: 8px 12px; color: #fff;
-      font-family: var(--font-body, inherit); font-size: 13px;
-      cursor: pointer; outline: none; transition: border-color .2s;
-      color-scheme: dark;
-    }
-    .avail-input:focus { border-color: rgba(255,90,95,.7); }
-    .avail-arrow { opacity: .4; flex-shrink: 0; color: #fff; margin-top: 14px; }
-    .avail-clear {
-      display: flex; align-items: center; gap: 6px;
-      background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.14);
-      border-radius: 8px; padding: 8px 12px; color: rgba(255,255,255,.7);
-      font-size: 12px; font-weight: 500; cursor: pointer; transition: background .2s;
-      margin-top: 14px;
-    }
-    .avail-clear:hover { background: rgba(255,255,255,.14); }
-    .avail-hint { font-size: 11px; color: rgba(255,255,255,.35); margin: 0; flex-basis: 100%; }
+    .date-filter-input:hover,
+    .date-filter-input:focus { border-color: var(--terracotta); color: var(--dark); }
+    .date-filter-input.is-active { border-color: var(--terracotta); color: var(--terracotta); }
 
     /* ── Availability badge on cards ── */
-    .avail-badge { min-height: 0; transition: all .2s; }
+    .avail-badge { min-height: 0; }
     .avail-badge:empty { margin: 0; padding: 0; }
-    .avail-badge .badge-chip {
-      display: inline-flex; align-items: center; gap: 5px;
-      border-radius: 20px; padding: 4px 10px;
-      font-size: 11px; font-weight: 600; letter-spacing: .04em;
-      margin-bottom: 10px;
-    }
-    .avail-badge .badge-chip.loading { background: rgba(0,0,0,.06); color: #888; }
-    .avail-badge .badge-chip.available { background: #e6f9ee; color: #1a7a40; }
-    .avail-badge .badge-chip.unavailable { background: #fdecea; color: #c0392b; }
-    .avail-badge .badge-chip.no-ical { background: rgba(0,0,0,.06); color: #888; }
-    .avail-badge .badge-chip.book-link {
-      background: #FF5A5F; color: #fff; text-decoration: none; cursor: pointer;
-      transition: background .18s;
-    }
-    .avail-badge .badge-chip.book-link:hover { background: #e0474c; }
-    .prop-card.unavail { opacity: .5; }
-    .prop-card.unavail .prop-card-img { pointer-events: none; }
   </style>
 </head>
 <body>
@@ -251,36 +217,19 @@
             <option value="5">5+ chambres</option>
           </select>
         </div>
+        <div class="filter-select-wrap">
+          <svg class="filter-select-icon" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          <input type="date" id="avCheckIn" class="date-filter-input" aria-label="Date d'arrivée" autocomplete="off" />
+        </div>
+        <svg width="12" height="12" fill="none" stroke="var(--light-gray)" stroke-width="2" viewBox="0 0 24 24" style="flex-shrink:0"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        <div class="filter-select-wrap">
+          <svg class="filter-select-icon" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          <input type="date" id="avCheckOut" class="date-filter-input" aria-label="Date de départ" autocomplete="off" />
+        </div>
         <button class="filter-reset" id="filterReset" aria-label="Réinitialiser les filtres" style="display:none;">
           <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
           Réinitialiser
         </button>
-      </div>
-
-      <!-- Availability Date Picker -->
-      <div class="avail-datepicker reveal" id="availPicker">
-        <div class="avail-datepicker-inner">
-          <div class="avail-datepicker-title">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-            Vérifier les disponibilités
-          </div>
-          <div class="avail-datepicker-fields">
-            <div class="avail-field-wrap">
-              <label class="avail-label" for="avCheckIn">Arrivée</label>
-              <input type="date" id="avCheckIn" class="avail-input" autocomplete="off" />
-            </div>
-            <svg class="avail-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            <div class="avail-field-wrap">
-              <label class="avail-label" for="avCheckOut">Départ</label>
-              <input type="date" id="avCheckOut" class="avail-input" autocomplete="off" />
-            </div>
-            <button class="avail-clear" id="avClear" aria-label="Effacer les dates" style="display:none">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-              Effacer
-            </button>
-          </div>
-          <p class="avail-hint" id="avHint">Sélectionnez vos dates pour voir la disponibilité en temps réel</p>
-        </div>
       </div>
 
       <!-- Properties Grid -->
@@ -907,117 +856,54 @@
   (function () {
     const inEl  = document.getElementById('avCheckIn');
     const outEl = document.getElementById('avCheckOut');
-    const clear = document.getElementById('avClear');
-    const hint  = document.getElementById('avHint');
+    if (!inEl || !outEl) return;
 
-    // Set min date to today
     const today = new Date().toISOString().slice(0, 10);
     inEl.min  = today;
     outEl.min = today;
 
     inEl.addEventListener('change', onDateChange);
     outEl.addEventListener('change', onDateChange);
-    clear.addEventListener('click', clearDates);
 
     function onDateChange() {
       const ci = inEl.value, co = outEl.value;
-      if (ci) { outEl.min = ci; }
-      if (ci && !co) return;          // wait for checkout
-      if (ci && co && co <= ci) {
-        outEl.value = '';
-        hint.textContent = 'La date de départ doit être après l\'arrivée.';
-        return;
-      }
-      if (ci && co) checkAll(ci, co);
-    }
-
-    function clearDates() {
-      inEl.value = ''; outEl.value = '';
-      outEl.min  = today;
-      clear.style.display = 'none';
-      hint.textContent = 'Sélectionnez vos dates pour voir la disponibilité en temps réel';
-      document.querySelectorAll('.prop-card').forEach(c => {
-        c.classList.remove('unavail');
-        const b = c.querySelector('.avail-badge');
-        if (b) b.innerHTML = '';
-      });
+      if (ci) outEl.min = ci;
+      if (!ci || !co) return;
+      if (co <= ci) { outEl.value = ''; return; }
+      checkAll(ci, co);
     }
 
     async function checkAll(ci, co) {
-      clear.style.display = 'flex';
-      hint.textContent = 'Vérification en cours…';
+      inEl.classList.add('is-active');
+      outEl.classList.add('is-active');
+      window._availActive = false;
+      document.querySelectorAll('.prop-card[data-slug]').forEach(c => c.removeAttribute('data-avail'));
+      if (window._applyFilters) window._applyFilters();
 
       const cards = Array.from(document.querySelectorAll('.prop-card[data-slug]'));
 
-      // Show loading state
-      cards.forEach(card => {
-        const slug = card.dataset.slug;
-        const b = card.querySelector('.avail-badge');
-        if (!b) return;
-        if (!slug) {
-          b.innerHTML = chip('no-ical', '⬜', 'Nous contacter');
-        } else {
-          b.innerHTML = chip('loading', '…', 'Vérification');
-        }
-      });
-
-      // Fetch availability in parallel
       const results = await Promise.allSettled(
         cards.map(card => {
           const slug = card.dataset.slug;
-          if (!slug) return Promise.resolve({ slug, available: null, reason: 'no_ical' });
+          if (!slug) return Promise.resolve({ available: null });
           return fetch(`/.netlify/functions/availability?slug=${encodeURIComponent(slug)}&checkin=${ci}&checkout=${co}`)
             .then(r => r.json());
         })
       );
 
-      let availCount = 0, unavailCount = 0;
+      window._availActive = true;
 
       results.forEach((res, i) => {
         const card = cards[i];
-        const b    = card.querySelector('.avail-badge');
-        if (!b) return;
-
         const data = res.status === 'fulfilled' ? res.value : null;
-        const slug = card.dataset.slug;
-
-        if (!slug) {
-          b.innerHTML = chip('no-ical', '⬜', 'Nous contacter');
-          return;
-        }
-        if (!data || data.error) {
-          b.innerHTML = chip('loading', '?', 'Erreur réseau');
-          return;
-        }
-        if (data.available === null) {
-          b.innerHTML = chip('no-ical', '⬜', 'Non configuré');
-          return;
-        }
-        if (data.available) {
-          availCount++;
-          card.classList.remove('unavail');
-          const href = buildAirbnbUrl(slug, ci, co);
-          b.innerHTML = `<a href="${href}" class="badge-chip book-link available" target="_blank" rel="noopener">
-            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-            Disponible — Réserver
-          </a>`;
+        if (!data || data.available === null) {
+          card.dataset.avail = 'true'; // unknown → show
         } else {
-          unavailCount++;
-          card.classList.add('unavail');
-          b.innerHTML = chip('unavailable', '✕', 'Indisponible');
+          card.dataset.avail = data.available ? 'true' : 'false';
         }
       });
 
-      const nights = Math.round((new Date(co) - new Date(ci)) / 86400000);
-      hint.textContent = `${availCount} bien${availCount !== 1 ? 's' : ''} disponible${availCount !== 1 ? 's' : ''} pour ${nights} nuit${nights !== 1 ? 's' : ''} · ${unavailCount} indisponible${unavailCount !== 1 ? 's' : ''}`;
-    }
-
-    function chip(cls, icon, label) {
-      return `<div class="badge-chip ${cls}">${icon} ${label}</div>`;
-    }
-
-    function buildAirbnbUrl(slug, ci, co) {
-      return `https://www.airbnb.com/h/${slug}?check_in=${ci}&check_out=${co}`;
+      if (window._applyFilters) window._applyFilters();
     }
   })();
   </script>
