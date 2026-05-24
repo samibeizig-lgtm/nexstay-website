@@ -378,6 +378,18 @@
     </div>
   </nav>
 
+  <!-- ANCHOR NAV -->
+  <nav class="page-anchor-nav" aria-label="Sections de la page">
+    <ul class="page-anchor-list-h">
+      <li><a href="#avantages" class="page-anchor-link-h">Pourquoi Nexstay</a></li>
+      <li><a href="#smartCalc" class="page-anchor-link-h">Simulateur</a></li>
+      <li><a href="#tre" class="page-anchor-link-h">TRE</a></li>
+      <li><a href="#etapes" class="page-anchor-link-h">Comment rejoindre</a></li>
+      <li><a href="#avis" class="page-anchor-link-h">Avis</a></li>
+      <li><a href="#faq-prop" class="page-anchor-link-h">FAQ</a></li>
+    </ul>
+  </nav>
+
   <!-- PAGE HERO -->
   <section class="page-hero-prop">
     <div class="page-hero-bg">
@@ -390,7 +402,7 @@
   </section>
 
   <!-- 1. BENEFITS SECTION -->
-  <section class="section bg-off-white">
+  <section id="avantages" class="section bg-off-white" style="scroll-margin-top:calc(var(--nav-h) + 44px);">
     <div class="container" style="margin-bottom:60px;">
       <div class="section-label reveal"><span class="section-label-line"></span><span class="section-label-text">Pourquoi nous choisir</span></div>
       <h2 class="display-md reveal reveal-delay-1">Pourquoi choisir Nexstay&nbsp;?</h2>
@@ -430,7 +442,7 @@
   </section>
 
   <!-- 2. REVENUE CALCULATOR -->
-  <div id="smartCalc" class="calc-split" style="scroll-margin-top:var(--nav-h);">
+  <div id="smartCalc" class="calc-split" style="scroll-margin-top:calc(var(--nav-h) + 44px);">
     <div class="calc-split-left">
       <div class="section-label reveal" style="margin-bottom:20px;"><span class="section-label-line"></span><span class="section-label-text">Simulateur</span></div>
       <h2 class="display-md white reveal reveal-delay-1" style="margin-bottom:20px;">Estimez vos revenus<br>potentiels</h2>
@@ -545,7 +557,7 @@
   </div>
 
   <!-- TRE SECTION -->
-  <section class="section" id="tre" style="background:var(--dark);scroll-margin-top:var(--nav-h);">
+  <section class="section" id="tre" style="background:var(--dark);scroll-margin-top:calc(var(--nav-h) + 44px);">
     <div class="container">
 
       <div class="tre-header">
@@ -630,7 +642,7 @@
   </section>
 
   <!-- 3. HOW IT WORKS -->
-  <section class="section" style="background:var(--white);">
+  <section id="etapes" class="section" style="background:var(--white);scroll-margin-top:calc(var(--nav-h) + 44px);">
     <div class="container-sm">
       <div class="section-header">
         <div class="section-label reveal"><span class="section-label-line"></span><span class="section-label-text">Processus</span></div>
@@ -683,7 +695,7 @@
   </section>
 
   <!-- 4. TESTIMONIALS -->
-  <section class="section testimonials-section">
+  <section id="avis" class="section testimonials-section" style="scroll-margin-top:calc(var(--nav-h) + 44px);">
     <div class="container">
       <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:60px;">
         <div>
@@ -748,7 +760,7 @@
   </section>
 
   <!-- 5. FAQ FOR OWNERS -->
-  <section class="section" style="background:var(--white);">
+  <section id="faq-prop" class="section" style="background:var(--white);scroll-margin-top:calc(var(--nav-h) + 44px);">
     <div class="container-sm">
       <div class="section-header">
         <div class="section-label reveal"><span class="section-label-line"></span><span class="section-label-text">Vos questions</span></div>
@@ -875,5 +887,24 @@
   </footer>
 
   <script src="js/main.js"></script>
+  <script>
+    (function(){
+      var links = document.querySelectorAll('.page-anchor-link-h');
+      var ids = ['avantages','smartCalc','tre','etapes','avis','faq-prop'];
+      var sections = ids.map(function(id){ return document.getElementById(id); }).filter(Boolean);
+      if(!links.length || !sections.length) return;
+      var navH = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nav-h')) || 80;
+      var anchorH = 44;
+      var offset = navH + anchorH + 10;
+      function setActive(){
+        var scrollY = window.scrollY;
+        var active = sections[0];
+        sections.forEach(function(s){ if(s.getBoundingClientRect().top + scrollY - offset <= scrollY) active = s; });
+        links.forEach(function(l){ l.classList.toggle('is-active', l.getAttribute('href') === '#' + active.id); });
+      }
+      window.addEventListener('scroll', setActive, {passive:true});
+      setActive();
+    })();
+  </script>
 </body>
 </html>

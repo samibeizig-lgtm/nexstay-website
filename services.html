@@ -324,6 +324,20 @@
     </div>
   </nav>
 
+  <!-- ANCHOR NAV -->
+  <nav class="page-anchor-nav" aria-label="Sections de la page">
+    <ul class="page-anchor-list-h">
+      <li><a href="#conciergerie" class="page-anchor-link-h">Conciergerie</a></li>
+      <li><a href="#checkin" class="page-anchor-link-h">Accueil</a></li>
+      <li><a href="#menage" class="page-anchor-link-h">Ménage</a></li>
+      <li><a href="#revenus" class="page-anchor-link-h">Revenus</a></li>
+      <li><a href="#photo" class="page-anchor-link-h">Photographie</a></li>
+      <li><a href="#support" class="page-anchor-link-h">Support 24/7</a></li>
+      <li><a href="#formules" class="page-anchor-link-h">Formules</a></li>
+      <li><a href="#faq-services" class="page-anchor-link-h">FAQ</a></li>
+    </ul>
+  </nav>
+
   <!-- PAGE HERO -->
   <section class="page-hero-services">
     <div class="page-hero-bg">
@@ -365,7 +379,7 @@
   <!-- 2. SERVICES DETAIL -->
 
   <!-- Service 1: Gestion locative — image LEFT / content RIGHT (bg white) -->
-  <div class="service-split">
+  <div id="conciergerie" class="service-split" style="scroll-margin-top:calc(var(--nav-h) + 40px)">
     <div class="service-split-image reveal-left">
       <img src="https://images.unsplash.com/photo-1434626881859-194d67b2b86f?auto=format&fit=crop&w=800&q=80" alt="Gestion locative complète" loading="lazy" />
     </div>
@@ -391,7 +405,7 @@
   </div>
 
   <!-- Service 2: Accueil & Check-in VIP — content LEFT (bg dark) / image RIGHT -->
-  <div class="service-split">
+  <div id="checkin" class="service-split" style="scroll-margin-top:calc(var(--nav-h) + 40px)">
     <div class="service-split-content" style="background:var(--dark);">
       <span class="service-split-num reveal" style="color:var(--terracotta);">Service 02</span>
       <h2 class="service-split-title white reveal reveal-delay-1">Accueil &amp; Check-in assisté</h2>
@@ -429,7 +443,7 @@
   </div>
 
   <!-- Service 3: Ménage — image LEFT / content RIGHT (bg white) -->
-  <div class="service-split">
+  <div id="menage" class="service-split" style="scroll-margin-top:calc(var(--nav-h) + 40px)">
     <div class="service-split-image reveal-left">
       <img src="https://images.unsplash.com/photo-1527515545081-5db817172677?auto=format&fit=crop&w=800&q=80" alt="Ménage professionnel" loading="lazy" />
     </div>
@@ -467,7 +481,7 @@
   </div>
 
   <!-- Service 4: Optimisation — content LEFT (bg dark) / image RIGHT -->
-  <div class="service-split">
+  <div id="revenus" class="service-split" style="scroll-margin-top:calc(var(--nav-h) + 40px)">
     <div class="service-split-content" style="background:var(--dark);">
       <span class="service-split-num reveal" style="color:var(--terracotta);">Service 04</span>
       <h2 class="service-split-title white reveal reveal-delay-1">Optimisation des revenus</h2>
@@ -505,7 +519,7 @@
   </div>
 
   <!-- Service 5: Photographie — image LEFT / content RIGHT (bg white) -->
-  <div class="service-split">
+  <div id="photo" class="service-split" style="scroll-margin-top:calc(var(--nav-h) + 40px)">
     <div class="service-split-image reveal-left">
       <img src="https://images.unsplash.com/photo-1542038784456-1ea8e935640e?auto=format&fit=crop&w=800&q=80" alt="Photographie professionnelle" loading="lazy" />
     </div>
@@ -543,7 +557,7 @@
   </div>
 
   <!-- Service 6: Support 24/7 — content LEFT (bg dark) / image RIGHT -->
-  <div class="service-split">
+  <div id="support" class="service-split" style="scroll-margin-top:calc(var(--nav-h) + 40px)">
     <div class="service-split-content" style="background:var(--dark);">
       <span class="service-split-num reveal" style="color:var(--terracotta);">Service 06</span>
       <h2 class="service-split-title white reveal reveal-delay-1">Support voyageurs 24/7</h2>
@@ -658,7 +672,7 @@
   </section>
 
   <!-- 4. FAQ SECTION -->
-  <section class="section" style="background:var(--white);">
+  <section id="faq-services" class="section" style="background:var(--white);scroll-margin-top:calc(var(--nav-h) + 40px);">
     <div class="container-sm">
       <div class="section-header">
         <div class="section-label reveal"><span class="section-label-line"></span><span class="section-label-text">FAQ</span></div>
@@ -794,5 +808,24 @@
   </footer>
 
   <script src="js/main.js"></script>
+  <script>
+    (function(){
+      var links = document.querySelectorAll('.page-anchor-link-h');
+      var ids = ['conciergerie','checkin','menage','revenus','photo','support','formules','faq-services'];
+      var sections = ids.map(function(id){ return document.getElementById(id); }).filter(Boolean);
+      if(!links.length || !sections.length) return;
+      var navH = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nav-h')) || 80;
+      var anchorH = 44;
+      var offset = navH + anchorH + 10;
+      function setActive(){
+        var scrollY = window.scrollY;
+        var active = sections[0];
+        sections.forEach(function(s){ if(s.getBoundingClientRect().top + scrollY - offset <= scrollY) active = s; });
+        links.forEach(function(l){ l.classList.toggle('is-active', l.getAttribute('href') === '#' + active.id); });
+      }
+      window.addEventListener('scroll', setActive, {passive:true});
+      setActive();
+    })();
+  </script>
 </body>
 </html>
