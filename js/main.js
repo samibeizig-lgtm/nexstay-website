@@ -376,25 +376,67 @@ document.addEventListener('DOMContentLoaded', () => {
   // ── PROPERTY FILTER ───────────────────────────
   const filterBtns = document.querySelectorAll('.filter-btn');
   const propCards = document.querySelectorAll('.prop-card[data-city]');
+  const filterGuests = document.getElementById('filterGuests');
+  const filterRooms = document.getElementById('filterRooms');
+  const filterReset = document.getElementById('filterReset');
+
+  let activeCity = 'all';
+  let minGuests = 'all';
+  let minRooms = 'all';
+
+  function showCard(card) {
+    card.style.display = '';
+    setTimeout(() => { card.style.opacity = 1; card.style.transform = ''; }, 10);
+  }
+  function hideCard(card) {
+    card.style.opacity = 0;
+    card.style.transform = 'scale(0.95)';
+    setTimeout(() => { card.style.display = 'none'; }, 300);
+  }
+  function applyFilters() {
+    propCards.forEach(card => {
+      const cityOk = activeCity === 'all' || card.getAttribute('data-city') === activeCity;
+      const guestsOk = minGuests === 'all' || parseInt(card.getAttribute('data-guests') || 0) >= parseInt(minGuests);
+      const roomsOk  = minRooms  === 'all' || parseInt(card.getAttribute('data-rooms')  || 0) >= parseInt(minRooms);
+      cityOk && guestsOk && roomsOk ? showCard(card) : hideCard(card);
+    });
+    if (filterReset) {
+      const active = activeCity !== 'all' || minGuests !== 'all' || minRooms !== 'all';
+      filterReset.style.display = active ? '' : 'none';
+    }
+  }
 
   if (filterBtns.length && propCards.length) {
     filterBtns.forEach(btn => {
       btn.addEventListener('click', () => {
-        const city = btn.getAttribute('data-filter');
+        activeCity = btn.getAttribute('data-filter');
         filterBtns.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
-
-        propCards.forEach(card => {
-          if (city === 'all' || card.getAttribute('data-city') === city) {
-            card.style.display = '';
-            setTimeout(() => { card.style.opacity = 1; card.style.transform = ''; }, 10);
-          } else {
-            card.style.opacity = 0;
-            card.style.transform = 'scale(0.95)';
-            setTimeout(() => { card.style.display = 'none'; }, 300);
-          }
-        });
+        applyFilters();
       });
+    });
+  }
+  if (filterGuests) {
+    filterGuests.addEventListener('change', () => {
+      minGuests = filterGuests.value;
+      filterGuests.classList.toggle('is-active', minGuests !== 'all');
+      applyFilters();
+    });
+  }
+  if (filterRooms) {
+    filterRooms.addEventListener('change', () => {
+      minRooms = filterRooms.value;
+      filterRooms.classList.toggle('is-active', minRooms !== 'all');
+      applyFilters();
+    });
+  }
+  if (filterReset) {
+    filterReset.addEventListener('click', () => {
+      activeCity = 'all'; minGuests = 'all'; minRooms = 'all';
+      filterBtns.forEach(b => b.classList.toggle('active', b.getAttribute('data-filter') === 'all'));
+      if (filterGuests) { filterGuests.value = 'all'; filterGuests.classList.remove('is-active'); }
+      if (filterRooms)  { filterRooms.value  = 'all'; filterRooms.classList.remove('is-active'); }
+      applyFilters();
     });
   }
 
