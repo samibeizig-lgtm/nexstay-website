@@ -6,7 +6,7 @@
 (function () {
   const GKEY = 'AIzaSyBhu0EBc9ZEWf6effAuxDn_JW4VCuXXej0';
   const API = 'https://places.googleapis.com/v1';
-  const STAR = '<svg class=”star” viewBox=”0 0 24 24”><path d=”M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z”/></svg>';
+  const STAR = '<svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>';
 
   function getPerView() {
     return window.innerWidth > 1024 ? 3 : window.innerWidth > 600 ? 2 : 1;
@@ -108,11 +108,11 @@
     var card = document.createElement('div');
     card.className = 'testimonial-card';
     card.innerHTML =
-      '<div class=”testimonial-stars”>' + STAR.repeat(Math.min(5, Math.max(0, Math.floor(r.rating || 0)))) + '</div>' +
-      '<p class=”testimonial-text”>”' + esc(text) + '”</p>' +
-      '<div class=”testimonial-author”><div class=”testimonial-avatar-slot”></div>' +
-      '<div><div class=”testimonial-name”>' + esc(name) + '</div>' +
-      '<div class=”testimonial-role” style=”color:var(--terracotta);”>★ Google · ' + esc(time) + '</div>' +
+      '<div class="testimonial-stars">' + STAR.repeat(Math.min(5, Math.max(0, Math.floor(r.rating || 0)))) + '</div>' +
+      '<p class="testimonial-text">"' + esc(text) + '"</p>' +
+      '<div class="testimonial-author"><div class="testimonial-avatar-slot"></div>' +
+      '<div><div class="testimonial-name">' + esc(name) + '</div>' +
+      '<div class="testimonial-role" style="color:var(--terracotta);">★ Google · ' + esc(time) + '</div>' +
       '</div></div>';
     var slot = card.querySelector('.testimonial-avatar-slot');
     if (slot) slot.replaceWith(avatarEl);
