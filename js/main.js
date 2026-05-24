@@ -83,11 +83,45 @@
       .replace(/"/g, '&quot;');
   }
 
+  function buildCard(r) {
+    var name     = (r.authorAttribution && r.authorAttribution.displayName) || 'Anonyme';
+    var photoUri = (r.authorAttribution && r.authorAttribution.photoUri)    || '';
+    var rawText  = (r.text && r.text.text) || '';
+    var text     = rawText.length > 280 ? rawText.slice(0, 277) + '…' : rawText;
+    var time     = r.relativePublishTimeDescription || '';
+    var initials = name.split(' ').map(function (w) { return w[0] || ''; }).join('').slice(0, 2).toUpperCase() || '?';
+
+    var avatarEl = document.createElement('div');
+    avatarEl.className = 'testimonial-avatar';
+    avatarEl.textContent = initials;
+    if (photoUri) {
+      var img = new Image();
+      img.onload = function () {
+        img.style.cssText = 'width:100%;height:100%;object-fit:cover;border-radius:50%;';
+        img.alt = '';
+        avatarEl.textContent = '';
+        avatarEl.appendChild(img);
+      };
+      img.src = photoUri;
+    }
+
+    var card = document.createElement('div');
+    card.className = 'testimonial-card';
+    card.innerHTML =
+      '<div class=”testimonial-stars”>' + STAR.repeat(Math.min(5, Math.max(0, Math.floor(r.rating || 0)))) + '</div>' +
+      '<p class=”testimonial-text”>”' + esc(text) + '”</p>' +
+      '<div class=”testimonial-author”><div class=”testimonial-avatar-slot”></div>' +
+      '<div><div class=”testimonial-name”>' + esc(name) + '</div>' +
+      '<div class=”testimonial-role” style=”color:var(--terracotta);”>★ Google · ' + esc(time) + '</div>' +
+      '</div></div>';
+    var slot = card.querySelector('.testimonial-avatar-slot');
+    if (slot) slot.replaceWith(avatarEl);
+    return card;
+  }
+
   function renderGoogleReviews(place) {
     const grid = document.getElementById('reviews-grid');
-    const outer = document.getElementById('reviews-outer');
-    const track = document.getElementById('reviews-track');
-    if (!track || !grid || !outer) return;
+    if (!grid) return;
 
     // Update badge
     const gRating = document.getElementById('g-rating');
@@ -101,51 +135,12 @@
     if (place.userRatingCount && gCount) gCount.textContent = place.userRatingCount + ' avis Google';
     if (place.googleMapsUri   && gLink)  gLink.href = place.googleMapsUri;
 
-    var reviews = (place.reviews || []).filter(function (r) { return r.rating >= 4; }).slice(0, 5);
+    var reviews = (place.reviews || []).filter(function (r) { return r.rating >= 4; }).slice(0, 3);
     if (!reviews.length) return;
 
-    // Build cards
-    track.innerHTML = '';
-    reviews.forEach(function (r) {
-      var name     = (r.authorAttribution && r.authorAttribution.displayName) || 'Anonyme';
-      var photoUri = (r.authorAttribution && r.authorAttribution.photoUri)    || '';
-      var rawText  = (r.text && r.text.text) || '';
-      var text     = rawText.length > 280 ? rawText.slice(0, 277) + '…' : rawText;
-      var time     = r.relativePublishTimeDescription || '';
-      var initials = name.split(' ').map(function (w) { return w[0] || ''; }).join('').slice(0, 2).toUpperCase() || '?';
-
-      var avatarEl = document.createElement('div');
-      avatarEl.className = 'testimonial-avatar';
-      avatarEl.textContent = initials;
-      if (photoUri) {
-        var img = new Image();
-        img.onload = function () {
-          img.style.cssText = 'width:100%;height:100%;object-fit:cover;border-radius:50%;';
-          img.alt = '';
-          avatarEl.textContent = '';
-          avatarEl.appendChild(img);
-        };
-        img.src = photoUri;
-      }
-
-      var card = document.createElement('div');
-      card.className = 'testimonial-card';
-      card.innerHTML =
-        '<div class=”testimonial-stars”>' + STAR.repeat(Math.min(5, Math.max(0, Math.floor(r.rating || 0)))) + '</div>' +
-        '<p class=”testimonial-text”>“' + esc(text) + '”</p>' +
-        '<div class=”testimonial-author”><div class=”testimonial-avatar-slot”></div>' +
-        '<div><div class=”testimonial-name”>' + esc(name) + '</div>' +
-        '<div class=”testimonial-role” style=”color:var(--terracotta);”>★ Google · ' + esc(time) + '</div>' +
-        '</div></div>';
-      var slot = card.querySelector('.testimonial-avatar-slot');
-      if (slot) slot.replaceWith(avatarEl);
-      track.appendChild(card);
-    });
-
-    // Swap grid → carousel
-    grid.style.display  = 'none';
-    outer.style.display = 'block';
-    initCarousel();
+    // Replace static cards in the existing grid — no carousel, no layout calculation
+    grid.innerHTML = '';
+    reviews.forEach(function (r) { grid.appendChild(buildCard(r)); });
   }
 
   async function loadGoogleReviews() {
