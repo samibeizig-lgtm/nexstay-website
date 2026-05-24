@@ -1,0 +1,16 @@
+User-agent: *
+Allow: /
+
+# Exclure les fichiers non pertinents pour le SEO
+Disallow: /js/
+Disallow: /css/
+
+# Autoriser les ressources nécessaires au rendu
+Allow: /js/main.js
+Allow: /css/style.css
+
+# Sitemap
+Sitemap: https://nexstay.tn/sitemap.xml
+
+# Temps de crawl recommandé (en secondes)
+Crawl-delay: 1
