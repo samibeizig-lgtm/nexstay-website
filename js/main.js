@@ -441,10 +441,11 @@ document.addEventListener('DOMContentLoaded', () => {
       // reset date availability filter
       window._availActive = false;
       document.querySelectorAll('.prop-card[data-avail]').forEach(c => c.removeAttribute('data-avail'));
+      document.querySelectorAll('.avail-badge').forEach(b => b.innerHTML = '');
       const ci = document.getElementById('avCheckIn');
       const co = document.getElementById('avCheckOut');
-      if (ci) { ci.value = ''; ci.classList.remove('is-active'); }
-      if (co) { co.value = ''; co.classList.remove('is-active'); }
+      if (ci) { ci.value = ''; ci.closest('.date-pill')?.classList.remove('is-active'); }
+      if (co) { co.value = ''; co.closest('.date-pill')?.classList.remove('is-active'); }
       applyFilters();
     });
   }
