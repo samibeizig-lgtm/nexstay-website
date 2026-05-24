@@ -338,6 +338,13 @@ button {
   box-shadow: 0 1px 0 rgba(255,255,255,0.06);
 }
 
+.nav.nav-dark {
+  background: rgba(30, 30, 30, 0.97);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 1px 0 rgba(255,255,255,0.06);
+}
+
 .nav.nav-light.scrolled {
   background: rgba(248, 245, 241, 0.97);
   box-shadow: 0 1px 0 rgba(0,0,0,0.06);
