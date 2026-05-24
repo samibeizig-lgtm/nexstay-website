@@ -117,6 +117,16 @@
     .date-pill.is-active svg,
     .date-pill.is-active .date-pill-label,
     .date-pill.is-active .date-pill-input { color: var(--terracotta); }
+    .avail-search-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: var(--font-display); font-size: 12px; font-weight: 600;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 10px 18px; border-radius: 30px;
+      background: var(--terracotta); color: #fff; border: none;
+      cursor: pointer; transition: background 0.2s; white-space: nowrap;
+    }
+    .avail-search-btn:hover { background: #c0392b; }
+    .avail-search-btn:disabled { background: var(--light-gray); cursor: default; }
 
     /* ── Availability badge on cards ── */
     .avail-badge { min-height: 0; }
@@ -241,6 +251,10 @@
           <span class="date-pill-label">Date check out</span>
           <input type="date" id="avCheckOut" class="date-pill-input" aria-label="Date de départ" autocomplete="off" />
         </div>
+        <button class="avail-search-btn" id="avSearch" aria-label="Rechercher les disponibilités">
+          <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          Rechercher
+        </button>
         <button class="filter-reset" id="filterReset" aria-label="Réinitialiser les filtres" style="display:none;">
           <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
           Réinitialiser
@@ -868,74 +882,76 @@
 
   <script src="js/main.js"></script>
   <script>
-  (function () {
-    const inEl  = document.getElementById('avCheckIn');
-    const outEl = document.getElementById('avCheckOut');
-    if (!inEl || !outEl) return;
+  document.addEventListener('DOMContentLoaded', function () {
+    var inEl   = document.getElementById('avCheckIn');
+    var outEl  = document.getElementById('avCheckOut');
+    var btnEl  = document.getElementById('avSearch');
+    if (!inEl || !outEl || !btnEl) return;
 
-    const today = new Date().toISOString().slice(0, 10);
-    inEl.min  = today;
+    var today = new Date().toISOString().slice(0, 10);
+    inEl.min = today;
     outEl.min = today;
+    inEl.addEventListener('change', function () { if (inEl.value) outEl.min = inEl.value; });
 
-    inEl.addEventListener('change', onDateChange);
-    outEl.addEventListener('change', onDateChange);
-
-    function onDateChange() {
-      const ci = inEl.value, co = outEl.value;
-      if (ci) outEl.min = ci;
-      if (!ci || !co) return;
-      if (co <= ci) { outEl.value = ''; return; }
+    btnEl.addEventListener('click', function () {
+      var ci = inEl.value, co = outEl.value;
+      if (!ci || !co) { alert('Sélectionnez une date d\'arrivée et de départ.'); return; }
+      if (co <= ci)   { alert('La date de départ doit être après l\'arrivée.'); return; }
       checkAll(ci, co);
-    }
+    });
 
-    async function checkAll(ci, co) {
-      inEl.closest('.date-pill')?.classList.add('is-active');
-      outEl.closest('.date-pill')?.classList.add('is-active');
-      window._availActive = false;
-      document.querySelectorAll('.prop-card[data-slug]').forEach(c => c.removeAttribute('data-avail'));
-      document.querySelectorAll('.avail-badge').forEach(b => b.innerHTML = '');
-      if (window._applyFilters) window._applyFilters();
+    function checkAll(ci, co) {
+      btnEl.disabled = true;
+      btnEl.textContent = '…';
 
-      const cards = Array.from(document.querySelectorAll('.prop-card[data-slug]'));
+      document.getElementById('datePillIn').classList.add('is-active');
+      document.getElementById('datePillOut').classList.add('is-active');
+      document.querySelectorAll('.avail-badge').forEach(function (b) { b.innerHTML = ''; });
 
-      // Fetch each property — never rejects (errors return null)
-      const fetches = cards.map(card => {
-        const slug = card.dataset.slug;
+      var cards = Array.from(document.querySelectorAll('.prop-card[data-slug]'));
+
+      // Show all first
+      cards.forEach(function (c) {
+        c.style.display = '';
+        c.style.opacity = '1';
+        c.style.transform = '';
+      });
+
+      var fetches = cards.map(function (card) {
+        var slug = card.dataset.slug;
         if (!slug) return Promise.resolve(null);
-        const url = `/.netlify/functions/availability?slug=${encodeURIComponent(slug)}&checkin=${ci}&checkout=${co}`;
-        return fetch(url)
-          .then(r => r.ok ? r.json() : null)
-          .catch(() => null);
+        var url = '/.netlify/functions/availability?slug=' + encodeURIComponent(slug) + '&checkin=' + ci + '&checkout=' + co;
+        return fetch(url).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; });
       });
 
-      const results = await Promise.all(fetches);
+      Promise.all(fetches).then(function (results) {
+        results.forEach(function (data, i) {
+          var card  = cards[i];
+          var slug  = card.dataset.slug;
+          var badge = card.querySelector('.avail-badge');
 
-      window._availActive = true;
-      const show = window._showCard || (c => { c.style.display = ''; c.style.opacity = '1'; c.style.transform = ''; });
-      const hide = window._hideCard || (c => { c.style.opacity = '0'; c.style.transform = 'scale(0.95)'; setTimeout(() => { c.style.display = 'none'; }, 300); });
-
-      results.forEach((data, i) => {
-        const card  = cards[i];
-        const slug  = card.dataset.slug;
-        const badge = card.querySelector('.avail-badge');
-
-        if (data && data.available === true) {
-          card.dataset.avail = 'true';
-          show(card);
-          if (badge && slug) {
-            const href = `https://www.airbnb.com/h/${slug}?check_in=${ci}&check_out=${co}`;
-            badge.innerHTML = `<a href="${href}" class="avail-book-btn" target="_blank" rel="noopener">
-              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-              Réserver sur Airbnb
-            </a>`;
+          if (data && data.available === true) {
+            card.style.display  = '';
+            card.style.opacity  = '1';
+            card.style.transform = '';
+            if (badge && slug) {
+              var href = 'https://www.airbnb.com/h/' + slug + '?check_in=' + ci + '&check_out=' + co;
+              badge.innerHTML = '<a href="' + href + '" class="avail-book-btn" target="_blank" rel="noopener">'
+                + '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>'
+                + ' Réserver sur Airbnb</a>';
+            }
+          } else {
+            card.style.opacity   = '0';
+            card.style.transform = 'scale(0.95)';
+            setTimeout(function () { card.style.display = 'none'; }, 300);
           }
-        } else {
-          card.dataset.avail = 'false';
-          hide(card);
-        }
+        });
+
+        btnEl.disabled = false;
+        btnEl.innerHTML = '<svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> Rechercher';
       });
     }
-  })();
+  });
   </script>
 </body>
 </html>
