@@ -919,7 +919,7 @@
 
       var cards = Array.from(document.querySelectorAll('.prop-card[data-slug]'));
 
-      fetch('https://nexstaysite.vercel.app/api/check-all?checkin=' + ci + '&checkout=' + co)
+      fetch('/api/check-all?checkin=' + ci + '&checkout=' + co)
         .then(function (r) { return r.ok ? r.json() : { results: {} }; })
         .catch(function () { return { results: {} }; })
         .then(function (data) {
