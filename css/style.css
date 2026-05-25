@@ -401,6 +401,32 @@ button {
   gap: 40px;
 }
 
+/* ===================== LANGUAGE SWITCHER ===================== */
+.lang-switcher {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-left: 12px;
+  flex-shrink: 0;
+}
+.lang-link {
+  color: rgba(255, 255, 255, 0.45);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.lang-link:hover { color: var(--white); }
+.lang-active { color: var(--terracotta); }
+.lang-sep { color: rgba(255, 255, 255, 0.25); font-weight: 300; }
+.lang-switcher-mobile {
+  margin-top: 16px;
+  justify-content: center;
+  font-size: 13px;
+}
+
 .nav-link {
   font-family: var(--font-display);
   font-size: 13px;
