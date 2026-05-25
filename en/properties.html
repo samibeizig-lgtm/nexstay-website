@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- SEO Primary -->
+  <title>Our Managed Airbnb Properties — Apartments & Villas in Tunis | Nexstay</title>
+  <meta name="description" content="Discover the apartments and villas managed by Nexstay Conciergerie in Tunisia: La Marsa, Ain Zaghouan, Ariana, La Soukra, Berges du Lac. Premium short-term rentals on Airbnb." />
+  <meta name="keywords" content="Airbnb apartment La Marsa, short-term rental Tunis, villa Airbnb Ain Zaghouan, vacation rental Tunisia, Airbnb apartment Ariana, seasonal rental Tunis, Nexstay managed properties, short-term rental Berges du Lac" />
+  <meta name="robots" content="index, follow" />
+  <meta name="author" content="Nexstay Conciergerie" />
+  <link rel="canonical" href="https://www.nexstay.tn/en/properties.html" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="en_TN" />
+  <meta property="og:site_name" content="Nexstay Conciergerie" />
+  <meta property="og:title" content="Our Managed Airbnb Properties in Tunisia — Nexstay" />
+  <meta property="og:description" content="Apartments and villas managed by Nexstay in La Marsa, Ain Zaghouan, Ariana, Berges du Lac. Premium short-term rentals in Tunisia." />
+  <meta property="og:url" content="https://www.nexstay.tn/en/properties.html" />
+  <meta property="og:image" content="https://www.nexstay.tn/img/og-nexstay.jpg" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Our Managed Airbnb Properties in Tunisia — Nexstay" />
+  <meta name="twitter:description" content="Apartments and villas managed by Nexstay Conciergerie in Tunis, La Marsa, Ain Zaghouan and more." />
+  <meta name="twitter:image" content="https://www.nexstay.tn/img/og-nexstay.jpg" />
+
+  <!-- Schema.org ItemList for properties -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "Airbnb Managed Properties — Nexstay Conciergerie Tunisia",
+    "description": "Portfolio of real estate properties managed by Nexstay Conciergerie in Tunisia for short-term rental",
+    "itemListOrder": "https://schema.org/ItemListUnordered",
+    "numberOfItems": 6,
+    "itemListElement": [
+      {"@type": "ListItem", "position": 1, "name": "La Marsa Apartment — Nexstay", "description": "Premium apartment managed by Nexstay in La Marsa, Tunisia"},
+      {"@type": "ListItem", "position": 2, "name": "Ain Zaghouan Apartment — Nexstay", "description": "Modern apartment under Airbnb management in Ain Zaghouan"},
+      {"@type": "ListItem", "position": 3, "name": "Ariana Apartment — Nexstay", "description": "Short-term rental property in Ariana, managed by Nexstay"},
+      {"@type": "ListItem", "position": 4, "name": "Berges du Lac Apartment — Nexstay", "description": "Seasonal rental at Berges du Lac, Tunis"},
+      {"@type": "ListItem", "position": 5, "name": "La Soukra Apartment — Nexstay", "description": "Professionally managed Airbnb property in La Soukra"},
+      {"@type": "ListItem", "position": 6, "name": "Mrezga Apartment — Nexstay", "description": "Short-term rental in Mrezga managed by Nexstay"}
+    ]
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.nexstay.tn/en/index.html"},
+      {"@type": "ListItem", "position": 2, "name": "Our Properties", "item": "https://www.nexstay.tn/en/properties.html"}
+    ]
+  }
+  </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400&family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&display=swap" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <style>
+    a.prop-card-img {
+      display: block;
+      text-decoration: none;
+    }
+    a.prop-card-img::after {
+      content: 'View on Airbnb ↗';
+      position: absolute;
+      bottom: 16px;
+      left: 50%;
+      transform: translateX(-50%) translateY(10px);
+      background: rgba(255,90,95,0.93);
+      color: #fff;
+      padding: 7px 18px;
+      border-radius: 30px;
+      font-family: var(--font-display);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      opacity: 0;
+      transition: opacity 0.22s, transform 0.22s;
+      white-space: nowrap;
+      pointer-events: none;
+      z-index: 3;
+    }
+    a.prop-card-img:hover::after {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* ── Date filter pill ── */
+    .date-pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 10px 14px; border-radius: 30px;
+      border: 1.5px solid var(--light-gray);
+      background: var(--white); cursor: pointer;
+      transition: border-color 0.25s;
+    }
+    .date-pill:hover, .date-pill:focus-within { border-color: var(--terracotta); }
+    .date-pill svg { color: var(--gray); flex-shrink: 0; transition: color 0.25s; }
+    .date-pill-label {
+      font-family: var(--font-display); font-size: 12px; font-weight: 600;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--gray); white-space: nowrap; transition: color 0.25s;
+    }
+    .date-pill-input {
+      border: none; background: transparent; padding: 0; outline: none;
+      font-family: var(--font-display); font-size: 12px; font-weight: 600;
+      color: var(--gray); cursor: pointer; width: 110px;
+    }
+    .date-pill.is-active { border-color: var(--terracotta); }
+    .date-pill.is-active svg,
+    .date-pill.is-active .date-pill-label,
+    .date-pill.is-active .date-pill-input { color: var(--terracotta); }
+    .avail-search-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: var(--font-display); font-size: 12px; font-weight: 600;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 10px 18px; border-radius: 30px;
+      background: var(--terracotta); color: #fff; border: none;
+      cursor: pointer; transition: background 0.2s; white-space: nowrap;
+    }
+    .avail-search-btn:hover { background: #c0392b; }
+    .avail-search-btn:disabled { background: var(--light-gray); cursor: default; }
+
+    /* ── Availability badge on cards ── */
+    .avail-badge { min-height: 0; }
+    .avail-badge:empty { margin: 0; padding: 0; }
+    .avail-book-btn {
+      display: inline-flex; align-items: center; gap: 5px;
+      background: #FF5A5F; color: #fff; text-decoration: none;
+      padding: 5px 12px; border-radius: 20px;
+      font-size: 11px; font-weight: 600; letter-spacing: .04em;
+      margin-bottom: 8px; transition: background .18s;
+    }
+    .avail-book-btn:hover { background: #e0474c; }
+
+    /* availability filter — !important overrides .reveal opacity:0 */
+    .prop-card[data-hidden] {
+      display: none !important;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVIGATION -->
+  <nav class="nav nav-dark" id="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <div class="nav-logo-text"><span class="logo-nex">Nex</span><span class="logo-stay">stay</span></div>
+        <span class="nav-logo-sub">Conciergerie</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="services.html" class="nav-link">Services</a></li>
+        <li><a href="owners.html" class="nav-link">Owners</a></li>
+        <li><a href="properties.html" class="nav-link">Our Properties</a></li>
+        <li><a href="about.html" class="nav-link">About</a></li>
+        <li><a href="blog.html" class="nav-link">Blog</a></li>
+        <li><a href="contact.html" class="btn btn-primary nav-cta"><span>Contact Us</span></a></li>
+      </ul>
+      <div class="lang-switcher"><a href="/nos-biens.html" class="lang-link">FR</a><span class="lang-sep">|</span><span class="lang-active">EN</span></div>
+      <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <div class="nav-mobile">
+    <a href="services.html" class="nav-link">Services</a>
+    <a href="owners.html" class="nav-link">Owners</a>
+    <a href="properties.html" class="nav-link">Our Properties</a>
+    <a href="about.html" class="nav-link">About</a>
+    <a href="blog.html" class="nav-link">Blog</a>
+    <a href="contact.html" class="btn btn-primary btn-lg"><span>Contact Us</span></a>
+    <div class="lang-switcher lang-switcher-mobile"><a href="/nos-biens.html" class="lang-link">FR</a><span class="lang-sep">|</span><span class="lang-active">EN</span></div>
+  </div>
+
+  <nav class="breadcrumb-bar" aria-label="Breadcrumb">
+    <div class="container">
+      <ol class="breadcrumb-list">
+        <li itemscope itemtype="https://schema.org/ListItem" itemprop="item">
+          <a href="index.html" class="breadcrumb-link" itemprop="item" href="index.html">
+            <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            <span itemprop="name">Home</span>
+          </a>
+          <meta itemprop="position" content="1" />
+        </li>
+        <li itemscope itemtype="https://schema.org/ListItem" itemprop="item" aria-current="page">
+          <span class="breadcrumb-current" itemprop="name">Our Properties</span>
+          <meta itemprop="position" content="2" />
+        </li>
+      </ol>
+    </div>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <section class="page-hero">
+    <div class="page-hero-bg">
+      <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1920&q=80" alt="Our managed properties" width="1920" height="1080" />
+    </div>
+    <div class="page-hero-content">
+      <div class="container">
+        <div class="section-label reveal">
+          <span class="section-label-line"></span>
+          <span class="section-label-text">Portfolio</span>
+        </div>
+        <h1 class="display-lg white reveal reveal-delay-1" style="margin-top:16px;max-width:760px;">Our Properties<br><em style="font-family:var(--font-serif);font-weight:300;color:var(--terracotta);">under management</em></h1>
+        <p class="body-lg reveal reveal-delay-2" style="color:rgba(255,255,255,0.65);margin-top:24px;max-width:560px;">Discover our portfolio of properties in Tunisia — carefully selected apartments and villas for an exceptional guest experience.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FILTER + GRID -->
+  <section class="section bg-off-white">
+    <div class="container">
+
+      <!-- Filter Bar -->
+      <div class="filter-bar reveal">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="La Marsa">La Marsa</button>
+        <button class="filter-btn" data-filter="Ain Zaghouan">Ain Zaghouan</button>
+        <button class="filter-btn" data-filter="Ariana">Ariana</button>
+        <button class="filter-btn" data-filter="Mrezga">Mrezga</button>
+        <button class="filter-btn" data-filter="Soukra">Soukra</button>
+        <button class="filter-btn" data-filter="Lac 2">Lac 2</button>
+      </div>
+
+      <!-- Secondary filters: capacity & rooms -->
+      <div class="filter-bar filter-bar-secondary reveal">
+        <div class="filter-select-wrap">
+          <svg class="filter-select-icon" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+          <select class="filter-select" id="filterGuests" aria-label="Filter by capacity">
+            <option value="all">Capacity</option>
+            <option value="2">2+ guests</option>
+            <option value="3">3+ guests</option>
+            <option value="4">4+ guests</option>
+            <option value="6">6+ guests</option>
+            <option value="9">9 guests</option>
+          </select>
+        </div>
+        <div class="filter-select-wrap">
+          <svg class="filter-select-icon" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>
+          <select class="filter-select" id="filterRooms" aria-label="Filter by number of bedrooms">
+            <option value="all">Bedrooms</option>
+            <option value="1">1+ bedroom</option>
+            <option value="2">2+ bedrooms</option>
+            <option value="5">5+ bedrooms</option>
+          </select>
+        </div>
+        <div class="date-pill" id="datePillIn">
+          <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          <span class="date-pill-label">Check-in date</span>
+          <input type="date" id="avCheckIn" class="date-pill-input" aria-label="Check-in date" autocomplete="off" />
+        </div>
+        <svg width="12" height="12" fill="none" stroke="var(--light-gray)" stroke-width="2" viewBox="0 0 24 24" style="flex-shrink:0"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        <div class="date-pill" id="datePillOut">
+          <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          <span class="date-pill-label">Check-out date</span>
+          <input type="date" id="avCheckOut" class="date-pill-input" aria-label="Check-out date" autocomplete="off" />
+        </div>
+        <button class="avail-search-btn" id="avSearch" aria-label="Search availability">
+          <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          Search
+        </button>
+        <button class="filter-reset" id="filterReset" aria-label="Reset filters" style="display:none;">
+          <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          Reset
+        </button>
+      </div>
+
+      <!-- Availability status message -->
+      <p id="availStatus" style="font-family:var(--font-display);font-size:13px;color:var(--gray);margin:0 0 8px;min-height:1.4em;"></p>
+
+      <!-- Properties Grid -->
+      <div class="properties-grid">
+
+        <!-- 1. IDEAL APPART AIN ZAGHOUAN -->
+        <div class="prop-card reveal" data-city="Ain Zaghouan" data-guests="4" data-rooms="2" style="transition: opacity 0.3s, transform 0.3s;" data-slug="iaaz">
+          <a href="https://airbnb.com/h/iaaz" class="prop-card-img" target="_blank" rel="noopener noreferrer">
+            <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=600&q=80" alt="Ideal Appart Ain Zaghouan" loading="lazy" width="600" height="400" />
+            <span class="prop-badge">Ain Zaghouan</span>
+          </a>
+          <div class="prop-card-body">
+            <div class="avail-badge" aria-live="polite"></div>
+            <div class="prop-city">
+              <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              Résidence Hasdrubal, Ain Zaghouan
+            </div>
+            <div class="prop-name">Ideal Appart Ain Zaghouan</div>
+            <div class="prop-features">
+              <div class="prop-feature">
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>
+                2 bedrooms
+              </div>
+              <div class="prop-feature">
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+                4 guests
+              </div>
+              <div class="prop-feature">
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 17v2a1 1 0 001 1h14a1 1 0 001-1v-2"/><path d="M3 10h18v7H3z"/><path d="M6 10V6a6 6 0 0112 0v4"/></svg>
+                1 bathroom
+              </div>
+            </div>
+            <div class="tags" style="margin-top:12px;">
+              <span class="tag">WiFi</span>
+              <span class="tag">Air Conditioning</span>
+              <span class="tag">Parking</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. IDEAL APPART LES PALMIERS -->
+        <div class="prop-card reveal" data-city="La Marsa" data-guests="3" data-rooms="1" style="transition: opacity 0.3s, transform 0.3s;" data-slug="idealme">
+          <a href="https://airbnb.com/h/idealme" class="prop-card-img" target="_blank" rel="noopener noreferrer">
+            <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=600&q=80" alt="Ideal Appart Les Palmiers" loading="lazy" width="600" height="400" />
+            <span class="prop-badge">La Marsa</span>
+          </a>
+          <div class="prop-card-body">
+            <div class="avail-badge" aria-live="polite"></div>
+            <div class="prop-city">
+              <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              6 Rue des Palmiers, La Marsa
+            </div>
+            <div class="prop-name">Ideal Appart Les Palmiers</div>
+            <div class="prop-features">
+              <div class="prop-feature">
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>
+                1 bedroom
+              </div>
+              <div class="prop-feature">
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+                3 guests
+              </div>
+              <div class="prop-feature">
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+                Pool
+              </div>
+            </div>
+            <div class="tags" style="margin-top:12px;">
+              <span class="tag">Pool</span>
+              <span class="tag">Garden</span>
+              <span class="tag">WiFi</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. IDEAL APPART MARSA JADE -->
+        <div class="prop-card reveal" data-city="La Marsa" data-guests="2" data-rooms="1" style="transition: opacity 0.3s, transform 0.3s;" data-slug="idealappartmj">
+          <a href="https://airbnb.com/h/idealappartmj" class="prop-card-img" target="_blank" rel="noopener noreferrer">
+            <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=600&q=80" alt="Ideal Appart Marsa Jade" loading="lazy" width="600" height="400" />
+            <span class="prop-badge">La Marsa</span>
+          </a>
+          <div class="prop-card-body">
+            <div class="avail-badge" aria-live="polite"></div>
+            <div class="prop-city">
+              <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              Résidence Marsa Jade, La Marsa
+            </div>
+            <div class="prop-name">Ideal Appart Marsa Jade</div>
+            <div class="prop-features">
+              <div class="prop-feature">
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>
+                1 bedroom
+              </div>
+              <div class="prop-feature">
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+                2 guests
+              </div>
+            </div>
+            <div class="tags" style="margin-top:12px;">
+              <span class="tag">WiFi</span>
+              <span class="tag">Air Conditioning</span>
+              <span class="tag">Sea View</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. IDEAL APPART NORTH 22 -->
+        <div class="prop-card reveal" data-city="Ain Zaghouan" data-guests="4" data-rooms="1" style="transition: opacity 0.3s, transform 0.3s;" data-slug="north22">
+          <a href="https://airbnb.com/h/north22" class="prop-card-img" target="_blank" rel="noopener noreferrer">
+            <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=600&q=80" alt="Ideal Appart North 22" loading="lazy" width="600" height="400" />
+            <span class="prop-badge">Ain Zaghouan</span>
+          </a>
+          <div class="prop-card-body">
+            <div class="avail-badge" aria-live="polite"></div>
+            <div class="prop-city">
+              <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              Résidence The 22, Ain Zaghouan Nord
+            </div>
+            <div class="prop-name">Ideal Appart North 22</div>
+            <div class="prop-features">
+              <div class="prop-feature">
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>
+                1 bedroom
+              </div>
+              <div class="prop-feature">
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+                4 guests
+              </div>
+              <div class="prop-feature">
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="15" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg>
+                Balcony
+              </div>
+            </div>
+            <div class="tags" style="margin-top:12px;">
+              <span class="tag">Balcony</span>
+              <span class="tag">WiFi</span>
+              <span class="tag">Air Conditioning</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5. IDEAL APPART MARSA PRESTIGE -->
+        <div class="prop-card reveal" data-city="La Marsa" data-guests="2" data-rooms="1" style="transition: opacity 0.3s, transform 0.3s;" data-slug="iamp">
+          <a href="https://airbnb.com/h/iamp" class="prop-card-img" target="_blank" rel="noopener noreferrer">
+            <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=600&q=80" alt="Ideal Appart Marsa Prestige" loading="lazy" width="600" height="400" />
+            <span class="prop-badge">La Marsa</span>
+          </a>
+          <div class="prop-card-body">
+            <div class="avail-badge" aria-live="polite"></div>
+            <div class="prop-city">
+              <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              Rue du Stade, La Marsa
+            </div>
+            <div class="prop-name">Ideal Appart Marsa Prestige</div>
+            <div class="prop-features">
+              <div class="prop-feature">
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>
+                1 bedroom
+              </div>
+              <div class="prop-feature">
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+                2 guests
+              </div>
+            </div>
+            <div class="tags" style="margin-top:12px;">
+              <span class="tag">WiFi</span>
+              <span class="tag">Air Conditioning</span>
+              <span class="tag">Parking</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 6. DAR HOUTA MREZGA -->
+        <div class="prop-card reveal" data-city="Mrezga" data-guests="4" data-rooms="1" style="transition: opacity 0.3s, transform 0.3s;" data-slug="houta">
+          <a href="https://airbnb.com/h/houta" class="prop-card-img" target="_blank" rel="noopener noreferrer">
+            <img src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=600&q=80" alt="Dar Houta Mrezga" loading="lazy" width="600" height="400" />
+            <span class="prop-badge">Mrezga</span>
+          </a>
+          <div class="prop-card-body">
+            <div class="avail-badge" aria-live="polite"></div>
+            <div class="prop-city">
+              <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              Avenue Mrezga, Mrezga
+            </div>
+            <div class="prop-name">Dar Houta Mrezga</div>
+            <div class="prop-features">
+              <div class="prop-feature">
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>
+                1 bedroom
+              </div>
+              <div class="prop-feature">
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+                4 guests
+              </div>
+              <div class="prop-feature">
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>
+                Garden
+              </div>
+            </div>
+            <div class="tags" style="margin-top:12px;">
+              <span class="tag">Garden</span>
+              <span class="tag">WiFi</span>
+              <span class="tag">Barbecue</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 7. IDEAL APPART FRENCH STYLE -->
+        <div class="prop-card reveal" data-city="Ariana" data-guests="4" data-rooms="2" style="transition: opacity 0.3s, transform 0.3s;" data-slug="frenchst">
+          <a href="https://airbnb.com/h/frenchst" class="prop-card-img" target="_blank" rel="noopener noreferrer">
+            <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=600&q=80" alt="Ideal Appart French Style" loading="lazy" width="600" height="400" />
+            <span class="prop-badge">Ariana</span>
+          </a>
+          <div class="prop-card-body">
+            <div class="avail-badge" aria-live="polite"></div>
+            <div class="prop-city">
+              <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              Résidence Phoenix, Ariana
+            </div>
+            <div class="prop-name">Ideal Appart French Style</div>
+            <div class="prop-features">
+              <div class="prop-feature">
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>
+                2 bedrooms
+              </div>
+              <div class="prop-feature">
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+                4 guests
+              </div>
+              <div class="prop-feature">
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 17v2a1 1 0 001 1h14a1 1 0 001-1v-2"/><path d="M3 10h18v7H3z"/><path d="M6 10V6a6 6 0 0112 0v4"/></svg>
+                2 bathrooms
+              </div>
+            </div>
+            <div class="tags" style="margin-top:12px;">
+              <span class="tag">WiFi</span>
+              <span class="tag">Air Conditioning</span>
+              <span class="tag">Fully Equipped Kitchen</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 8. IDEAL APPART EL WAHAT VIP -->
+        <div class="prop-card reveal" data-city="Ain Zaghouan" data-guests="3" data-rooms="1" style="transition: opacity 0.3s, transform 0.3s;" data-slug="idealappartw">
+          <a href="https://airbnb.com/h/idealappartw" class="prop-card-img" target="_blank" rel="noopener noreferrer">
+            <img src="https://images.unsplash.com/photo-1779636599601-9d08ef2436d5?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Ideal Appart El Wahat VIP" loading="lazy" width="1074" height="716" />
+            <span class="prop-badge">Ain Zaghouan</span>
+          </a>
+          <div class="prop-card-body">
+            <div class="avail-badge" aria-live="polite"></div>
+            <div class="prop-city">
+              <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              Résidence Hanine, Ain Zaghouan
+            </div>
+            <div class="prop-name">Ideal Appart El Wahat VIP</div>
+            <div class="prop-features">
+              <div class="prop-feature">
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>
+                1 bedroom
+              </div>
+              <div class="prop-feature">
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+                3 guests
+              </div>
+              <div class="prop-feature">
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 17v2a1 1 0 001 1h14a1 1 0 001-1v-2"/><path d="M3 10h18v7H3z"/><path d="M6 10V6a6 6 0 0112 0v4"/></svg>
+                2 bathrooms
+              </div>
+            </div>
+            <div class="tags" style="margin-top:12px;">
+              <span class="tag">WiFi</span>
+              <span class="tag">Air Conditioning</span>
+              <span class="tag">VIP</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 9. IDEAL APPART GREEN CALLIGRAPHY -->
+        <div class="prop-card reveal" data-city="Ain Zaghouan" data-guests="4" data-rooms="1" style="transition: opacity 0.3s, transform 0.3s;" data-slug="greencal">
+          <a href="https://airbnb.com/h/greencal" class="prop-card-img" target="_blank" rel="noopener noreferrer">
+            <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=600&q=80" alt="Ideal Appart Green Calligraphy" loading="lazy" width="600" height="400" />
+            <span class="prop-badge">Ain Zaghouan</span>
+          </a>
+          <div class="prop-card-body">
+            <div class="avail-badge" aria-live="polite"></div>
+            <div class="prop-city">
+              <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              Résidence Green 2, Ain Zaghouan Nord
+            </div>
+            <div class="prop-name">Ideal Appart Green Calligraphy</div>
+            <div class="prop-features">
+              <div class="prop-feature">
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+                Pool
+              </div>
+              <div class="prop-feature">
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+                4 guests
+              </div>
+            </div>
+            <div class="tags" style="margin-top:12px;">
+              <span class="tag">Pool</span>
+              <span class="tag">WiFi</span>
+              <span class="tag">Air Conditioning</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 10. IDEAL APPART GREEN TOUCH -->
+        <div class="prop-card reveal" data-city="Ain Zaghouan" data-guests="3" data-rooms="1" style="transition: opacity 0.3s, transform 0.3s;" data-slug="greent">
+          <a href="https://airbnb.com/h/greent" class="prop-card-img" target="_blank" rel="noopener noreferrer">
+            <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=600&q=80" alt="Ideal Appart Green Touch" loading="lazy" width="600" height="400" />
+            <span class="prop-badge">Ain Zaghouan</span>
+          </a>
+          <div class="prop-card-body">
+            <div class="avail-badge" aria-live="polite"></div>
+            <div class="prop-city">
+              <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              Résidence Green 2, Ain Zaghouan Nord
+            </div>
+            <div class="prop-name">Ideal Appart Green Touch</div>
+            <div class="prop-features">
+              <div class="prop-feature">
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+                Pool
+              </div>
+              <div class="prop-feature">
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+                3 guests
+              </div>
+            </div>
+            <div class="tags" style="margin-top:12px;">
+              <span class="tag">Pool</span>
+              <span class="tag">WiFi</span>
+              <span class="tag">Air Conditioning</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 11. IDEAL APPART GREEN VIBES -->
+        <div class="prop-card reveal" data-city="Ain Zaghouan" data-guests="4" data-rooms="1" style="transition: opacity 0.3s, transform 0.3s;" data-slug="gnvibes">
+          <a href="https://airbnb.com/h/gnvibes" class="prop-card-img" target="_blank" rel="noopener noreferrer">
+            <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=600&q=80" alt="Ideal Appart Green Vibes" loading="lazy" width="600" height="400" />
+            <span class="prop-badge">Ain Zaghouan</span>
+          </a>
+          <div class="prop-card-body">
+            <div class="avail-badge" aria-live="polite"></div>
+            <div class="prop-city">
+              <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              Résidence Green 2, Ain Zaghouan Nord
+            </div>
+            <div class="prop-name">Ideal Appart Green Vibes</div>
+            <div class="prop-features">
+              <div class="prop-feature">
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+                Pool
+              </div>
+              <div class="prop-feature">
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+                4 guests
+              </div>
+            </div>
+            <div class="tags" style="margin-top:12px;">
+              <span class="tag">Pool</span>
+              <span class="tag">WiFi</span>
+              <span class="tag">Air Conditioning</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 12. IDEAL APPART PARK SUITE -->
+        <div class="prop-card reveal" data-city="Ain Zaghouan" data-guests="4" data-rooms="1" style="transition: opacity 0.3s, transform 0.3s;" data-slug="iamonta">
+          <a href="https://airbnb.com/h/iamonta" class="prop-card-img" target="_blank" rel="noopener noreferrer">
+            <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=600&q=80" alt="Ideal Appart Park Suite" loading="lazy" width="600" height="400" />
+            <span class="prop-badge">Ain Zaghouan</span>
+          </a>
+          <div class="prop-card-body">
+            <div class="avail-badge" aria-live="polite"></div>
+            <div class="prop-city">
+              <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              Résidence Montazah, Ain Zaghouan
+            </div>
+            <div class="prop-name">Ideal Appart Park Suite</div>
+            <div class="prop-features">
+              <div class="prop-feature">
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>
+                1 bedroom
+              </div>
+              <div class="prop-feature">
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+                4 guests
+              </div>
+              <div class="prop-feature">
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="15" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg>
+                Balcony
+              </div>
+            </div>
+            <div class="tags" style="margin-top:12px;">
+              <span class="tag">Balcony</span>
+              <span class="tag">WiFi</span>
+              <span class="tag">Parking</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 13. IDEAL APPART ZEPHYR GARDEN -->
+        <div class="prop-card reveal" data-city="Soukra" data-guests="3" data-rooms="1" style="transition: opacity 0.3s, transform 0.3s;" data-slug="zephyrg">
+          <a href="https://airbnb.com/h/zephyrg" class="prop-card-img" target="_blank" rel="noopener noreferrer">
+            <img src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=600&q=80" alt="Ideal Appart Zephyr Garden" loading="lazy" width="600" height="400" />
+            <span class="prop-badge">Soukra</span>
+          </a>
+          <div class="prop-card-body">
+            <div class="avail-badge" aria-live="polite"></div>
+            <div class="prop-city">
+              <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              Résidence Zephyr 2, Soukra
+            </div>
+            <div class="prop-name">Ideal Appart Zephyr Garden</div>
+            <div class="prop-features">
+              <div class="prop-feature">
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>
+                Garden
+              </div>
+              <div class="prop-feature">
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+                3 guests
+              </div>
+            </div>
+            <div class="tags" style="margin-top:12px;">
+              <span class="tag">Garden</span>
+              <span class="tag">WiFi</span>
+              <span class="tag">Air Conditioning</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 14. MODERN MEETS BERBER HERITAGE -->
+        <div class="prop-card reveal" data-city="Lac 2" data-guests="2" data-rooms="1" style="transition: opacity 0.3s, transform 0.3s;" data-slug="modern-meets-tuniso-berber-heritage">
+          <a href="https://airbnb.com/h/modern-meets-tuniso-berber-heritage" class="prop-card-img" target="_blank" rel="noopener noreferrer">
+            <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=600&q=80" alt="Modern Meets Berber Heritage" loading="lazy" width="600" height="400" />
+            <span class="prop-badge">Lac 2</span>
+          </a>
+          <div class="prop-card-body">
+            <div class="avail-badge" aria-live="polite"></div>
+            <div class="prop-city">
+              <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              Les Berges du Lac 2
+            </div>
+            <div class="prop-name">Modern Meets Berber Heritage</div>
+            <div class="prop-features">
+              <div class="prop-feature">
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                Unique design
+              </div>
+              <div class="prop-feature">
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+                2 guests
+              </div>
+            </div>
+            <div class="tags" style="margin-top:12px;">
+              <span class="tag">Design</span>
+              <span class="tag">WiFi</span>
+              <span class="tag">Lac 2</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 15. VILLA PUPPUTIA -->
+        <div class="prop-card reveal" data-city="Mrezga" data-guests="4" data-rooms="1" style="transition: opacity 0.3s, transform 0.3s;" data-slug="pupput">
+          <a href="https://airbnb.com/h/pupput" class="prop-card-img" target="_blank" rel="noopener noreferrer">
+            <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=600&q=80" alt="Villa Pupputia" loading="lazy" width="600" height="400" />
+            <span class="prop-badge">Mrezga</span>
+          </a>
+          <div class="prop-card-body">
+            <div class="avail-badge" aria-live="polite"></div>
+            <div class="prop-city">
+              <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              Avenue Mrezga, Mrezga
+            </div>
+            <div class="prop-name">Villa Pupputia</div>
+            <div class="prop-features">
+              <div class="prop-feature">
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>
+                1 bedroom
+              </div>
+              <div class="prop-feature">
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+                4 guests
+              </div>
+              <div class="prop-feature">
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="15" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg>
+                Balcony
+              </div>
+            </div>
+            <div class="tags" style="margin-top:12px;">
+              <span class="tag">Balcony</span>
+              <span class="tag">2 bathrooms</span>
+              <span class="tag">WiFi</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 16. VILLA LES JASMINS -->
+        <div class="prop-card reveal" data-city="Mrezga" data-guests="9" data-rooms="5" style="transition: opacity 0.3s, transform 0.3s;" data-slug="">
+          <a href="#" class="prop-card-img" target="_blank" rel="noopener noreferrer">
+            <img src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=600&q=80" alt="Villa les Jasmins" loading="lazy" width="600" height="400" />
+            <span class="prop-badge">Mrezga</span>
+          </a>
+          <div class="prop-card-body">
+            <div class="avail-badge" aria-live="polite"></div>
+            <div class="prop-city">
+              <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              Avenue Mrezga, Mrezga
+            </div>
+            <div class="prop-name">Villa les Jasmins</div>
+            <div class="prop-features">
+              <div class="prop-feature">
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>
+                5 bedrooms
+              </div>
+              <div class="prop-feature">
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+                9 guests
+              </div>
+              <div class="prop-feature">
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 17v2a1 1 0 001 1h14a1 1 0 001-1v-2"/><path d="M3 10h18v7H3z"/><path d="M6 10V6a6 6 0 0112 0v4"/></svg>
+                4 bathrooms
+              </div>
+            </div>
+            <div class="tags" style="margin-top:12px;">
+              <span class="tag">Pool</span>
+              <span class="tag">WiFi</span>
+              <span class="tag">Air Conditioning</span>
+              <span class="tag">Parking</span>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /properties-grid -->
+
+    </div>
+  </section>
+
+  <!-- CTA BAND -->
+  <section class="cta-band">
+    <div class="container">
+      <div class="cta-inner reveal">
+        <h2 class="cta-title">Do you have a property<br>to entrust us with?</h2>
+        <p class="cta-subtitle">Join the property owners who trust us and maximize your rental income effortlessly.</p>
+        <div class="cta-actions">
+          <a href="owners.html" class="btn btn-dark btn-lg"><span>List my property</span></a>
+          <a href="contact.html" class="btn btn-outline-white btn-lg"><span>Contact Us</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container-xl">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <div class="footer-logo-text"><span class="logo-nex">Nex</span><span class="logo-stay">stay</span></div>
+          <span class="footer-logo-sub">Conciergerie</span>
+          <p class="footer-desc">The leading Airbnb concierge service in Tunisia. We turn your property into a steady source of income.</p>
+          <div class="footer-social">
+            <a href="#" class="social-link" aria-label="Instagram"><svg width="16" height="16" fill="none" stroke="rgba(255,255,255,.6)" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="rgba(255,255,255,.6)" stroke="none"/></svg></a>
+            <a href="#" class="social-link" aria-label="Facebook"><svg width="16" height="16" fill="none" stroke="rgba(255,255,255,.6)" stroke-width="2" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
+            <a href="https://wa.me/21627973200" class="social-link" aria-label="WhatsApp"><svg width="16" height="16" fill="none" stroke="rgba(255,255,255,.6)" stroke-width="2" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg></a>
+            <a href="#" class="social-link" aria-label="LinkedIn"><svg width="16" height="16" fill="none" stroke="rgba(255,255,255,.6)" stroke-width="2" viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+            <a href="#" class="social-link" aria-label="TikTok"><svg width="16" height="16" fill="rgba(255,255,255,.6)" viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.77 1.52V6.76a4.85 4.85 0 01-1-.07z"/></svg></a>
+          </div>
+        </div>
+        <div>
+          <div class="footer-col-title">Navigation</div>
+          <ul class="footer-links">
+            <li><a href="index.html" class="footer-link">Home</a></li>
+            <li><a href="services.html" class="footer-link">Services</a></li>
+            <li><a href="owners.html" class="footer-link">Owners</a></li>
+            <li><a href="properties.html" class="footer-link">Our Properties</a></li>
+            <li><a href="about.html" class="footer-link">About</a></li>
+            <li><a href="contact.html" class="footer-link">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer-col-title">Services</div>
+          <ul class="footer-links">
+            <li><a href="services.html" class="footer-link">Full Concierge</a></li>
+            <li><a href="services.html" class="footer-link">Assisted Check-in</a></li>
+            <li><a href="services.html" class="footer-link">Professional Cleaning</a></li>
+            <li><a href="services.html" class="footer-link">Revenue Optimization</a></li>
+            <li><a href="services.html" class="footer-link">Professional Photography</a></li>
+            <li><a href="services.html" class="footer-link">24/7 Support</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer-col-title">Contact</div>
+          <div class="footer-contact-item">
+            <svg class="footer-contact-icon" width="16" height="16" fill="none" stroke="var(--terracotta)" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span class="footer-contact-text">10 Rue Ile Rhodes, Im. Henda<br>Les Jardins du Lac, 1053 Tunis</span>
+          </div>
+          <div class="footer-contact-item">
+            <svg class="footer-contact-icon" width="16" height="16" fill="none" stroke="var(--terracotta)" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            <span class="footer-contact-text">contact@nexstay.tn</span>
+          </div>
+          <div class="footer-contact-item">
+            <svg class="footer-contact-icon" width="16" height="16" fill="none" stroke="var(--terracotta)" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.07 1.18 2 2 0 012.03 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+            <a href="https://wa.me/21627973200" class="footer-contact-text" style="transition:color 0.25s;" target="_blank" rel="noopener">+216 27 973 200</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="footer-copy">© 2025 <span>Nexstay</span> Conciergerie · SARL · RNE 1870873S/A/M/000 · All rights reserved</p>
+        <div style="display:flex;gap:20px;flex-wrap:wrap;">
+          <a href="legal.html" class="footer-copy" style="color:rgba(255,255,255,0.45);text-decoration:none;">Legal Notice</a>
+          <a href="privacy.html" class="footer-copy" style="color:rgba(255,255,255,0.45);text-decoration:none;">Privacy Policy</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+  <script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var inEl  = document.getElementById('avCheckIn');
+    var outEl = document.getElementById('avCheckOut');
+    var btnEl = document.getElementById('avSearch');
+    if (!inEl || !outEl || !btnEl) return;
+
+    var today = new Date().toISOString().slice(0, 10);
+    inEl.min = today;
+    outEl.min = today;
+    inEl.addEventListener('change', function () { if (inEl.value) outEl.min = inEl.value; });
+
+    btnEl.addEventListener('click', function () {
+      var ci = inEl.value, co = outEl.value;
+      if (!ci || !co) { alert('Please select a check-in and check-out date.'); return; }
+      if (co <= ci)   { alert('The check-out date must be after the check-in date.'); return; }
+      checkAll(ci, co);
+    });
+
+    function checkAll(ci, co) {
+      btnEl.disabled = true;
+      btnEl.textContent = '…';
+      document.getElementById('datePillIn').classList.add('is-active');
+      document.getElementById('datePillOut').classList.add('is-active');
+      document.querySelectorAll('.avail-badge').forEach(function (b) { b.innerHTML = ''; });
+      var statusEl = document.getElementById('availStatus');
+      if (statusEl) statusEl.textContent = '';
+
+      var cards = Array.from(document.querySelectorAll('.prop-card[data-slug]'));
+
+      fetch('/api/check-all?checkin=' + ci + '&checkout=' + co)
+        .then(function (r) { return r.ok ? r.json() : { results: {} }; })
+        .catch(function () { return { results: {} }; })
+        .then(function (data) {
+          var results = data.results || {};
+          var nbAvail = 0;
+
+          cards.forEach(function (card) {
+            var slug  = card.dataset.slug;
+            var badge = card.querySelector('.avail-badge');
+            var avail = slug && results[slug] === true;
+
+            if (avail) {
+              nbAvail++;
+              clearTimeout(card._hideTimer);
+              card.removeAttribute('data-hidden');
+              card.classList.add('visible');
+              card.style.display   = '';
+              card.style.opacity   = '1';
+              card.style.transform = 'none';
+              if (badge && slug) {
+                var href = 'https://www.airbnb.com/h/' + slug + '?check_in=' + ci + '&check_out=' + co;
+                badge.innerHTML = '<a href="' + href + '" class="avail-book-btn" target="_blank" rel="noopener">'
+                  + '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>'
+                  + ' &#x2713; Book on Airbnb</a>';
+              }
+            } else {
+              clearTimeout(card._hideTimer);
+              card.style.display = 'none';
+              card.removeAttribute('data-hidden');
+            }
+          });
+
+          btnEl.disabled = false;
+          btnEl.innerHTML = '<svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> Search';
+
+          if (statusEl) {
+            statusEl.textContent = nbAvail === 0
+              ? 'No properties available for these dates.'
+              : nbAvail + ' propert' + (nbAvail > 1 ? 'ies' : 'y') + ' available for these dates.';
+          }
+        });
+    }
+  });
+  </script>
+</body>
+</html>
