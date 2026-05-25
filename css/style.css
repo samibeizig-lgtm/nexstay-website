@@ -1534,7 +1534,11 @@ button {
   border-bottom: 1px solid rgba(255,255,255,0.08);
 }
 
-.footer-brand {}
+.footer-brand {
+  display: inline-grid;
+  grid-template-columns: max-content;
+  row-gap: 3px;
+}
 
 .footer-logo-text {
   font-family: 'Playfair Display', serif;
