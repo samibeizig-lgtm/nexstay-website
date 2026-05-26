@@ -305,22 +305,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ── SMART CALCULATOR ──────────────────────────
   const BASE = {
-    gammarth:    {s1:115, s2:175, s3:240, villa3:520, villa4:780},
-    sidibousaid: {s1:120, s2:185, s3:260, villa3:550, villa4:820},
-    jardins:     {s1:105, s2:160, s3:220, villa3:460, villa4:700},
-    marsa:       {s1:100, s2:150, s3:210, villa3:450, villa4:680},
-    lac2:        {s1:95,  s2:145, s3:195, villa3:420, villa4:640},
-    lac1:        {s1:90,  s2:135, s3:185, villa3:400, villa4:600},
-    ainzagnord:  {s1:85,  s2:130, s3:175, villa3:380, villa4:560},
-    ainzag:      {s1:80,  s2:125, s3:165, villa3:360, villa4:530},
-    menzah:      {s1:85,  s2:130, s3:175, villa3:380, villa4:560},
-    ennasr:      {s1:80,  s2:120, s3:160, villa3:350, villa4:520},
-    soukra:      {s1:80,  s2:120, s3:160, villa3:350, villa4:520},
-    hammamet:    {s1:115, s2:175, s3:240, villa3:500, villa4:750}
+    gammarth:    {s1:200, s2:300, s3:420, villa3:850, villa4:1200},
+    sidibousaid: {s1:220, s2:320, s3:450, villa3:900, villa4:1300},
+    jardins:     {s1:170, s2:255, s3:360, villa3:750, villa4:1050},
+    marsa:       {s1:170, s2:250, s3:350, villa3:720, villa4:1000},
+    lac2:        {s1:150, s2:230, s3:320, villa3:650, villa4:950},
+    lac1:        {s1:140, s2:210, s3:295, villa3:610, villa4:880},
+    ainzagnord:  {s1:130, s2:195, s3:270, villa3:560, villa4:820},
+    ainzag:      {s1:125, s2:185, s3:260, villa3:530, villa4:780},
+    menzah:      {s1:130, s2:195, s3:270, villa3:560, villa4:820},
+    ennasr:      {s1:120, s2:180, s3:250, villa3:520, villa4:760},
+    soukra:      {s1:120, s2:180, s3:250, villa3:520, villa4:760},
+    hammamet:    {s1:190, s2:285, s3:400, villa3:820, villa4:1150}
   };
   const NIGHTS = {
-    gammarth:20, sidibousaid:20, jardins:20, marsa:20, lac2:20, lac1:20,
-    ainzagnord:20, ainzag:20, menzah:20, ennasr:20, soukra:20, hammamet:22
+    gammarth:23, sidibousaid:23, jardins:23, marsa:23, lac2:23, lac1:23,
+    ainzagnord:23, ainzag:23, menzah:23, ennasr:23, soukra:23, hammamet:23
   };
   const POOL = {s1:0, s2:0, s3:0.2, villa3:0.4, villa4:0.4};
   const COMM = {essential:0.15, premium:0.25};
@@ -354,7 +354,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (el('r_nights')) el('r_nights').textContent = nights + ' nuits';
     if (el('r_gross')) el('r_gross').textContent = gross.toLocaleString('fr-TN') + ' DT';
     if (el('r_net')) el('r_net').textContent = net.toLocaleString('fr-TN') + ' DT';
-    if (el('r_note')) el('r_note').textContent = `Après commission ${COMM[formula]*100}% TTC · Formule ${formula === 'essential' ? 'Essential' : 'Premium'} · Estimation indicative`;
+    if (el('r_note')) el('r_note').textContent = `Après honoraires de service ${COMM[formula]*100}% · Formule ${formula === 'essential' ? 'Essential' : 'Premium'}`;
+    if (el('r_disclaimer')) el('r_disclaimer').textContent = `Estimation indicative qui dépend de l'état du logement, son emplacement, son standing et son équipement.`;
     if (resultEl) resultEl.style.display = 'block';
   }
 
