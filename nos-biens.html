@@ -921,48 +921,42 @@
       var statusEl = document.getElementById('availStatus');
       if (statusEl) statusEl.textContent = '';
 
-      var cards = Array.from(document.querySelectorAll('.prop-card[data-slug]'));
-
       fetch('/api/check-all?checkin=' + ci + '&checkout=' + co)
         .then(function (r) { return r.ok ? r.json() : { results: {} }; })
         .catch(function () { return { results: {} }; })
         .then(function (data) {
           var results = data.results || {};
-          var nbAvail = 0;
 
-          cards.forEach(function (card) {
+          // Tag each card with its availability result, then delegate to the
+          // shared applyFilters() so city + guests + rooms + dates all intersect.
+          document.querySelectorAll('.prop-card[data-slug]').forEach(function (card) {
             var slug  = card.dataset.slug;
-            var badge = card.querySelector('.avail-badge');
             var avail = slug && results[slug] === true;
-
-            if (avail) {
-              nbAvail++;
-              clearTimeout(card._hideTimer);
-              card.removeAttribute('data-hidden');
-              card.classList.add('visible');
-              card.style.display   = '';
-              card.style.opacity   = '1';
-              card.style.transform = 'none';
-              if (badge && slug) {
+            card.setAttribute('data-avail', avail ? 'true' : 'false');
+            if (avail && slug) {
+              var badge = card.querySelector('.avail-badge');
+              if (badge) {
                 var href = 'https://www.airbnb.com/h/' + slug + '?check_in=' + ci + '&check_out=' + co;
                 badge.innerHTML = '<a href="' + href + '" class="avail-book-btn" target="_blank" rel="noopener">'
                   + '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>'
                   + ' Réserver sur Airbnb</a>';
               }
-            } else {
-              clearTimeout(card._hideTimer);
-              card.style.display = 'none';
-              card.removeAttribute('data-hidden');
             }
           });
+
+          window._availActive = true;
+          if (window._applyFilters) window._applyFilters();
 
           btnEl.disabled = false;
           btnEl.innerHTML = '<svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> Rechercher';
 
           if (statusEl) {
-            statusEl.textContent = nbAvail === 0
-              ? 'Aucun bien disponible pour ces dates.'
-              : nbAvail + ' bien' + (nbAvail > 1 ? 's' : '') + ' disponible' + (nbAvail > 1 ? 's' : '') + ' pour ces dates.';
+            var nbVisible = Array.from(document.querySelectorAll('.prop-card')).filter(function (c) {
+              return c.style.display !== 'none';
+            }).length;
+            statusEl.textContent = nbVisible === 0
+              ? 'Aucun bien disponible pour ces critères.'
+              : nbVisible + ' bien' + (nbVisible > 1 ? 's' : '') + ' disponible' + (nbVisible > 1 ? 's' : '') + ' pour ces critères.';
           }
         });
     }
