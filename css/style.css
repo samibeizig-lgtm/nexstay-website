@@ -328,7 +328,7 @@ button {
   height: var(--nav-h);
   display: flex;
   align-items: center;
-  background: linear-gradient(to bottom, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.05) 100%);
+  background: linear-gradient(to bottom, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.15) 100%);
   transition: background 0.4s var(--ease), box-shadow 0.4s var(--ease);
 }
 
