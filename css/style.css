@@ -328,22 +328,19 @@ button {
   height: var(--nav-h);
   display: flex;
   align-items: center;
-  background: linear-gradient(to bottom, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.15) 100%);
+  background: rgba(18, 18, 18, 0.97);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 1px 0 rgba(255,255,255,0.06);
   transition: background 0.4s var(--ease), box-shadow 0.4s var(--ease);
 }
 
 .nav.scrolled {
-  background: rgba(30, 30, 30, 0.97);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  box-shadow: 0 1px 0 rgba(255,255,255,0.06);
+  background: rgba(18, 18, 18, 0.99);
 }
 
 .nav.nav-dark {
-  background: rgba(30, 30, 30, 0.97);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  box-shadow: 0 1px 0 rgba(255,255,255,0.06);
+  background: rgba(18, 18, 18, 0.99);
 }
 
 .nav.nav-light.scrolled {
