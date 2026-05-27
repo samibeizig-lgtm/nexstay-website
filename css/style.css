@@ -359,15 +359,10 @@ button {
 }
 
 .nav-logo {
-  display: inline-flex;
-  align-items: center;
+  display: inline-grid;
+  grid-template-columns: max-content;
   flex-shrink: 0;
-}
-
-.nav-logo-img {
-  height: 44px;
-  width: auto;
-  display: block;
+  row-gap: 3px;
 }
 
 .nav-logo-text {
