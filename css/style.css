@@ -2369,13 +2369,13 @@ button {
   }
 
   .hero {
-    padding-bottom: 60px;
+    padding-bottom: 36px;
   }
 
   .hero-inner {
     padding: 0 24px;
     grid-template-columns: 1fr;
-    gap: 28px;
+    gap: 20px;
   }
 
   .hero-right {
