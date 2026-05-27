@@ -8,7 +8,7 @@
   <meta name="robots" content="noindex, nofollow" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -72,19 +72,31 @@
 
     /* Logo */
     .logo {
-      display: inline-block;
+      display: inline-grid;
+      grid-template-columns: max-content;
+      row-gap: 3px;
       margin-bottom: 56px;
       text-decoration: none;
     }
     .logo-text {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: clamp(28px, 5vw, 36px);
+      font-family: 'Playfair Display', serif;
+      font-size: 32px;
       font-weight: 700;
-      letter-spacing: -0.04em;
       line-height: 1;
+      display: block;
+      white-space: nowrap;
     }
     .logo-nex  { color: var(--dark); }
     .logo-stay { color: var(--terracotta); }
+    .logo-sub {
+      display: block;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #B8B0A6;
+    }
 
     /* Divider */
     .divider {
@@ -164,6 +176,7 @@
       <span class="logo-text">
         <span class="logo-nex">Nex</span><span class="logo-stay">stay</span>
       </span>
+      <span class="logo-sub">Conciergerie</span>
     </a>
 
     <div class="divider"></div>
