@@ -518,7 +518,7 @@ button {
   transform: translateY(-100%);
   transition: transform 0.5s var(--ease);
   overflow: hidden;
-  padding: 0 32px;
+  padding: var(--nav-h) 32px 0;
 }
 
 .nav-mobile.open {
