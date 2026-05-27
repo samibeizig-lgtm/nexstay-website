@@ -472,21 +472,38 @@ document.addEventListener('DOMContentLoaded', () => {
   // ── CONTACT FORM ──────────────────────────────
   const contactForm = document.getElementById('contactForm');
   if (contactForm) {
-    contactForm.addEventListener('submit', (e) => {
+    contactForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       const btn = contactForm.querySelector('[type="submit"]');
       const original = btn.innerHTML;
       btn.innerHTML = '<span>Envoi en cours…</span>';
       btn.disabled = true;
-      setTimeout(() => {
-        btn.innerHTML = '<span>Message envoyé ✓</span>';
-        contactForm.reset();
-        showToast('Votre message a bien été envoyé. Nous vous répondrons dans les 24h.');
-        setTimeout(() => {
+
+      const fd = new FormData(contactForm);
+      const payload = Object.fromEntries(fd.entries());
+
+      try {
+        const res = await fetch('/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        const json = await res.json().catch(() => ({}));
+        if (res.ok) {
+          btn.innerHTML = '<span>Message envoyé ✓</span>';
+          contactForm.reset();
+          showToast('Votre message a bien été envoyé. Nous vous répondrons dans les 24h.');
+          setTimeout(() => { btn.innerHTML = original; btn.disabled = false; }, 3000);
+        } else {
           btn.innerHTML = original;
           btn.disabled = false;
-        }, 3000);
-      }, 1500);
+          showToast(json.error || 'Une erreur est survenue. Veuillez réessayer.');
+        }
+      } catch {
+        btn.innerHTML = original;
+        btn.disabled = false;
+        showToast('Connexion impossible. Vérifiez votre réseau et réessayez.');
+      }
     });
   }
 
