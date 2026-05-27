@@ -11,7 +11,11 @@
   <meta name="keywords" content="conciergerie Airbnb Tunisie, services conciergerie Airbnb Tunis, prestataire location courte durée Tunisie, conciergerie Tunis, accueil voyageurs Tunisie, ménage Airbnb Tunisie, TRE tunisien étranger conciergerie Airbnb, conciergerie La Marsa Airbnb, conciergerie Sidi Bou Said, séjours affaires Tunis, remise des clés Airbnb Tunisie" />
   <meta name="robots" content="index, follow" />
   <meta name="author" content="Nexstay Conciergerie" />
+  <meta name="theme-color" content="#1E1E1E" />
   <link rel="canonical" href="https://www.nexstay.tn/" />
+
+  <!-- LCP: preload hero image -->
+  <link rel="preload" as="image" href="https://images.unsplash.com/photo-1779835390242-7c63470314ba?auto=format&fit=crop&w=1920&q=80" fetchpriority="high" imagesrcset="https://images.unsplash.com/photo-1779835390242-7c63470314ba?auto=format&fit=crop&w=640&q=75 640w, https://images.unsplash.com/photo-1779835390242-7c63470314ba?auto=format&fit=crop&w=1200&q=80 1200w, https://images.unsplash.com/photo-1779835390242-7c63470314ba?auto=format&fit=crop&w=1920&q=80 1920w" imagesizes="100vw" />
 
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
@@ -175,7 +179,8 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400&family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400&family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&display=swap" media="print" onload="this.media='all'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400&family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&display=swap" /></noscript>
   <link rel="stylesheet" href="css/style.css" />
   <style>
     .hero { background: var(--dark); }
@@ -266,7 +271,17 @@
   <!-- HERO -->
   <section class="hero">
     <div class="hero-bg">
-      <img src="https://images.unsplash.com/photo-1779835390242-7c63470314ba?auto=format&fit=crop&w=1920&q=80" alt="Villa de luxe Nexstay" loading="eager" width="1920" height="1080" />
+      <img
+        src="https://images.unsplash.com/photo-1779835390242-7c63470314ba?auto=format&fit=crop&w=1920&q=80"
+        srcset="https://images.unsplash.com/photo-1779835390242-7c63470314ba?auto=format&fit=crop&w=640&q=75 640w,
+                https://images.unsplash.com/photo-1779835390242-7c63470314ba?auto=format&fit=crop&w=1200&q=80 1200w,
+                https://images.unsplash.com/photo-1779835390242-7c63470314ba?auto=format&fit=crop&w=1920&q=80 1920w"
+        sizes="100vw"
+        alt="Villa de luxe Nexstay"
+        loading="eager"
+        fetchpriority="high"
+        decoding="sync"
+        width="1920" height="1080" />
     </div>
     <div class="hero-overlay"></div>
     <div class="hero-content">
@@ -392,7 +407,7 @@
           </a>
         </div>
         <div class="about-visual reveal-right">
-          <img class="about-visual-img" src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=800&q=80" alt="Appartement Nexstay" loading="lazy" width="800" height="534" />
+          <img class="about-visual-img" src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=800&q=80" alt="Appartement Nexstay" loading="lazy" decoding="async" width="800" height="534" />
           <div class="about-badge"><span class="about-badge-num">2024</span><span class="about-badge-text">Fondée en</span></div>
         </div>
       </div>
@@ -563,7 +578,7 @@
       <div class="prop-preview">
         <div class="prop-card prop-preview-hero reveal">
           <div class="prop-card-img">
-            <img src="img/properties/pupput.jpg" alt="Villa Pupputia" loading="lazy" width="900" height="600" />
+            <img src="img/properties/pupput.jpg" alt="Villa Pupputia" loading="lazy" decoding="async" width="900" height="600" />
             <span class="prop-badge">Mrezga</span>
           </div>
           <div class="prop-card-body">
@@ -578,7 +593,7 @@
         </div>
         <div class="prop-card reveal reveal-delay-1">
           <div class="prop-card-img">
-            <img src="img/properties/zephyrg.jpg" alt="Ideal Appart Zephyr Garden" loading="lazy" width="600" height="400" />
+            <img src="img/properties/zephyrg.jpg" alt="Ideal Appart Zephyr Garden" loading="lazy" decoding="async" width="600" height="400" />
             <span class="prop-badge">Soukra</span>
           </div>
           <div class="prop-card-body">
@@ -589,7 +604,7 @@
         </div>
         <div class="prop-card reveal reveal-delay-2">
           <div class="prop-card-img">
-            <img src="img/properties/greencal.jpg" alt="Ideal Appart Green Calligraphy" loading="lazy" width="600" height="400" />
+            <img src="img/properties/greencal.jpg" alt="Ideal Appart Green Calligraphy" loading="lazy" decoding="async" width="600" height="400" />
             <span class="prop-badge">Ain Zaghouan</span>
           </div>
           <div class="prop-card-body">
@@ -600,7 +615,7 @@
         </div>
         <div class="prop-card reveal reveal-delay-1">
           <div class="prop-card-img">
-            <img src="img/properties/idealappartmj.jpg" alt="Ideal Appart Marsa Jade" loading="lazy" width="600" height="400" />
+            <img src="img/properties/idealappartmj.jpg" alt="Ideal Appart Marsa Jade" loading="lazy" decoding="async" width="600" height="400" />
             <span class="prop-badge">La Marsa</span>
           </div>
           <div class="prop-card-body">
@@ -611,7 +626,7 @@
         </div>
         <div class="prop-card reveal reveal-delay-2">
           <div class="prop-card-img">
-            <img src="img/properties/idealappartw.jpg" alt="Ideal Appart El Wahat VIP" loading="lazy" width="600" height="400" />
+            <img src="img/properties/idealappartw.jpg" alt="Ideal Appart El Wahat VIP" loading="lazy" decoding="async" width="600" height="400" />
             <span class="prop-badge">Ain Zaghouan</span>
           </div>
           <div class="prop-card-body">

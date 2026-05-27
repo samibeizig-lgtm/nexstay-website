@@ -3044,3 +3044,150 @@ button {
 @media (max-width: 768px) {
   .wa-float { bottom: 20px; right: 16px; width: 50px; height: 50px; }
 }
+
+/* ============ PERFORMANCE & MOBILE v2 ============ */
+
+/* Remove 300ms tap delay + iOS blue tap flash */
+a, button, [role="button"],
+.prop-card, .service-card, .filter-btn, .faq-question, .nav-link {
+  -webkit-tap-highlight-color: transparent;
+}
+
+a, button, .filter-btn, .faq-question, .nav-link {
+  touch-action: manipulation;
+}
+
+/* Hero — dynamic viewport unit so iOS address bar doesn't cut content */
+.hero {
+  min-height: 100svh;
+}
+
+/* iPhone X+ safe area: home-bar + notch support */
+@supports (padding: env(safe-area-inset-bottom)) {
+  .footer {
+    padding-bottom: calc(40px + env(safe-area-inset-bottom));
+  }
+
+  .wa-float {
+    bottom: calc(28px + env(safe-area-inset-bottom));
+  }
+
+  @media (max-width: 768px) {
+    .wa-float {
+      bottom: calc(20px + env(safe-area-inset-bottom));
+      right: calc(16px + env(safe-area-inset-right));
+    }
+  }
+
+  .nav-mobile {
+    padding-bottom: calc(40px + env(safe-area-inset-bottom));
+  }
+}
+
+/* Minimum 44×44px touch targets (WCAG 2.5.5) */
+.social-link {
+  width: 44px;
+  height: 44px;
+}
+
+.filter-btn {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.footer-link {
+  display: inline-block;
+  padding: 4px 0;
+  min-height: 32px;
+}
+
+/* Parallax: disable on touch devices (battery + performance) */
+@media (hover: none) {
+  .hero-bg img {
+    transform: none !important;
+  }
+}
+
+/* Testimonials carousel: swipe fade-out hint on mobile */
+@media (max-width: 768px) {
+  .testimonials-section {
+    overflow: hidden;
+  }
+  .testimonials-carousel-outer {
+    position: relative;
+  }
+  .testimonials-carousel-outer::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 56px;
+    background: linear-gradient(to right, transparent, var(--off-white));
+    pointer-events: none;
+    z-index: 2;
+  }
+}
+
+/* Stats: tighter on very small phones */
+@media (max-width: 420px) {
+  .stat-item {
+    padding: 28px 16px;
+  }
+  .stat-number {
+    font-size: clamp(26px, 9vw, 42px);
+  }
+}
+
+/* Hero actions: always full-width on mobile */
+@media (max-width: 480px) {
+  .hero-actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+  .hero-actions {
+    width: 100%;
+  }
+}
+
+/* About badge: stay within image bounds on narrow screens */
+@media (max-width: 480px) {
+  .about-badge {
+    right: 8px !important;
+    bottom: 16px !important;
+    min-width: 110px !important;
+  }
+}
+
+/* Nav mobile: larger tap areas for links */
+.nav-mobile .nav-link {
+  padding: 10px 20px;
+  width: 100%;
+  text-align: center;
+  display: block;
+}
+
+/* Improve focus visibility for keyboard nav */
+:focus-visible {
+  outline: 2px solid var(--terracotta);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Skip focus ring on mouse click (only show on keyboard) */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Image rendering hint for property photos */
+.prop-card-img img {
+  image-rendering: auto;
+  will-change: transform;
+}
+
+/* Reduce CLS from about-badge on image load */
+.about-visual-img {
+  display: block;
+  background: var(--light-gray);
+}

@@ -539,9 +539,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // ── PARALLAX HERO ─────────────────────────────
+  // ── PARALLAX HERO (desktop + no-motion check only) ────────────────────
   const heroBg = document.querySelector('.hero-bg img');
-  if (heroBg && !prefersReducedMotion) {
+  const isTouchDevice = window.matchMedia('(hover: none)').matches;
+  if (heroBg && !prefersReducedMotion && !isTouchDevice) {
     window.addEventListener('scroll', () => {
       const offset = window.scrollY * 0.4;
       heroBg.style.transform = `translateY(${offset}px)`;
