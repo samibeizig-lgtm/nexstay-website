@@ -15,7 +15,7 @@
     :root {
       --terracotta: #D4714E;
       --terracotta-dark: #B5583A;
-      --cream: #FAF8F5;
+      --cream: #f8f6ea;
       --dark: #1E1E1E;
       --muted: #8A8179;
     }
@@ -72,32 +72,14 @@
 
     /* Logo */
     .logo {
-      display: inline-grid;
-      grid-template-columns: max-content;
-      row-gap: 3px;
+      display: inline-block;
       margin-bottom: 56px;
       text-decoration: none;
-      text-align: left;
     }
-    .logo-text {
-      font-family: 'Playfair Display', serif;
-      font-size: 30px;
-      font-weight: 700;
-      line-height: 1;
+    .logo-img {
+      height: 80px;
+      width: auto;
       display: block;
-      white-space: nowrap;
-    }
-    .logo-nex  { color: var(--dark); }
-    .logo-stay { color: var(--terracotta); }
-    .logo-sub {
-      display: block;
-      font-family: 'Inter', sans-serif;
-      font-size: 11.055px;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: #B8B0A6;
-      text-align-last: justify;
     }
 
     /* Divider */
@@ -168,6 +150,7 @@
 
     @media (max-width: 480px) {
       .logo { margin-bottom: 40px; }
+      .logo-img { height: 60px; }
       .divider { margin-bottom: 36px; }
     }
   </style>
@@ -175,10 +158,7 @@
 <body>
   <div class="container">
     <a href="/" class="logo" aria-label="Nexstay">
-      <span class="logo-text">
-        <span class="logo-nex">Nex</span><span class="logo-stay">stay</span>
-      </span>
-      <span class="logo-sub">Conciergerie</span>
+      <img src="/img/logo-light-crop.jpg" alt="Nexstay Conciergerie" class="logo-img">
     </a>
 
     <div class="divider"></div>
