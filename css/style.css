@@ -3180,10 +3180,9 @@ a, button, .filter-btn, .faq-question, .nav-link {
   outline: none;
 }
 
-/* Image rendering hint for property photos */
+/* Prop card images — no will-change to avoid excessive GPU layers */
 .prop-card-img img {
   image-rendering: auto;
-  will-change: transform;
 }
 
 /* Reduce CLS from about-badge on image load */
