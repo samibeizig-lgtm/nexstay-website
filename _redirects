@@ -1,0 +1,6 @@
+# ─── MODE MAINTENANCE ────────────────────────────────────────────────────────
+# Pour activer la page "Bientôt disponible" : décommenter la ligne ci-dessous,
+# puis commit + push. Pour désactiver : remettre le # et repousser.
+#
+# /* /coming-soon.html 200
+# ─────────────────────────────────────────────────────────────────────────────
