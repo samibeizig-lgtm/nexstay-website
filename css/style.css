@@ -3109,6 +3109,25 @@ a, button, .filter-btn, .faq-question, .nav-link {
   }
 }
 
+/* Hero overlay: stronger on mobile so text stays readable */
+@media (max-width: 768px) {
+  .hero-overlay {
+    background: linear-gradient(
+      to bottom,
+      rgba(18,18,18,0.55) 0%,
+      rgba(18,18,18,0.45) 35%,
+      rgba(18,18,18,0.70) 65%,
+      rgba(18,18,18,0.88) 100%
+    );
+  }
+  .hero-title {
+    text-shadow: 0 2px 16px rgba(0,0,0,0.45);
+  }
+  .hero-desc {
+    text-shadow: 0 1px 8px rgba(0,0,0,0.4);
+  }
+}
+
 /* Testimonials carousel: swipe fade-out hint on mobile */
 @media (max-width: 768px) {
   .testimonials-section {
