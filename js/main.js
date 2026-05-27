@@ -2,10 +2,8 @@
    NEXSTAY CONCIERGERIE — MAIN JAVASCRIPT
    ============================================ */
 
-// ── GOOGLE REVIEWS (Places API New — REST) ───
+// ── GOOGLE REVIEWS (via Netlify Function — clé API côté serveur uniquement) ───
 (function () {
-  const GKEY = 'AIzaSyBhu0EBc9ZEWf6effAuxDn_JW4VCuXXej0';
-  const API = 'https://places.googleapis.com/v1';
   const STAR = '<svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>';
 
   function getPerView() {
@@ -145,52 +143,11 @@
 
   async function loadGoogleReviews() {
     try {
-      // Step 1: find the place via text search with Tunis location bias
-      const searchRes = await fetch(API + '/places:searchText', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-Goog-Api-Key': GKEY,
-          'X-Goog-FieldMask': 'places.id'
-        },
-        body: JSON.stringify({
-          textQuery: 'Nexstay Conciergerie',
-          languageCode: 'fr',
-          locationBias: {
-            circle: { center: { latitude: 36.8, longitude: 10.18 }, radius: 50000.0 }
-          },
-          maxResultCount: 1
-        })
-      });
-
-      const searchData = await searchRes.json();
-      if (searchData.error) {
-        console.warn('[Nexstay Reviews] searchText error:', searchData.error.message);
-        return;
-      }
-      if (!searchData.places || !searchData.places.length) {
-        console.warn('[Nexstay Reviews] no place found');
-        return;
-      }
-
-      const placeId = searchData.places[0].id;
-
-      // Step 2: fetch reviews + rating from the place resource
-      const detailRes = await fetch(API + '/places/' + placeId + '?languageCode=fr', {
-        headers: {
-          'X-Goog-Api-Key': GKEY,
-          'X-Goog-FieldMask': 'rating,userRatingCount,reviews,googleMapsUri'
-        }
-      });
-
-      const place = await detailRes.json();
-      if (place.error) {
-        console.warn('[Nexstay Reviews] getPlace error:', place.error.message);
-        return;
-      }
-
+      const res = await fetch('/.netlify/functions/places');
+      if (!res.ok) return;
+      const place = await res.json();
+      if (place.error) return;
       renderGoogleReviews(place);
-
     } catch (err) {
       console.warn('[Nexstay Reviews]', err.message);
     }
@@ -202,8 +159,57 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
   // ── GOOGLE REVIEWS ────────────────────────────
   try { if (window._loadGoogleReviews) window._loadGoogleReviews(); } catch (e) { /* silent */ }
+
+  // ── HERO TITLE ANIMATION ──────────────────────
+  if (!prefersReducedMotion) {
+    const heroEyebrow = document.querySelector('.hero-eyebrow');
+    const heroTitle   = document.querySelector('.hero-title');
+    const heroDesc    = document.querySelector('.hero-desc');
+    const heroActions = document.querySelector('.hero-actions');
+
+    if (heroEyebrow) {
+      heroEyebrow.style.cssText = 'opacity:0;transform:translateY(14px);transition:opacity 0.55s ease 0.1s,transform 0.55s ease 0.1s';
+      requestAnimationFrame(() => { heroEyebrow.style.opacity = '1'; heroEyebrow.style.transform = 'translateY(0)'; });
+    }
+
+    if (heroTitle) {
+      let delay = 220;
+      Array.from(heroTitle.childNodes).forEach(node => {
+        if (node.nodeType === Node.TEXT_NODE) {
+          const words = node.textContent.split(/(\s+)/);
+          const frag = document.createDocumentFragment();
+          words.forEach(part => {
+            if (part.trim()) {
+              const span = document.createElement('span');
+              span.className = 'hero-word';
+              span.style.animationDelay = delay + 'ms';
+              span.textContent = part;
+              frag.appendChild(span);
+              delay += 110;
+            } else {
+              frag.appendChild(document.createTextNode(part));
+            }
+          });
+          node.replaceWith(frag);
+        } else if (node.nodeType === Node.ELEMENT_NODE && node.tagName !== 'BR') {
+          node.classList.add('hero-word');
+          node.style.animationDelay = delay + 'ms';
+          delay += 130;
+        }
+      });
+    }
+
+    [heroDesc, heroActions].forEach((el, i) => {
+      if (!el) return;
+      const d = 620 + i * 160;
+      el.style.cssText = `opacity:0;transform:translateY(18px);transition:opacity 0.6s ease ${d}ms,transform 0.6s ease ${d}ms`;
+      setTimeout(() => { el.style.opacity = '1'; el.style.transform = 'translateY(0)'; }, d);
+    });
+  }
 
   // ── NAV SCROLL BEHAVIOUR ──────────────────────
   const nav = document.querySelector('.nav');
@@ -505,7 +511,7 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   // ── CUSTOM CURSOR (desktop only) ──────────────
-  if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+  if (!prefersReducedMotion && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
     const cursor = document.createElement('div');
     cursor.className = 'custom-cursor';
     document.body.appendChild(cursor);
@@ -535,7 +541,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ── PARALLAX HERO ─────────────────────────────
   const heroBg = document.querySelector('.hero-bg img');
-  if (heroBg) {
+  if (heroBg && !prefersReducedMotion) {
     window.addEventListener('scroll', () => {
       const offset = window.scrollY * 0.4;
       heroBg.style.transform = `translateY(${offset}px)`;
