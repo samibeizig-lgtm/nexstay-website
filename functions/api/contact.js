@@ -88,7 +88,7 @@ export async function onRequestPost(context) {
   if (!resendRes.ok) {
     const errText = await resendRes.text().catch(() => '');
     console.error('Resend error:', resendRes.status, errText);
-    return new Response(JSON.stringify({ error: 'Erreur lors de l\'envoi. Réessayez.' }), { status: 502, headers: corsHeaders });
+    return new Response(JSON.stringify({ error: `Resend ${resendRes.status}: ${errText}` }), { status: 502, headers: corsHeaders });
   }
 
   return new Response(JSON.stringify({ ok: true }), { status: 200, headers: corsHeaders });
