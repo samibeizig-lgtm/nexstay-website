@@ -39,7 +39,7 @@ export async function onRequestPost(context) {
   }
 
   const toEmail   = env.CONTACT_TO_EMAIL   || 'contact@nexstay.tn';
-  const fromEmail = env.CONTACT_FROM_EMAIL || 'Nexstay <noreply@nexstay.tn>';
+  const fromEmail = env.CONTACT_FROM_EMAIL || 'Nexstay <onboarding@resend.dev>';
 
   const subject = `[Nexstay] ${escHtml(type) || 'Demande'} — ${escHtml(prenom)} ${escHtml(nom)}`.trim();
 
