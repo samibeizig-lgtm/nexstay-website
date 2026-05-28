@@ -933,14 +933,14 @@
         .catch(function () { return { results: {} }; })
         .then(function (data) {
           var results = data.results || {};
+          var hasResults = Object.keys(results).length > 0;
 
-          // Tag each card with its availability result, then delegate to the
-          // shared applyFilters() so city + guests + rooms + dates all intersect.
           document.querySelectorAll('.prop-card[data-slug]').forEach(function (card) {
             var slug  = card.dataset.slug;
-            var avail = slug && results[slug] === true;
+            // false only if API explicitly says unavailable — null/undefined = show
+            var avail = !slug || results[slug] !== false;
             card.setAttribute('data-avail', avail ? 'true' : 'false');
-            if (avail && slug) {
+            if (avail && slug && results[slug] === true) {
               var badge = card.querySelector('.avail-badge');
               if (badge) {
                 var href = 'https://www.airbnb.com/h/' + slug + '?check_in=' + ci + '&check_out=' + co;
@@ -951,19 +951,21 @@
             }
           });
 
-          window._availActive = true;
+          window._availActive = hasResults;
           if (window._applyFilters) window._applyFilters();
 
           btnEl.disabled = false;
           btnEl.innerHTML = '<svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> Rechercher';
 
           if (statusEl) {
-            var nbVisible = Array.from(document.querySelectorAll('.prop-card')).filter(function (c) {
-              return c.style.display !== 'none';
-            }).length;
-            statusEl.textContent = nbVisible === 0
-              ? 'Aucun bien disponible pour ces critères.'
-              : nbVisible + ' bien' + (nbVisible > 1 ? 's' : '') + ' disponible' + (nbVisible > 1 ? 's' : '') + ' pour ces critères.';
+            setTimeout(function () {
+              var nbVisible = Array.from(document.querySelectorAll('.prop-card')).filter(function (c) {
+                return c.style.display !== 'none';
+              }).length;
+              statusEl.textContent = nbVisible === 0
+                ? 'Aucun bien disponible pour ces critères.'
+                : nbVisible + ' bien' + (nbVisible > 1 ? 's' : '') + ' disponible' + (nbVisible > 1 ? 's' : '') + ' pour ces critères.';
+            }, 350);
           }
         });
     }
