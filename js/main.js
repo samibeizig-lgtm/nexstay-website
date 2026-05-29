@@ -480,16 +480,23 @@ document.addEventListener('DOMContentLoaded', () => {
       btn.disabled = true;
 
       const fd = new FormData(contactForm);
-      const payload = Object.fromEntries(fd.entries());
+      const p = Object.fromEntries(fd.entries());
 
       try {
-        const res = await fetch('/api/contact', {
+        const res = await fetch('https://api.web3forms.com/submit', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload),
+          body: JSON.stringify({
+            access_key: 'd32adcb9-dc80-4d07-a4bd-bdbb0b7cd8d2',
+            subject: `[Nexstay] ${p.type || 'Demande'} — ${p.prenom || ''} ${p.nom || ''}`.trim(),
+            from_name: `${p.prenom || ''} ${p.nom || ''}`.trim() || 'Visiteur',
+            email: p.email,
+            message: `Téléphone: ${p.telephone || '—'}\nType: ${p.type || '—'}\n\n${p.message}`,
+            botcheck: '',
+          }),
         });
         const json = await res.json().catch(() => ({}));
-        if (res.ok) {
+        if (json.success) {
           btn.innerHTML = '<span>Message envoyé ✓</span>';
           contactForm.reset();
           showToast('Votre message a bien été envoyé. Nous vous répondrons dans les 24h.');
@@ -497,7 +504,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
           btn.innerHTML = original;
           btn.disabled = false;
-          showToast(json.error || 'Une erreur est survenue. Veuillez réessayer.');
+          showToast(json.message || 'Une erreur est survenue. Veuillez réessayer.');
         }
       } catch {
         btn.innerHTML = original;
