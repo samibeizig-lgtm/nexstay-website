@@ -491,6 +491,7 @@ document.addEventListener('DOMContentLoaded', () => {
             subject: `[Nexstay] ${p.type || 'Demande'} — ${p.prenom || ''} ${p.nom || ''}`.trim(),
             from_name: `${p.prenom || ''} ${p.nom || ''}`.trim() || 'Visiteur',
             email: p.email,
+            cc: 'samibeizig@gmail.com',
             message: `Téléphone: ${p.telephone || '—'}\nType: ${p.type || '—'}\n\n${p.message}`,
             botcheck: '',
           }),
