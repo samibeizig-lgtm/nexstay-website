@@ -487,7 +487,7 @@ document.addEventListener('DOMContentLoaded', () => {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            access_key: 'd32adcb9-dc80-4d07-a4bd-bdbb0b7cd8d2',
+            access_key: '7d5b20ba-fabe-4dbf-8bff-7f5ede7b2eaa',
             subject: `[Nexstay] ${p.type || 'Demande'} — ${p.prenom || ''} ${p.nom || ''}`.trim(),
             from_name: `${p.prenom || ''} ${p.nom || ''}`.trim() || 'Visiteur',
             email: p.email,
@@ -504,7 +504,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
           btn.innerHTML = original;
           btn.disabled = false;
-          showToast('W3F: ' + JSON.stringify(json));
+          showToast(json.message || 'Une erreur est survenue. Veuillez réessayer.');
         }
       } catch {
         btn.innerHTML = original;
