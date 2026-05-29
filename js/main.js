@@ -487,7 +487,7 @@ document.addEventListener('DOMContentLoaded', () => {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            access_key: '25338127-c25a-4c9f-9d21-6a71d76c21db',
+            access_key: '7d5b20ba-fabe-4dbf-8bff-7f5ede7b2eaa',
             subject: `[Nexstay] ${p.type || 'Demande'} — ${p.prenom || ''} ${p.nom || ''}`.trim(),
             from_name: `${p.prenom || ''} ${p.nom || ''}`.trim() || 'Visiteur',
             email: p.email,
