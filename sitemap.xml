@@ -7,7 +7,8 @@
     <loc>https://www.nexstay.tn/</loc>
     <xhtml:link rel="alternate" hreflang="fr" href="https://www.nexstay.tn/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.nexstay.tn/en/"/>
-    <lastmod>2026-05-28</lastmod>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.nexstay.tn/"/>
+    <lastmod>2026-05-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -16,7 +17,7 @@
     <loc>https://www.nexstay.tn/proprietaires.html</loc>
     <xhtml:link rel="alternate" hreflang="fr" href="https://www.nexstay.tn/proprietaires.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.nexstay.tn/en/owners.html"/>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-05-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -25,7 +26,7 @@
     <loc>https://www.nexstay.tn/services.html</loc>
     <xhtml:link rel="alternate" hreflang="fr" href="https://www.nexstay.tn/services.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.nexstay.tn/en/services.html"/>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-05-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -34,7 +35,7 @@
     <loc>https://www.nexstay.tn/nos-biens.html</loc>
     <xhtml:link rel="alternate" hreflang="fr" href="https://www.nexstay.tn/nos-biens.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.nexstay.tn/en/properties.html"/>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-05-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -43,7 +44,7 @@
     <loc>https://www.nexstay.tn/about.html</loc>
     <xhtml:link rel="alternate" hreflang="fr" href="https://www.nexstay.tn/about.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.nexstay.tn/en/about.html"/>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-05-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -52,7 +53,7 @@
     <loc>https://www.nexstay.tn/contact.html</loc>
     <xhtml:link rel="alternate" hreflang="fr" href="https://www.nexstay.tn/contact.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.nexstay.tn/en/contact.html"/>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-05-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -61,7 +62,7 @@
     <loc>https://www.nexstay.tn/blog.html</loc>
     <xhtml:link rel="alternate" hreflang="fr" href="https://www.nexstay.tn/blog.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.nexstay.tn/en/blog.html"/>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-05-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -71,7 +72,7 @@
     <loc>https://www.nexstay.tn/blog/location-courte-duree-tunisie.html</loc>
     <xhtml:link rel="alternate" hreflang="fr" href="https://www.nexstay.tn/blog/location-courte-duree-tunisie.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.nexstay.tn/en/blog/short-term-rental-tunisia.html"/>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-05-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -80,7 +81,7 @@
     <loc>https://www.nexstay.tn/blog/preparer-appartement-airbnb.html</loc>
     <xhtml:link rel="alternate" hreflang="fr" href="https://www.nexstay.tn/blog/preparer-appartement-airbnb.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.nexstay.tn/en/blog/prepare-apartment-airbnb.html"/>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-05-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -89,7 +90,7 @@
     <loc>https://www.nexstay.tn/blog/tarification-airbnb-tunisie.html</loc>
     <xhtml:link rel="alternate" hreflang="fr" href="https://www.nexstay.tn/blog/tarification-airbnb-tunisie.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.nexstay.tn/en/blog/airbnb-pricing-tunisia.html"/>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-05-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -98,7 +99,7 @@
     <loc>https://www.nexstay.tn/blog/zones-investissement-location-tunisie.html</loc>
     <xhtml:link rel="alternate" hreflang="fr" href="https://www.nexstay.tn/blog/zones-investissement-location-tunisie.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.nexstay.tn/en/blog/investment-zones-tunisia.html"/>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-05-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -107,7 +108,7 @@
     <loc>https://www.nexstay.tn/blog/tre-investissement-locatif-tunisie.html</loc>
     <xhtml:link rel="alternate" hreflang="fr" href="https://www.nexstay.tn/blog/tre-investissement-locatif-tunisie.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.nexstay.tn/en/blog/tre-investment-tunisia.html"/>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-05-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -116,7 +117,7 @@
     <loc>https://www.nexstay.tn/blog/conciergerie-delegation-tunisie.html</loc>
     <xhtml:link rel="alternate" hreflang="fr" href="https://www.nexstay.tn/blog/conciergerie-delegation-tunisie.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.nexstay.tn/en/blog/property-management-tunisia.html"/>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-05-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -126,49 +127,61 @@
     <loc>https://www.nexstay.tn/en/</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.nexstay.tn/en/"/>
     <xhtml:link rel="alternate" hreflang="fr" href="https://www.nexstay.tn/"/>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-05-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
     <loc>https://www.nexstay.tn/en/owners.html</loc>
-    <lastmod>2026-05-28</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.nexstay.tn/en/owners.html"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.nexstay.tn/proprietaires.html"/>
+    <lastmod>2026-05-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://www.nexstay.tn/en/services.html</loc>
-    <lastmod>2026-05-28</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.nexstay.tn/en/services.html"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.nexstay.tn/services.html"/>
+    <lastmod>2026-05-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://www.nexstay.tn/en/properties.html</loc>
-    <lastmod>2026-05-28</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.nexstay.tn/en/properties.html"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.nexstay.tn/nos-biens.html"/>
+    <lastmod>2026-05-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
     <loc>https://www.nexstay.tn/en/about.html</loc>
-    <lastmod>2026-05-28</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.nexstay.tn/en/about.html"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.nexstay.tn/about.html"/>
+    <lastmod>2026-05-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
 
   <url>
     <loc>https://www.nexstay.tn/en/contact.html</loc>
-    <lastmod>2026-05-28</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.nexstay.tn/en/contact.html"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.nexstay.tn/contact.html"/>
+    <lastmod>2026-05-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
 
   <url>
     <loc>https://www.nexstay.tn/en/blog.html</loc>
-    <lastmod>2026-05-28</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.nexstay.tn/en/blog.html"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.nexstay.tn/blog.html"/>
+    <lastmod>2026-05-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -176,42 +189,54 @@
   <!-- ── Articles blog EN ── -->
   <url>
     <loc>https://www.nexstay.tn/en/blog/short-term-rental-tunisia.html</loc>
-    <lastmod>2026-05-28</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.nexstay.tn/en/blog/short-term-rental-tunisia.html"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.nexstay.tn/blog/location-courte-duree-tunisie.html"/>
+    <lastmod>2026-05-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
 
   <url>
     <loc>https://www.nexstay.tn/en/blog/prepare-apartment-airbnb.html</loc>
-    <lastmod>2026-05-28</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.nexstay.tn/en/blog/prepare-apartment-airbnb.html"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.nexstay.tn/blog/preparer-appartement-airbnb.html"/>
+    <lastmod>2026-05-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
 
   <url>
     <loc>https://www.nexstay.tn/en/blog/airbnb-pricing-tunisia.html</loc>
-    <lastmod>2026-05-28</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.nexstay.tn/en/blog/airbnb-pricing-tunisia.html"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.nexstay.tn/blog/tarification-airbnb-tunisie.html"/>
+    <lastmod>2026-05-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
 
   <url>
     <loc>https://www.nexstay.tn/en/blog/investment-zones-tunisia.html</loc>
-    <lastmod>2026-05-28</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.nexstay.tn/en/blog/investment-zones-tunisia.html"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.nexstay.tn/blog/zones-investissement-location-tunisie.html"/>
+    <lastmod>2026-05-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
 
   <url>
     <loc>https://www.nexstay.tn/en/blog/tre-investment-tunisia.html</loc>
-    <lastmod>2026-05-28</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.nexstay.tn/en/blog/tre-investment-tunisia.html"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.nexstay.tn/blog/tre-investissement-locatif-tunisie.html"/>
+    <lastmod>2026-05-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
 
   <url>
     <loc>https://www.nexstay.tn/en/blog/property-management-tunisia.html</loc>
-    <lastmod>2026-05-28</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.nexstay.tn/en/blog/property-management-tunisia.html"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.nexstay.tn/blog/conciergerie-delegation-tunisie.html"/>
+    <lastmod>2026-05-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
@@ -219,14 +244,14 @@
   <!-- ── Pages légales ── -->
   <url>
     <loc>https://www.nexstay.tn/mentions-legales.html</loc>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-05-29</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
 
   <url>
     <loc>https://www.nexstay.tn/confidentialite.html</loc>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-05-29</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
