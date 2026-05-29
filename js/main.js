@@ -504,7 +504,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
           btn.innerHTML = original;
           btn.disabled = false;
-          showToast(json.message || 'Une erreur est survenue. Veuillez réessayer.');
+          showToast('W3F: ' + JSON.stringify(json));
         }
       } catch {
         btn.innerHTML = original;
