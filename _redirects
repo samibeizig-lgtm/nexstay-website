@@ -4,3 +4,17 @@
 #
 # /* /coming-soon.html 200
 # ─────────────────────────────────────────────────────────────────────────────
+
+# ─── REDIRECTIONS 301 — ancien site ──────────────────────────────────────────
+/présentation               /about.html                 301
+/pr%C3%A9sentation          /about.html                 301
+/feed/                      /blog.html                  301
+/feed                       /blog.html                  301
+/locataires/                /nos-biens.html             301
+/locataires                 /nos-biens.html             301
+/proprietaires/             /proprietaires.html         301
+/vision/                    /about.html                 301
+/vision                     /about.html                 301
+/votre-partenaire-location/ /proprietaires.html         301
+/votre-partenaire-location  /proprietaires.html         301
+# ─────────────────────────────────────────────────────────────────────────────
