@@ -17,8 +17,8 @@
   <link rel="alternate" hreflang="en" href="https://www.nexstay.tn/en/" />
   <link rel="alternate" hreflang="x-default" href="https://www.nexstay.tn/" />
 
-  <!-- LCP: preload hero image -->
-  <link rel="preload" as="image" href="https://images.unsplash.com/photo-1779835390242-7c63470314ba?auto=format&fit=crop&w=1920&q=80" fetchpriority="high" imagesrcset="https://images.unsplash.com/photo-1779835390242-7c63470314ba?auto=format&fit=crop&w=640&q=75 640w, https://images.unsplash.com/photo-1779835390242-7c63470314ba?auto=format&fit=crop&w=1200&q=80 1200w, https://images.unsplash.com/photo-1779835390242-7c63470314ba?auto=format&fit=crop&w=1920&q=80 1920w" imagesizes="100vw" />
+  <!-- LCP: preload hero image (self-hosted WebP) -->
+  <link rel="preload" as="image" href="/img/hero.webp" fetchpriority="high" imagesrcset="/img/hero-640.webp 640w, /img/hero-1200.webp 1200w, /img/hero.webp 1920w" imagesizes="100vw" />
 
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
@@ -339,17 +339,18 @@
   <!-- HERO -->
   <section class="hero">
     <div class="hero-bg">
-      <img
-        src="https://images.unsplash.com/photo-1779835390242-7c63470314ba?auto=format&fit=crop&w=1920&q=80"
-        srcset="https://images.unsplash.com/photo-1779835390242-7c63470314ba?auto=format&fit=crop&w=640&q=75 640w,
-                https://images.unsplash.com/photo-1779835390242-7c63470314ba?auto=format&fit=crop&w=1200&q=80 1200w,
-                https://images.unsplash.com/photo-1779835390242-7c63470314ba?auto=format&fit=crop&w=1920&q=80 1920w"
-        sizes="100vw"
-        alt="Villa de luxe Nexstay"
-        loading="eager"
-        fetchpriority="high"
-        decoding="sync"
-        width="1920" height="1080" />
+      <picture>
+        <source type="image/webp"
+          srcset="/img/hero-640.webp 640w, /img/hero-1200.webp 1200w, /img/hero.webp 1920w"
+          sizes="100vw" />
+        <img
+          src="/img/hero.jpg"
+          alt="Intérieur lumineux d'une villa Nexstay à Tunis"
+          loading="eager"
+          fetchpriority="high"
+          decoding="async"
+          width="1920" height="1080" />
+      </picture>
     </div>
     <div class="hero-overlay"></div>
     <div class="hero-content">
