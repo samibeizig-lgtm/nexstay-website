@@ -36,6 +36,15 @@
   --section-v-sm: 80px;
 }
 
+/* Mobile variable overrides — must mirror critical CSS to prevent CLS when style.css loads async */
+@media (max-width: 768px) {
+  :root {
+    --nav-h: 68px;
+    --section-v: 72px;
+    --section-v-sm: 56px;
+  }
+}
+
 /* ============ RESET & BASE ============ */
 *, *::before, *::after {
   box-sizing: border-box;
