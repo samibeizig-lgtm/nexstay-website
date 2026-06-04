@@ -9,6 +9,28 @@ Disallow: /css/
 Allow: /js/main.js
 Allow: /css/style.css
 
+# Crawlers IA — autoriser l'indexation du contenu
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: cohere-ai
+Allow: /
+
 # Sitemap
 Sitemap: https://www.nexstay.tn/sitemap.xml
 
