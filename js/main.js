@@ -143,7 +143,7 @@
 
   async function loadGoogleReviews() {
     try {
-      const res = await fetch('/.netlify/functions/places');
+      const res = await fetch('/api/places');
       if (!res.ok) return;
       const place = await res.json();
       if (place.error) return;
