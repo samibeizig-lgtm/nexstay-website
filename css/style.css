@@ -2370,6 +2370,11 @@ button {
 
   .hero {
     padding-bottom: 36px;
+    padding-top: var(--nav-h);
+  }
+
+  .hero-title {
+    font-size: clamp(38px, 10.5vw, 52px);
   }
 
   .hero-inner {
