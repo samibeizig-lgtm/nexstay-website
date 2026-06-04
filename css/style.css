@@ -2527,9 +2527,7 @@ button {
     transform: none;
     transition: none;
   }
-  .hero-word, .hero-line-anim {
-    opacity: 1;
-    transform: none;
+  .hero-title {
     animation: none;
   }
   .marquee-track {
@@ -2537,21 +2535,14 @@ button {
   }
 }
 
-/* ============ HERO WORD ANIMATION ============ */
-.hero-word {
-  display: inline-block;
-  transform: translateY(32px);
-  animation: heroWordIn 0.75s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+/* ============ HERO TITLE ANIMATION ============ */
+.hero-title {
+  animation: heroTitleIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
 }
 
-.hero-line-anim {
-  display: inline-block;
-  transform: translateY(20px);
-  animation: heroWordIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-@keyframes heroWordIn {
-  to { transform: translateY(0); }
+@keyframes heroTitleIn {
+  from { transform: translateY(28px); }
+  to   { transform: translateY(0); }
 }
 
 /* ============ PROP CARD HOVER LIFT ============ */

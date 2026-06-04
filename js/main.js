@@ -176,32 +176,6 @@ document.addEventListener('DOMContentLoaded', () => {
       requestAnimationFrame(() => { heroEyebrow.style.transform = 'translateY(0)'; });
     }
 
-    if (heroTitle) {
-      let delay = 220;
-      Array.from(heroTitle.childNodes).forEach(node => {
-        if (node.nodeType === Node.TEXT_NODE) {
-          const words = node.textContent.split(/(\s+)/);
-          const frag = document.createDocumentFragment();
-          words.forEach(part => {
-            if (part.trim()) {
-              const span = document.createElement('span');
-              span.className = 'hero-word';
-              span.style.animationDelay = delay + 'ms';
-              span.textContent = part;
-              frag.appendChild(span);
-              delay += 110;
-            } else {
-              frag.appendChild(document.createTextNode(part));
-            }
-          });
-          node.replaceWith(frag);
-        } else if (node.nodeType === Node.ELEMENT_NODE && node.tagName !== 'BR') {
-          node.classList.add('hero-word');
-          node.style.animationDelay = delay + 'ms';
-          delay += 130;
-        }
-      });
-    }
 
     [heroDesc, heroActions].forEach((el, i) => {
       if (!el) return;
