@@ -254,6 +254,10 @@
     .hero-desc{font-size:16px;font-weight:300;line-height:1.7;color:rgba(255,255,255,.75);}
     .hero-actions{display:flex;flex-direction:column;gap:12px;}
     .hero-scroll{position:absolute;bottom:36px;left:50%;transform:translateX(-50%);z-index:2;display:flex;flex-direction:column;align-items:center;gap:10px;color:rgba(255,255,255,.5);}
+    /* hero word animation — inline so words are FCP-eligible before style.css loads */
+    .hero-word{display:inline-block;transform:translateY(32px);animation:heroWordIn 0.75s cubic-bezier(0.16,1,0.3,1) forwards;}
+    .hero-line-anim{display:inline-block;transform:translateY(20px);animation:heroWordIn 0.6s cubic-bezier(0.16,1,0.3,1) forwards;}
+    @keyframes heroWordIn{to{transform:translateY(0);}}
     /* eyebrow */
     .hero-eyebrow{display:inline-flex;align-items:center;gap:10px;background:rgba(212,113,78,.15);border:1px solid rgba(212,113,78,.3);border-radius:30px;padding:8px 18px;margin-bottom:36px;}
     .hero-eyebrow-dot{width:7px;height:7px;border-radius:50%;background:var(--terracotta);animation:pulse 2s infinite;}

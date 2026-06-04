@@ -172,8 +172,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const heroActions = document.querySelector('.hero-actions');
 
     if (heroEyebrow) {
-      heroEyebrow.style.cssText = 'opacity:0;transform:translateY(14px);transition:opacity 0.55s ease 0.1s,transform 0.55s ease 0.1s';
-      requestAnimationFrame(() => { heroEyebrow.style.opacity = '1'; heroEyebrow.style.transform = 'translateY(0)'; });
+      heroEyebrow.style.cssText = 'transform:translateY(14px);transition:transform 0.55s ease 0.1s';
+      requestAnimationFrame(() => { heroEyebrow.style.transform = 'translateY(0)'; });
     }
 
     if (heroTitle) {
@@ -206,8 +206,8 @@ document.addEventListener('DOMContentLoaded', () => {
     [heroDesc, heroActions].forEach((el, i) => {
       if (!el) return;
       const d = 620 + i * 160;
-      el.style.cssText = `opacity:0;transform:translateY(18px);transition:opacity 0.6s ease ${d}ms,transform 0.6s ease ${d}ms`;
-      setTimeout(() => { el.style.opacity = '1'; el.style.transform = 'translateY(0)'; }, d);
+      el.style.cssText = `transform:translateY(18px);transition:transform 0.6s ease ${d}ms`;
+      setTimeout(() => { el.style.transform = 'translateY(0)'; }, d);
     });
   }
 
