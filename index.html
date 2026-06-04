@@ -187,7 +187,11 @@
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400&family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&display=swap" /></noscript>
   <style>
     /* ── CRITICAL CSS — above the fold ── */
-    :root{--terracotta:#D4714E;--terracotta-dark:#B5583A;--terracotta-pale:#F5E6DF;--dark:#1E1E1E;--charcoal:#2F2F2F;--white:#FFFFFF;--off-white:#F8F5F1;--light-gray:#EDE9E3;--mid-gray:#B8B0A6;--gray:#7A7470;--font-display:'Plus Jakarta Sans',sans-serif;--font-body:'Inter',sans-serif;--font-serif:'Cormorant Garamond',serif;--ease:cubic-bezier(0.25,0.46,0.45,0.94);--ease-out:cubic-bezier(0.16,1,0.3,1);--nav-h:80px;--section-v:130px;--section-v-sm:80px;}
+    /* Fallback font metrics — prevent CLS on font swap */
+    @font-face{font-family:'PJS-Fallback';src:local('Arial');size-adjust:104%;ascent-override:96%;descent-override:24%;line-gap-override:0%;}
+    @font-face{font-family:'Inter-Fallback';src:local('Arial');size-adjust:107%;ascent-override:90%;descent-override:22%;line-gap-override:0%;}
+    @font-face{font-family:'CG-Fallback';src:local('Georgia');size-adjust:108%;ascent-override:88%;descent-override:22%;line-gap-override:0%;}
+    :root{--terracotta:#D4714E;--terracotta-dark:#B5583A;--terracotta-pale:#F5E6DF;--dark:#1E1E1E;--charcoal:#2F2F2F;--white:#FFFFFF;--off-white:#F8F5F1;--light-gray:#EDE9E3;--mid-gray:#B8B0A6;--gray:#7A7470;--font-display:'Plus Jakarta Sans','PJS-Fallback',sans-serif;--font-body:'Inter','Inter-Fallback',sans-serif;--font-serif:'Cormorant Garamond','CG-Fallback',serif;--ease:cubic-bezier(0.25,0.46,0.45,0.94);--ease-out:cubic-bezier(0.16,1,0.3,1);--nav-h:80px;--section-v:130px;--section-v-sm:80px;}
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
     html{scroll-behavior:smooth;overflow-x:hidden;}
     body{font-family:var(--font-body),sans-serif;color:var(--dark);background:var(--white);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
