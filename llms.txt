@@ -1,0 +1,36 @@
+# Nexstay
+
+> Nexstay est une société de conciergerie Airbnb professionnelle en Tunisie. Nous prenons en charge l'accueil des voyageurs, le ménage professionnel, la remise des clés et les conseils tarifaires pour les propriétaires Airbnb à Tunis, La Marsa et Sidi Bou Said.
+
+Nexstay assure la conciergerie sur place : le propriétaire loue son bien, Nexstay s'occupe de tout le reste. Notre service s'adresse aux propriétaires résidant en Tunisie ou à l'étranger (TRE) qui souhaitent louer leur appartement ou villa sur Airbnb sans contraintes logistiques.
+
+Nexstay ne fait pas de gestion locative. Nexstay est une conciergerie : nous intervenons sur place pour accueillir les voyageurs, assurer la propreté du bien et coordonner les remises de clés. Le propriétaire reste pleinement propriétaire et décisionnaire.
+
+## Pages principales (Français)
+
+- [Accueil](https://www.nexstay.tn/): Présentation de la conciergerie Nexstay et de ses services Airbnb en Tunisie
+- [Services](https://www.nexstay.tn/services.html): Détail des formules Essential et Premium — accueil voyageurs, ménage, remise des clés, conseils tarifaires
+- [Propriétaires](https://www.nexstay.tn/proprietaires.html): Pourquoi choisir Nexstay ? Avantages pour les propriétaires Airbnb en Tunisie
+- [À propos](https://www.nexstay.tn/about.html): L'équipe Nexstay et notre mission de conciergerie à Tunis, La Marsa et Sidi Bou Said
+- [Contact](https://www.nexstay.tn/contact.html): Contacter Nexstay pour un devis ou une question sur nos services de conciergerie
+
+## Pages principales (English)
+
+- [Home](https://www.nexstay.tn/en/): Nexstay professional Airbnb concierge service in Tunisia
+- [Services](https://www.nexstay.tn/en/services.html): Essential and Premium packages — guest welcome, cleaning, key handover, pricing advice
+- [Property Owners](https://www.nexstay.tn/en/proprietaires.html): Why choose Nexstay concierge service for your Airbnb in Tunisia
+- [About](https://www.nexstay.tn/en/about.html): The Nexstay team and our concierge mission in Tunis, La Marsa and Sidi Bou Said
+- [Contact](https://www.nexstay.tn/en/contact.html): Contact Nexstay for a quote or question about our concierge services
+
+## Blog (Français)
+
+- [Blog Nexstay](https://www.nexstay.tn/blog.html): Conseils pour propriétaires Airbnb en Tunisie — conciergerie, accueil voyageurs, tarification
+
+## Informations essentielles
+
+- **Zones desservies** : Tunis, La Marsa, Sidi Bou Said (Tunisie)
+- **Type de service** : Conciergerie Airbnb (accueil, ménage, remise des clés, conseils tarifaires)
+- **Clients cibles** : Propriétaires Airbnb résidant en Tunisie ou à l'étranger (TRE)
+- **Langues** : Français (principal), Anglais
+- **Site web** : https://www.nexstay.tn
+- **Contact** : https://www.nexstay.tn/contact.html
