@@ -266,6 +266,67 @@
     <priority>0.5</priority>
   </url>
 
+  <!-- ── Nouveaux articles blog (juin 2026) ── -->
+  <url>
+    <loc>https://www.nexstay.tn/blog/ete-airbnb-tunisie.html</loc>
+    <xhtml:link rel="alternate" hreflang="fr"        href="https://www.nexstay.tn/blog/ete-airbnb-tunisie.html"/>
+    <xhtml:link rel="alternate" hreflang="en"        href="https://www.nexstay.tn/en/blog/summer-airbnb-tunisia.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.nexstay.tn/blog/ete-airbnb-tunisie.html"/>
+    <lastmod>2026-06-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://www.nexstay.tn/en/blog/summer-airbnb-tunisia.html</loc>
+    <xhtml:link rel="alternate" hreflang="en"        href="https://www.nexstay.tn/en/blog/summer-airbnb-tunisia.html"/>
+    <xhtml:link rel="alternate" hreflang="fr"        href="https://www.nexstay.tn/blog/ete-airbnb-tunisie.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.nexstay.tn/blog/ete-airbnb-tunisie.html"/>
+    <lastmod>2026-06-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://www.nexstay.tn/blog/photos-annonce-airbnb.html</loc>
+    <xhtml:link rel="alternate" hreflang="fr"        href="https://www.nexstay.tn/blog/photos-annonce-airbnb.html"/>
+    <xhtml:link rel="alternate" hreflang="en"        href="https://www.nexstay.tn/en/blog/airbnb-listing-photos.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.nexstay.tn/blog/photos-annonce-airbnb.html"/>
+    <lastmod>2026-06-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://www.nexstay.tn/en/blog/airbnb-listing-photos.html</loc>
+    <xhtml:link rel="alternate" hreflang="en"        href="https://www.nexstay.tn/en/blog/airbnb-listing-photos.html"/>
+    <xhtml:link rel="alternate" hreflang="fr"        href="https://www.nexstay.tn/blog/photos-annonce-airbnb.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.nexstay.tn/blog/photos-annonce-airbnb.html"/>
+    <lastmod>2026-06-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://www.nexstay.tn/blog/accueil-voyageurs-tunisie.html</loc>
+    <xhtml:link rel="alternate" hreflang="fr"        href="https://www.nexstay.tn/blog/accueil-voyageurs-tunisie.html"/>
+    <xhtml:link rel="alternate" hreflang="en"        href="https://www.nexstay.tn/en/blog/guest-welcome-airbnb.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.nexstay.tn/blog/accueil-voyageurs-tunisie.html"/>
+    <lastmod>2026-06-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://www.nexstay.tn/en/blog/guest-welcome-airbnb.html</loc>
+    <xhtml:link rel="alternate" hreflang="en"        href="https://www.nexstay.tn/en/blog/guest-welcome-airbnb.html"/>
+    <xhtml:link rel="alternate" hreflang="fr"        href="https://www.nexstay.tn/blog/accueil-voyageurs-tunisie.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.nexstay.tn/blog/accueil-voyageurs-tunisie.html"/>
+    <lastmod>2026-06-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
   <!-- ── Pages légales ── -->
   <url>
     <loc>https://www.nexstay.tn/mentions-legales.html</loc>
