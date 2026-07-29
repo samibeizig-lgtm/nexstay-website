@@ -981,12 +981,10 @@
   </div>
   <script>
     (function(){
-      if(sessionStorage.getItem('promoDismissed')) return;
       var overlay = document.getElementById('promo-overlay');
       function dismiss(){
         overlay.classList.remove('promo-visible');
         setTimeout(function(){ overlay.style.display='none'; }, 400);
-        sessionStorage.setItem('promoDismissed','1');
       }
       setTimeout(function(){ overlay.classList.add('promo-visible'); }, 900);
       overlay.addEventListener('click', function(e){ if(e.target===overlay) dismiss(); });
