@@ -939,8 +939,11 @@
     .promo-new-wrap{display:flex;flex-direction:column;}
     .promo-new{font-size:34px;font-weight:800;color:#D4714E;line-height:1;}
     .promo-new-label{font-size:9px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#7A7470;margin-top:2px;}
-    .promo-deadline{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:#1E1E1E;margin-bottom:20px;padding:7px 12px;border:1px solid #ece8e5;border-radius:20px;}
-    .promo-deadline svg{flex-shrink:0;color:#D4714E;}
+    .promo-countdown{display:flex;align-items:flex-start;gap:5px;margin-bottom:18px;}
+    .promo-cd-block{display:flex;flex-direction:column;align-items:center;background:#1E1E1E;border-radius:6px;padding:7px 8px;min-width:48px;}
+    .promo-cd-num{font-size:20px;font-weight:800;color:#D4714E;line-height:1;font-variant-numeric:tabular-nums;letter-spacing:.02em;}
+    .promo-cd-label{font-size:7.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#888;margin-top:3px;}
+    .promo-cd-sep{font-size:18px;font-weight:700;color:#D4714E;padding-top:7px;line-height:1;opacity:.7;}
     .promo-cta{display:block;width:100%;text-align:center;background:#D4714E;color:#fff;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:14px 18px;border-radius:8px;text-decoration:none;transition:background .2s;box-sizing:border-box;}
     .promo-cta:hover{background:#B5583A;}
     .promo-close-btn{position:absolute;top:14px;right:14px;background:#f4f0ee;border:none;cursor:pointer;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#7A7470;font-size:14px;line-height:1;transition:background .2s;z-index:10;}
@@ -971,9 +974,14 @@
             <span class="promo-new-label">Commission réduite</span>
           </div>
         </div>
-        <div class="promo-deadline">
-          <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-          Valable jusqu'au 10 août 2026
+        <div class="promo-countdown" id="promo-countdown">
+          <div class="promo-cd-block"><span class="promo-cd-num" id="cd-days">--</span><span class="promo-cd-label">jours</span></div>
+          <span class="promo-cd-sep">:</span>
+          <div class="promo-cd-block"><span class="promo-cd-num" id="cd-hours">--</span><span class="promo-cd-label">heures</span></div>
+          <span class="promo-cd-sep">:</span>
+          <div class="promo-cd-block"><span class="promo-cd-num" id="cd-mins">--</span><span class="promo-cd-label">min</span></div>
+          <span class="promo-cd-sep">:</span>
+          <div class="promo-cd-block"><span class="promo-cd-num" id="cd-secs">--</span><span class="promo-cd-label">sec</span></div>
         </div>
         <a href="contact.html" class="promo-cta" id="promo-cta">Contactez-nous &amp; bénéficiez de l'offre</a>
       </div>
@@ -981,13 +989,40 @@
   </div>
   <script>
     (function(){
+      var PROMO_END = new Date('2026-08-10T23:59:59+01:00').getTime();
       var overlay = document.getElementById('promo-overlay');
-      function dismiss(){
-        overlay.classList.remove('promo-visible');
-        setTimeout(function(){ overlay.style.display='none'; }, 400);
+      var cdTimer;
+
+      function pad(n){ return n < 10 ? '0' + n : '' + n; }
+
+      function updateCountdown(){
+        var diff = PROMO_END - Date.now();
+        if(diff <= 0){
+          clearInterval(cdTimer);
+          overlay.style.display = 'none';
+          return;
+        }
+        document.getElementById('cd-days').textContent  = pad(Math.floor(diff / 86400000));
+        document.getElementById('cd-hours').textContent = pad(Math.floor((diff % 86400000) / 3600000));
+        document.getElementById('cd-mins').textContent  = pad(Math.floor((diff % 3600000) / 60000));
+        document.getElementById('cd-secs').textContent  = pad(Math.floor((diff % 60000) / 1000));
       }
+
+      function dismiss(){
+        clearInterval(cdTimer);
+        overlay.classList.remove('promo-visible');
+        setTimeout(function(){ overlay.style.display = 'none'; }, 400);
+      }
+
+      if(Date.now() >= PROMO_END){
+        overlay.style.display = 'none';
+        return;
+      }
+
+      updateCountdown();
+      cdTimer = setInterval(updateCountdown, 1000);
       setTimeout(function(){ overlay.classList.add('promo-visible'); }, 900);
-      overlay.addEventListener('click', function(e){ if(e.target===overlay) dismiss(); });
+      overlay.addEventListener('click', function(e){ if(e.target === overlay) dismiss(); });
       document.getElementById('promo-close').addEventListener('click', dismiss);
       document.getElementById('promo-cta').addEventListener('click', dismiss);
     })();
