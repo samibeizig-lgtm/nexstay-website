@@ -303,7 +303,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ainzagnord:23, ainzag:23, menzah:23, ennasr:23, soukra:23, hammamet:23
   };
   const POOL = {s1:0, s2:0, s3:0.2, villa3:0.4, villa4:0.4};
-  const COMM_PREMIUM = 0.20; // taux indicatif médian (offre réelle : 18–25% après visite)
+  const COMM = { premium: 0.20 };
 
   function getGrpVal(g) {
     const btn = document.querySelector(`[data-grp="${g}"] .csel-btn.active`);
@@ -317,8 +317,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const type = getGrpVal('type');
     const pool = getGrpVal('pool') === 'yes';
     const sea = getGrpVal('sea') === 'yes';
+    const formula = getGrpVal('formula');
     const resultEl = document.getElementById('calcResult');
-    if (!loc || !BASE[loc] || !type) {
+    if (!loc || !BASE[loc] || !type || !formula) {
       if (resultEl) resultEl.style.display = 'none';
       return;
     }
@@ -327,7 +328,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (sea) price = Math.round(price * 1.3);
     const nights = NIGHTS[loc] || 20;
     const gross = price * nights;
-    const net = Math.round(gross * (1 - COMM_PREMIUM));
+    const net = Math.round(gross * (1 - COMM[formula]));
     const el = (id) => document.getElementById(id);
     if (el('r_price')) el('r_price').textContent = price.toLocaleString('fr-TN') + ' DT';
     if (el('r_nights')) el('r_nights').textContent = nights + ' nuits';
