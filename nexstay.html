@@ -552,51 +552,16 @@ footer{background:var(--dk);padding:48px 20px 28px;border-top:1px solid rgba(255
     <h2 class="ttl rv d1" style="color:#fff;text-align:center;">Transparent,<br><em>sans surprise</em></h2>
     <p class="bd rv d2" style="color:var(--mg);text-align:center;margin-bottom:0;">Pour appartements &amp; villas · Aucun frais caché · Sans engagement minimum</p>
 
-    <div class="plan-tabs rv d2">
-      <button class="ptab ess-tab" data-pt="ess">
-        <span class="ptab-name">Essential</span>
-        <span class="ptab-rate">15% TTC</span>
-      </button>
-      <button class="ptab pre-tab active" data-pt="pre">
-        <span class="ptab-name">Premium ★</span>
-        <span class="ptab-rate">25% TTC · La plus populaire</span>
-      </button>
-    </div>
-
-    <!-- PANEL ESSENTIAL -->
-    <div class="plan-panel" id="pp-ess">
-      <div class="plan-pcard">
-        <div class="plan-phead">
-          <div>
-            <div class="plan-pname">Formule Essential</div>
-            <div class="plan-prate">15<span class="plan-punit">%</span> <span class="plan-pttc">TTC</span></div>
-            <p class="plan-pnote">Commission sur les revenus locatifs, toutes taxes comprises</p>
-          </div>
-          <a href="#contact" class="plan-pcta">Choisir Essential →</a>
-        </div>
-        <div class="plan-psvc-grid">
-          <div class="psvc-item"><span class="psvc-dot">✓</span>Accueil des voyageurs</div>
-          <div class="psvc-item"><span class="psvc-dot">✓</span>Nettoyage professionnel</div>
-          <div class="psvc-item"><span class="psvc-dot">✓</span>Gestion du linge</div>
-          <div class="psvc-item"><span class="psvc-dot">✓</span>Assistance de base</div>
-          <div class="psvc-item"><span class="psvc-dot">✓</span>Création des annonces</div>
-          <div class="psvc-item"><span class="psvc-dot">✓</span>Gestion des réservations</div>
-          <div class="psvc-item"><span class="psvc-dot">✓</span>Reporting mensuel</div>
-          <div class="psvc-item"><span class="psvc-dot">✓</span>Optimisation des tarifs</div>
-        </div>
-      </div>
-    </div>
-
     <!-- PANEL PREMIUM -->
     <div class="plan-panel active" id="pp-pre">
       <div class="plan-pcard">
         <div class="plan-phead">
           <div>
             <div class="plan-pname">Formule Premium</div>
-            <div class="plan-prate">25<span class="plan-punit">%</span> <span class="plan-pttc">TTC</span></div>
-            <p class="plan-pnote">Commission sur les revenus locatifs, toutes taxes comprises</p>
+            <div class="plan-prate">18–25<span class="plan-punit">%</span> <span class="plan-pttc">TTC</span></div>
+            <p class="plan-pnote">Taux personnalisé selon votre bien · défini après visite</p>
           </div>
-          <a href="#contact" class="plan-pcta">Choisir Premium →</a>
+          <a href="#contact" class="plan-pcta">Obtenir mon offre →</a>
         </div>
         <div class="plan-psvc-grid">
           <div class="psvc-item"><span class="psvc-dot">✓</span>Accueil des voyageurs</div>
@@ -737,11 +702,7 @@ footer{background:var(--dk);padding:48px 20px 28px;border-top:1px solid rgba(255
     </div>
 
     <div class="csel-group">
-      <span class="csel-lbl">Formule Nexstay</span>
-      <div class="csel-row" data-grp="formula">
-        <button class="csel-btn active" data-v="essential">Essential 15% TTC</button>
-        <button class="csel-btn" data-v="premium">Premium 25% TTC</button>
-      </div>
+      <span class="csel-lbl">Formule Nexstay : <strong style="color:var(--terra);">Premium — 18 à 25% TTC</strong></span>
     </div>
 
     <div class="cres-box">
@@ -940,23 +901,23 @@ const BASE={
 };
 const NIGHTS={gammarth:20,sidibousaid:20,jardins:20,marsa:20,lac2:20,lac1:20,ainzagnord:20,ainzag:20,menzah:20,ennasr:20,soukra:20,hammamet:22,bordmer:22};
 const POOL={s1:0,s2:0,s3:.2,villa3:.4,villa4:.4};
-const COMM={essential:.15,premium:.25};
+const COMM_PREMIUM=0.20; // taux indicatif médian (offre réelle 18–25% après visite)
 
 function getGrpVal(g){return document.querySelector(`[data-grp="${g}"] .csel-btn.active`)?.dataset.v;}
 
 function smartCalc(){
   const loc=document.getElementById('sel-loc')?.value;
-  const type=getGrpVal('type'),pool=getGrpVal('pool')==='yes',sea=getGrpVal('sea')==='yes',formula=getGrpVal('formula');
-  if(!loc||!BASE[loc]||!type||!formula)return;
+  const type=getGrpVal('type'),pool=getGrpVal('pool')==='yes',sea=getGrpVal('sea')==='yes';
+  if(!loc||!BASE[loc]||!type)return;
   let price=BASE[loc][type];
   if(pool)price=Math.round(price*(1+(POOL[type]||0)));
   if(sea)price=Math.round(price*1.3);
-  const nights=NIGHTS[loc]||20,gross=price*nights,net=Math.round(gross*(1-COMM[formula]));
+  const nights=NIGHTS[loc]||20,gross=price*nights,net=Math.round(gross*(1-COMM_PREMIUM));
   document.getElementById('r_price').textContent=price.toLocaleString('fr-TN')+' DT';
   document.getElementById('r_nights').textContent=nights+' nuits';
   document.getElementById('r_gross').textContent=gross.toLocaleString('fr-TN')+' DT';
   document.getElementById('r_net').textContent=net.toLocaleString('fr-TN')+' DT';
-  document.getElementById('r_note').textContent=`Après commission ${COMM[formula]*100}% TTC · Formule ${formula==='essential'?'Essential':'Premium'} · Estimation indicative`;
+  document.getElementById('r_note').textContent='Formule Premium · taux indicatif 20% TTC (18 à 25% selon votre bien, défini après visite)';
 }
 
 document.querySelectorAll('.csel-btn').forEach(btn=>{
