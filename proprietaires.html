@@ -929,6 +929,62 @@
       setActive();
     })();
   </script>
+  <!-- CALCULATOR INIT (inline fallback — runs after DOM is ready) -->
+  <script>
+  (function(){
+    var BASE={
+      gammarth:{s1:200,s2:300,s3:420,villa3:850,villa4:1200},
+      sidibousaid:{s1:220,s2:320,s3:450,villa3:900,villa4:1300},
+      jardins:{s1:170,s2:255,s3:360,villa3:750,villa4:1050},
+      marsa:{s1:170,s2:250,s3:350,villa3:720,villa4:1000},
+      lac2:{s1:150,s2:230,s3:320,villa3:650,villa4:950},
+      lac1:{s1:140,s2:210,s3:295,villa3:610,villa4:880},
+      ainzagnord:{s1:130,s2:195,s3:270,villa3:560,villa4:820},
+      ainzag:{s1:125,s2:185,s3:260,villa3:530,villa4:780},
+      menzah:{s1:130,s2:195,s3:270,villa3:560,villa4:820},
+      ennasr:{s1:120,s2:180,s3:250,villa3:520,villa4:760},
+      soukra:{s1:120,s2:180,s3:250,villa3:520,villa4:760},
+      hammamet:{s1:190,s2:285,s3:400,villa3:820,villa4:1150}
+    };
+    var NIGHTS={gammarth:23,sidibousaid:23,jardins:23,marsa:23,lac2:23,lac1:23,ainzagnord:23,ainzag:23,menzah:23,ennasr:23,soukra:23,hammamet:23};
+    var POOL={s1:0,s2:0,s3:.2,villa3:.4,villa4:.4};
+    var COMM=0.20;
+    function grpVal(g){var b=document.querySelector('[data-grp="'+g+'"] .csel-btn.active');return b?b.dataset.v:null;}
+    function calc(){
+      var sel=document.getElementById('sel-loc');
+      if(!sel)return;
+      var loc=sel.value,type=grpVal('type'),pool=grpVal('pool')==='yes',sea=grpVal('sea')==='yes';
+      var res=document.getElementById('calcResult');
+      if(!loc||!BASE[loc]||!type){if(res)res.style.display='none';return;}
+      var price=BASE[loc][type];
+      if(pool)price=Math.round(price*(1+(POOL[type]||0)));
+      if(sea)price=Math.round(price*1.3);
+      var nights=NIGHTS[loc]||20,gross=price*nights,net=Math.round(gross*(1-COMM));
+      function el(id){return document.getElementById(id);}
+      if(el('r_price'))el('r_price').textContent=price.toLocaleString('fr-TN')+' DT';
+      if(el('r_nights'))el('r_nights').textContent=nights+' nuits';
+      if(el('r_gross'))el('r_gross').textContent=gross.toLocaleString('fr-TN')+' DT';
+      if(el('r_net'))el('r_net').textContent=net.toLocaleString('fr-TN')+' DT';
+      if(el('r_note'))el('r_note').textContent='Formule Premium · 20% HT · sans frais cachés';
+      if(el('r_disclaimer'))el('r_disclaimer').textContent="Estimation indicative selon l'emplacement, le standing et l'équipement du bien.";
+      if(res)res.style.display='block';
+    }
+    var sel=document.getElementById('sel-loc');
+    if(sel){
+      sel.addEventListener('change',calc);
+      document.querySelectorAll('.csel-btn').forEach(function(btn){
+        btn.addEventListener('click',function(){
+          var grp=this.closest('[data-grp]');
+          if(!grp)return;
+          grp.querySelectorAll('.csel-btn').forEach(function(b){b.classList.remove('active');});
+          this.classList.add('active');
+          calc();
+        });
+      });
+      calc();
+    }
+  })();
+  </script>
   <!-- Floating WhatsApp button -->
   <a href="https://wa.me/21627973200" class="wa-float" target="_blank" rel="noopener noreferrer" aria-label="Contactez-nous sur WhatsApp">
     <svg width="28" height="28" fill="white" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.115.549 4.099 1.508 5.824L0 24l6.335-1.482A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.002-1.368l-.36-.214-3.726.977.994-3.634-.234-.373A9.818 9.818 0 012.182 12C2.182 6.58 6.58 2.182 12 2.182S21.818 6.58 21.818 12 17.42 21.818 12 21.818z"/></svg>
