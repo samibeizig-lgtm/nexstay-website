@@ -28,7 +28,7 @@
   <meta property="og:locale" content="fr_TN" />
   <meta property="og:site_name" content="Nexstay Conciergerie" />
   <meta property="og:title" content="Propriétaires — Confiez votre bien à Nexstay Conciergerie Tunisie" />
-  <meta property="og:description" content="Propriétaires en Tunisie : Nexstay assure l'accueil voyageurs, le ménage, la remise des clés et le suivi de votre bien. Formule Premium · honoraires 20% HT." />
+  <meta property="og:description" content="Propriétaires en Tunisie : Nexstay assure l'accueil voyageurs, le ménage, la remise des clés et le suivi de votre bien. Formule Premium · frais de service 20% HT." />
   <meta property="og:url" content="https://www.nexstay.tn/proprietaires.html" />
   <meta property="og:image" content="https://www.nexstay.tn/img/og-nexstay.jpg" />
   <meta property="og:image:width" content="1200" />
@@ -48,10 +48,10 @@
     "mainEntity": [
       {
         "@type": "Question",
-        "name": "Quels sont les honoraires de service de Nexstay en Tunisie ?",
+        "name": "Quels sont les frais de service de Nexstay en Tunisie ?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Nexstay propose une Formule Premium unique, avec des honoraires de 20% HT des revenus locatifs mensuels. Aucun frais caché, aucun abonnement mensuel."
+          "text": "Nexstay propose une Formule Premium unique, avec des frais de service de 20% HT des revenus locatifs mensuels. Aucun frais caché, aucun abonnement mensuel."
         }
       },
       {
@@ -551,7 +551,7 @@
             <div id="r_gross" class="calc-result-amount" style="font-size:28px;">—</div>
           </div>
           <div style="text-align:center;margin-top:12px;">
-            <div class="calc-result-label">Vos revenus après honoraires</div>
+            <div class="calc-result-label">Vos revenus après frais de service</div>
             <div id="r_net" class="calc-result-amount">—</div>
             <div id="r_note" class="calc-result-period" style="margin-top:6px;font-size:11px;"></div>
           </div>
@@ -570,7 +570,7 @@
             </div>
             <div class="calc-stat-item reveal reveal-delay-1">
               <span class="calc-stat-num">20%</span>
-              <span class="calc-stat-label">honoraires Formule Premium HT</span>
+              <span class="calc-stat-label">frais de service · Formule Premium HT</span>
             </div>
             <div class="calc-stat-item reveal reveal-delay-2">
               <span class="calc-stat-num">75%</span>
@@ -967,7 +967,7 @@
       if(el('r_nights'))el('r_nights').textContent=nights+' nuits';
       if(el('r_gross'))el('r_gross').textContent=gross.toLocaleString('fr-TN')+' DT';
       if(el('r_net'))el('r_net').textContent=net.toLocaleString('fr-TN')+' DT';
-      if(el('r_note'))el('r_note').textContent='Formule Premium · 20% HT · sans frais cachés';
+      if(el('r_note'))el('r_note').textContent='Après frais de service 20% HT · Formule Premium';
       if(el('r_disclaimer'))el('r_disclaimer').textContent="Estimation indicative selon l'emplacement, le standing et l'équipement du bien.";
       if(res)res.style.display='block';
     }

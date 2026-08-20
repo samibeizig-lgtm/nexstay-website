@@ -303,7 +303,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ainzagnord:23, ainzag:23, menzah:23, ennasr:23, soukra:23, hammamet:23
   };
   const POOL = {s1:0, s2:0, s3:0.2, villa3:0.4, villa4:0.4};
-  const COMM = {essential:0.15, premium:0.25};
+  const COMM = {essential:0.20, premium:0.20};
 
   function getGrpVal(g) {
     const btn = document.querySelector(`[data-grp="${g}"] .csel-btn.active`);
@@ -334,7 +334,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (el('r_nights')) el('r_nights').textContent = nights + ' nuits';
     if (el('r_gross')) el('r_gross').textContent = gross.toLocaleString('fr-TN') + ' DT';
     if (el('r_net')) el('r_net').textContent = net.toLocaleString('fr-TN') + ' DT';
-    if (el('r_note')) el('r_note').textContent = `Après honoraires de service ${COMM[formula]*100}% · Formule ${formula === 'essential' ? 'Essential' : 'Premium'}`;
+    if (el('r_note')) el('r_note').textContent = `Après frais de service 20% HT · Formule Premium`;
     if (el('r_disclaimer')) el('r_disclaimer').textContent = `Estimation indicative qui dépend de l'état du logement, son emplacement, son standing et son équipement.`;
     if (resultEl) resultEl.style.display = 'block';
   }
