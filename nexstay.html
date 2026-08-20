@@ -558,10 +558,10 @@ footer{background:var(--dk);padding:48px 20px 28px;border-top:1px solid rgba(255
         <div class="plan-phead">
           <div>
             <div class="plan-pname">Formule Premium</div>
-            <div class="plan-prate">18–25<span class="plan-punit">%</span> <span class="plan-pttc">TTC</span></div>
-            <p class="plan-pnote">Taux personnalisé selon votre bien · défini après visite</p>
+            <div class="plan-prate">20<span class="plan-punit">%</span> <span class="plan-pttc">HT</span></div>
+            <p class="plan-pnote">Taux personnalisé  · défini après visite</p>
           </div>
-          <a href="#contact" class="plan-pcta">Obtenir mon offre →</a>
+          <a href="#contact" class="plan-pcta">Choisir Premium →</a>
         </div>
         <div class="plan-psvc-grid">
           <div class="psvc-item"><span class="psvc-dot">✓</span>Accueil des voyageurs</div>
@@ -702,7 +702,7 @@ footer{background:var(--dk);padding:48px 20px 28px;border-top:1px solid rgba(255
     </div>
 
     <div class="csel-group">
-      <span class="csel-lbl">Formule Nexstay : <strong style="color:var(--terra);">Premium — 18 à 25% TTC</strong></span>
+      <span class="csel-lbl">Formule Nexstay : <strong style="color:var(--terra);">Premium — 20% HT</strong></span>
     </div>
 
     <div class="cres-box">
@@ -901,7 +901,7 @@ const BASE={
 };
 const NIGHTS={gammarth:20,sidibousaid:20,jardins:20,marsa:20,lac2:20,lac1:20,ainzagnord:20,ainzag:20,menzah:20,ennasr:20,soukra:20,hammamet:22,bordmer:22};
 const POOL={s1:0,s2:0,s3:.2,villa3:.4,villa4:.4};
-const COMM_PREMIUM=0.20; // taux indicatif médian (offre réelle 18–25% après visite)
+const COMM_PREMIUM=0.20; // taux indicatif médian (offre réelle 20% après visite)
 
 function getGrpVal(g){return document.querySelector(`[data-grp="${g}"] .csel-btn.active`)?.dataset.v;}
 
@@ -917,7 +917,7 @@ function smartCalc(){
   document.getElementById('r_nights').textContent=nights+' nuits';
   document.getElementById('r_gross').textContent=gross.toLocaleString('fr-TN')+' DT';
   document.getElementById('r_net').textContent=net.toLocaleString('fr-TN')+' DT';
-  document.getElementById('r_note').textContent='Formule Premium · taux indicatif 20% TTC (18 à 25% selon votre bien, défini après visite)';
+  document.getElementById('r_note').textContent='Formule Premium · taux indicatif 20% TTC (18 à 25% )';
 }
 
 document.querySelectorAll('.csel-btn').forEach(btn=>{

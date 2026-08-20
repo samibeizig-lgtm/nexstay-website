@@ -333,7 +333,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (el('r_nights')) el('r_nights').textContent = nights + ' nuits';
     if (el('r_gross')) el('r_gross').textContent = gross.toLocaleString('fr-TN') + ' DT';
     if (el('r_net')) el('r_net').textContent = net.toLocaleString('fr-TN') + ' DT';
-    if (el('r_note')) el('r_note').textContent = 'Formule Premium · taux indicatif 20% TTC (18 à 25% selon votre bien, défini après visite)';
+    if (el('r_note')) el('r_note').textContent = 'Formule Premium · 20% HT · Formule Premium';
     if (el('r_disclaimer')) el('r_disclaimer').textContent = `Estimation indicative qui dépend de l'état du logement, son emplacement, son standing et son équipement.`;
     if (resultEl) resultEl.style.display = 'block';
   }
