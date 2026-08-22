@@ -330,12 +330,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const gross = price * nights;
     const net = Math.round(gross * (1 - COMM[formula]));
     const el = (id) => document.getElementById(id);
+    const isEn = document.documentElement.lang === 'en';
     if (el('r_price')) el('r_price').textContent = price.toLocaleString('fr-TN') + ' DT';
-    if (el('r_nights')) el('r_nights').textContent = nights + ' nuits';
+    if (el('r_nights')) el('r_nights').textContent = nights + (isEn ? ' nights' : ' nuits');
     if (el('r_gross')) el('r_gross').textContent = gross.toLocaleString('fr-TN') + ' DT';
     if (el('r_net')) el('r_net').textContent = net.toLocaleString('fr-TN') + ' DT';
-    if (el('r_note')) el('r_note').textContent = 'Après frais de service 20% HT · Formule Premium';
-    if (el('r_disclaimer')) el('r_disclaimer').textContent = `Estimation indicative qui dépend de l'état du logement, son emplacement, son standing et son équipement.`;
+    if (el('r_note')) el('r_note').textContent = isEn
+      ? 'After service fee 20% excl. tax · Premium Plan'
+      : 'Après frais de service 20% HT · Formule Premium';
+    if (el('r_disclaimer')) el('r_disclaimer').textContent = isEn
+      ? 'Indicative estimate depending on the property location, condition and amenities.'
+      : "Estimation indicative qui dépend de l'état du logement, son emplacement, son standing et son équipement.";
     if (resultEl) resultEl.style.display = 'block';
   }
 
