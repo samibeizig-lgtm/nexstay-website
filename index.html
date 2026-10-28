@@ -19,6 +19,8 @@
 
   <!-- LCP: preload hero image (self-hosted WebP) -->
   <link rel="preload" as="image" href="/img/hero.webp" fetchpriority="high" imagesrcset="/img/hero-640.webp 640w, /img/hero-1200.webp 1200w, /img/hero.webp 1920w" imagesizes="100vw" />
+  <!-- Preload primary font early (self-hosted, served via Cloudflare) -->
+  <link rel="preload" as="font" href="/fonts/plusjakartasans-LDIoaomQNQcsA88c7O9yZ4KMCoOg4Ko20yw.woff2" type="font/woff2" crossorigin />
 
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
@@ -182,11 +184,6 @@
   }
   </script>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400&family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&display=swap" />
-  <link rel="stylesheet" media="print" onload="this.media='all';this.onload=null" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400&family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&display=swap" />
-  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400&family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&display=swap" /></noscript>
   <style>
     /* ── CRITICAL CSS — above the fold ── */
     /* Fallback font metrics — prevent CLS on font swap */
